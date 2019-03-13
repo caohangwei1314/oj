@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noi.oj.dao.ProgramLanguageMapper">
+  <resultMap id="BaseResultMap" type="com.noi.oj.domain.ProgramLanguage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="extTime" jdbcType="INTEGER" property="exttime" />
+    <result column="extMemory" jdbcType="INTEGER" property="extmemory" />
+    <result column="timeFactor" jdbcType="TINYINT" property="timefactor" />
+    <result column="memoryFactor" jdbcType="TINYINT" property="memoryfactor" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+    <result column="exe" jdbcType="VARCHAR" property="exe" />
+    <result column="complieOrder" jdbcType="TINYINT" property="complieorder" />
+    <result column="compileCmd" jdbcType="VARCHAR" property="compilecmd" />
+    <result column="brush" jdbcType="VARCHAR" property="brush" />
+    <result column="script" jdbcType="BIT" property="script" />
+    <result column="status" jdbcType="BIT" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, description, extTime, extMemory, timeFactor, memoryFactor, ext, exe, complieOrder, 
+    compileCmd, brush, script, status
+  </sql>
+  <select id="selectByExample" parameterType="com.noi.oj.domain.ProgramLanguageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from program_language
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from program_language
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from program_language
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.noi.oj.domain.ProgramLanguageExample">
+    delete from program_language
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.noi.oj.domain.ProgramLanguage">
+    insert into program_language (id, name, description, 
+      extTime, extMemory, timeFactor, 
+      memoryFactor, ext, exe, 
+      complieOrder, compileCmd, brush, 
+      script, status)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{exttime,jdbcType=INTEGER}, #{extmemory,jdbcType=INTEGER}, #{timefactor,jdbcType=TINYINT}, 
+      #{memoryfactor,jdbcType=TINYINT}, #{ext,jdbcType=VARCHAR}, #{exe,jdbcType=VARCHAR}, 
+      #{complieorder,jdbcType=TINYINT}, #{compilecmd,jdbcType=VARCHAR}, #{brush,jdbcType=VARCHAR}, 
+      #{script,jdbcType=BIT}, #{status,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.ProgramLanguage">
+    insert into program_language
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="exttime != null">
+        extTime,
+      </if>
+      <if test="extmemory != null">
+        extMemory,
+      </if>
+      <if test="timefactor != null">
+        timeFactor,
+      </if>
+      <if test="memoryfactor != null">
+        memoryFactor,
+      </if>
+      <if test="ext != null">
+        ext,
+      </if>
+      <if test="exe != null">
+        exe,
+      </if>
+      <if test="complieorder != null">
+        complieOrder,
+      </if>
+      <if test="compilecmd != null">
+        compileCmd,
+      </if>
+      <if test="brush != null">
+        brush,
+      </if>
+      <if test="script != null">
+        script,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="exttime != null">
+        #{exttime,jdbcType=INTEGER},
+      </if>
+      <if test="extmemory != null">
+        #{extmemory,jdbcType=INTEGER},
+      </if>
+      <if test="timefactor != null">
+        #{timefactor,jdbcType=TINYINT},
+      </if>
+      <if test="memoryfactor != null">
+        #{memoryfactor,jdbcType=TINYINT},
+      </if>
+      <if test="ext != null">
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="exe != null">
+        #{exe,jdbcType=VARCHAR},
+      </if>
+      <if test="complieorder != null">
+        #{complieorder,jdbcType=TINYINT},
+      </if>
+      <if test="compilecmd != null">
+        #{compilecmd,jdbcType=VARCHAR},
+      </if>
+      <if test="brush != null">
+        #{brush,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        #{script,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.noi.oj.domain.ProgramLanguageExample" resultType="java.lang.Long">
+    select count(*) from program_language
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update program_language
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exttime != null">
+        extTime = #{record.exttime,jdbcType=INTEGER},
+      </if>
+      <if test="record.extmemory != null">
+        extMemory = #{record.extmemory,jdbcType=INTEGER},
+      </if>
+      <if test="record.timefactor != null">
+        timeFactor = #{record.timefactor,jdbcType=TINYINT},
+      </if>
+      <if test="record.memoryfactor != null">
+        memoryFactor = #{record.memoryfactor,jdbcType=TINYINT},
+      </if>
+      <if test="record.ext != null">
+        ext = #{record.ext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exe != null">
+        exe = #{record.exe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.complieorder != null">
+        complieOrder = #{record.complieorder,jdbcType=TINYINT},
+      </if>
+      <if test="record.compilecmd != null">
+        compileCmd = #{record.compilecmd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brush != null">
+        brush = #{record.brush,jdbcType=VARCHAR},
+      </if>
+      <if test="record.script != null">
+        script = #{record.script,jdbcType=BIT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update program_language
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      extTime = #{record.exttime,jdbcType=INTEGER},
+      extMemory = #{record.extmemory,jdbcType=INTEGER},
+      timeFactor = #{record.timefactor,jdbcType=TINYINT},
+      memoryFactor = #{record.memoryfactor,jdbcType=TINYINT},
+      ext = #{record.ext,jdbcType=VARCHAR},
+      exe = #{record.exe,jdbcType=VARCHAR},
+      complieOrder = #{record.complieorder,jdbcType=TINYINT},
+      compileCmd = #{record.compilecmd,jdbcType=VARCHAR},
+      brush = #{record.brush,jdbcType=VARCHAR},
+      script = #{record.script,jdbcType=BIT},
+      status = #{record.status,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.ProgramLanguage">
+    update program_language
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="exttime != null">
+        extTime = #{exttime,jdbcType=INTEGER},
+      </if>
+      <if test="extmemory != null">
+        extMemory = #{extmemory,jdbcType=INTEGER},
+      </if>
+      <if test="timefactor != null">
+        timeFactor = #{timefactor,jdbcType=TINYINT},
+      </if>
+      <if test="memoryfactor != null">
+        memoryFactor = #{memoryfactor,jdbcType=TINYINT},
+      </if>
+      <if test="ext != null">
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="exe != null">
+        exe = #{exe,jdbcType=VARCHAR},
+      </if>
+      <if test="complieorder != null">
+        complieOrder = #{complieorder,jdbcType=TINYINT},
+      </if>
+      <if test="compilecmd != null">
+        compileCmd = #{compilecmd,jdbcType=VARCHAR},
+      </if>
+      <if test="brush != null">
+        brush = #{brush,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        script = #{script,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.ProgramLanguage">
+    update program_language
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      extTime = #{exttime,jdbcType=INTEGER},
+      extMemory = #{extmemory,jdbcType=INTEGER},
+      timeFactor = #{timefactor,jdbcType=TINYINT},
+      memoryFactor = #{memoryfactor,jdbcType=TINYINT},
+      ext = #{ext,jdbcType=VARCHAR},
+      exe = #{exe,jdbcType=VARCHAR},
+      complieOrder = #{complieorder,jdbcType=TINYINT},
+      compileCmd = #{compilecmd,jdbcType=VARCHAR},
+      brush = #{brush,jdbcType=VARCHAR},
+      script = #{script,jdbcType=BIT},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from program_language
+  </select>
+</mapper>

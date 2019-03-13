@@ -8,6 +8,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+
 public class AuthInterceptor extends HandlerInterceptorAdapter{
     /**
      *预处理回调方法，实现处理器的预处理（如登录检查）。
@@ -20,33 +21,22 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
                              Object handler) throws Exception {
         System.out.println("-------------------preHandle");
 //         验证用户是否登陆
-        if((!request.getRequestURI().contains("token")
-                &&!(request.getRequestURI().contains("users")&&request.getMethod().equals("POST"))
-                &&!(request.getRequestURI().contains("users")&&request.getRequestURI().contains("smscode"))
-                &&!(request.getRequestURI().contains("users")&&request.getMethod().equals("PATCH")))
-                ||(request.getRequestURI().contains("users")&&request.getRequestURI().contains("image")&&request.getMethod().equals("POST"))
-                ||(request.getRequestURI().contains("token")&&request.getRequestURI().contains("resend"))){
-            String header = request.getHeader("X-Token");
-            if(header==null||header.isEmpty()) {
+        String header = request.getHeader("X-Token");
+        if (header == null || header.isEmpty()) {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            response.sendError(401,"请登录");
+            return false;
+        } else {
+            try {
+                JwtUtil jwtUtil = new JwtUtil();
+                Claims claims = jwtUtil.parseJWT(header);
+                request.setAttribute("userId", claims.getId());
+                return true;
+            } catch (Exception e) {
                 response.setCharacterEncoding("UTF-8");
                 response.setContentType("application/json; charset=utf-8");
-                PrintWriter out = null;
-                PrintWriter writer = response.getWriter();
-                writer.write("无效的身份认证");
-                return false;
-            }else {
-                try {
-                    JwtUtil jwtUtil = new JwtUtil();
-                    Claims claims = jwtUtil.parseJWT(header);
-                    request.setAttribute("userId",claims.getId());
-                    return true;
-                }catch (Exception e){
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType("application/json; charset=utf-8");
-                    PrintWriter out = null;
-                    PrintWriter writer = response.getWriter();
-                    writer.write("无效的身份认证");
-                }
+                response.sendError(401,"登录过期");
             }
         }
         return true;
