@@ -4,26 +4,39 @@ package com.noi.oj.core.config;
 import com.noi.oj.domain.ProgramLanguage;
 import com.noi.oj.domain.ResultType;
 import com.noi.oj.service.ProgramLanguageService;
+import com.noi.oj.service.impl.ProgramLanguageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class OJConfig{
 
     @Autowired
+    public ProgramLanguageService programLanguageServiceed;
     public static ProgramLanguageService programLanguageService;
+
     public static List<ProgramLanguage> programLanguages;
-    public static Map<Integer,ProgramLanguage> languageType;
-    public static Map<String,Integer> languageID;
-    public static Map<Integer, ResultType> resultType;
+    public static Map<Integer,ProgramLanguage> languageType = new HashMap<>();
+    public static Map<String,Integer> languageID = new HashMap<>();
+    public static Map<Integer, ResultType> resultType = new HashMap<>();
     public static List<ResultType> judgeResult;
     public static final String workPath="E:\\work\\judge\\temp";
     public static final String dataPath="E:\\work\\judge\\data";
     public static final String compileShell="E:\\work\\bin\\com.exe";
     public static final String runShell="E:\\work\\bin\\run.exe";
+
+    @PostConstruct
+    public void init() {
+        programLanguageService = this.programLanguageServiceed;
+        loadLanguage();
+        initJudgeResult();
+    }
 
     public static void loadLanguage()
     {

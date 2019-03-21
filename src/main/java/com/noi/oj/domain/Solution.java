@@ -38,6 +38,8 @@ public class Solution implements Serializable {
 
     private BigDecimal passRate;
 
+    private String code;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSolutionId() {
@@ -158,6 +160,14 @@ public class Solution implements Serializable {
 
     public void setPassRate(BigDecimal passRate) {
         this.passRate = passRate;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override

@@ -18,4 +18,5 @@ public interface SolutionService {
 
     int updateRunError(Runtimeinfo record);
 
+    long countAccess(Long userId);
 }

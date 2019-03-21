@@ -127,4 +127,11 @@ public class UsersImpl implements UsersService {
         ServerConfig serverConfig = new ServerConfig();
         return serverConfig.getUrl() + "/profile/" + limit[limit.length-1];
     }
+
+    public boolean updateUsersSubmit(Long pkId){
+        Users users = selectByPrimaryKey(pkId);
+        users.setSubmit(users.getSubmit()+1);
+        users.setGmtModified(new Date());
+        return updateByPrimaryKeySelective(users)>0;
+    }
 }

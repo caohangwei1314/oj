@@ -20,4 +20,6 @@ public interface UsersService {
     int updateByPrimaryKey(Users record);
 
     boolean setUserProfile(MultipartFile profile, HttpServletRequest request);
+
+    boolean updateUsersSubmit(Long pkId);
 }
