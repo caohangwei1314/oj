@@ -132,7 +132,7 @@
       #{codeLength,jdbcType=INTEGER}, #{judgetime,jdbcType=TIMESTAMP}, #{passRate,jdbcType=DECIMAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.Solution">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.Solution" useGeneratedKeys="true" keyProperty="solutionId">
     insert into solution
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">

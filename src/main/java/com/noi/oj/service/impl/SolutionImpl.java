@@ -1,8 +1,7 @@
 package com.noi.oj.service.impl;
 
-import com.noi.oj.dao.CompileinfoMapper;
-import com.noi.oj.dao.RuntimeinfoMapper;
-import com.noi.oj.dao.SolutionMapper;
+import com.noi.oj.core.judge.JudgeService;
+import com.noi.oj.dao.*;
 import com.noi.oj.domain.*;
 import com.noi.oj.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,29 @@ public class SolutionImpl implements SolutionService {
     @Autowired
     private RuntimeinfoMapper runtimeinfoMapper;
 
+    @Autowired
+    private SourceCodeMapper sourceCodeMapper;
+
+    private static final JudgeService judgeService = JudgeService.me();
+
     @Override
     public int insertSelective(Solution record){
-        return solutionMapper.insertSelective(record);
+        if(solutionMapper.insertSelective(record)>0){
+            SourceCode code = new SourceCode();
+            Date date = new Date();
+            code.setSolutionId(record.getSolutionId());
+            code.setSource(record.getCode());
+            code.setGmtCreate(date);
+            code.setGmtModified(date);
+             if(sourceCodeMapper.insert(code)>0){
+                 judgeService.judge(record);
+             }else{
+                 return -2;
+             }
+        }else{
+            return -2;
+        }
+        return 1;
     }
 
     @Override
@@ -81,5 +100,16 @@ public class SolutionImpl implements SolutionService {
             record.setGmtModified(date);
             return runtimeinfoMapper.insert(record);
         }
+    }
+
+    @Override
+    public long countAccess(Long userId){
+        SolutionExample example = new SolutionExample();
+        SolutionExample.Criteria criteria = example.createCriteria();
+        if(userId!=null){
+            criteria.andUserIdEqualTo(userId);
+        }
+        criteria.andResultEqualTo(ResultType.AC);
+        return solutionMapper.countByExample(example);
     }
 }

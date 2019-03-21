@@ -3,8 +3,13 @@ package com.noi.oj.dao;
 import com.noi.oj.domain.SourceCode;
 import com.noi.oj.domain.SourceCodeExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Mapper
 public interface SourceCodeMapper {
     long countByExample(SourceCodeExample example);
 

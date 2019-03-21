@@ -24,18 +24,15 @@ public abstract class JudgeAdapter implements Runnable{
 
     protected Solution solution;
 
-    protected SourceCode sourceCode;
-
     private boolean deleteTempDir = false;
 
     public JudgeAdapter() {
         super();
     }
 
-    public JudgeAdapter(Solution solution,SourceCode sourceCode) {
+    public JudgeAdapter(Solution solution) {
         this();
         this.solution = solution;
-        this.sourceCode = sourceCode;
     }
 
     protected abstract boolean compile() throws IOException;
@@ -44,6 +41,7 @@ public abstract class JudgeAdapter implements Runnable{
 
     public void run()
     {
+        System.out.print("Thread start");
         synchronized (JudgeAdapter.class)
         {
             try {
@@ -63,7 +61,7 @@ public abstract class JudgeAdapter implements Runnable{
 
     protected void  prepare() throws IOException,URISyntaxException
     {
-        ProgramLanguage programLanguage = OJConfig.languageType.get(solution.getSolutionId());
+        ProgramLanguage programLanguage = OJConfig.languageType.get(solution.getLanguage());
 
         String workPath = judgeService.getWorkPath(solution);
 
@@ -88,7 +86,7 @@ public abstract class JudgeAdapter implements Runnable{
 
         if(solution.getLanguage().equals(OJConfig.languageID.get("Java")))
         {
-            String className = getJavaPublishClass(sourceCode.getSource());
+            String className = getJavaPublishClass(solution.getCode());
             if(className!=null && !className.equals(OJConstants.SOURCE_FILE_NAME)){
                 generateClassFiles(programLanguage,workDirPath,className);
                 return;
@@ -98,7 +96,7 @@ public abstract class JudgeAdapter implements Runnable{
         File sourceFile = new File(getFilePath(programLanguage,workDirPath,OJConstants.SOURCE_FILE_NAME));
         FileUtil.touch(sourceFile);
         String content =
-                sourceCode.getSource().replaceAll("#\\s*include\\s*\"\\.*/.*\".*", "#error \"Your action is logged!\"")
+                solution.getCode().replaceAll("#\\s*include\\s*\"\\.*/.*\".*", "#error \"Your action is logged!\"")
                         .replaceAll("#\\s*include\\s*<\\.*/.*>.*", "#error \"Your action is logged!\"");
 //        if(content.length()!=solution.getCodeLength())
 //        {
@@ -110,9 +108,9 @@ public abstract class JudgeAdapter implements Runnable{
     private void generateClassFiles(ProgramLanguage programLanguage,String workDirPath,String className)
             throws IOException,URISyntaxException{
 
-        generateMainClass(programLanguage,workDirPath,className);
-
         generateUserClass(programLanguage,workDirPath,className);
+
+        generateMainClass(programLanguage,workDirPath,className);
 
     }
 
@@ -120,13 +118,13 @@ public abstract class JudgeAdapter implements Runnable{
             throws IOException{
         File sourceFile = new File(getFilePath(programLanguage,workDirPath,className));
         FileUtil.touch(sourceFile);
-        String content = sourceCode.getSource().replaceAll("\\s*package\\s+.*;", "");
+        String content = solution.getCode().replaceAll("\\s*package\\s+.*;", "");
         FileUtil.writeString(sourceFile,content);
     }
 
     private void generateMainClass(ProgramLanguage programLanguage,String workDirPath,String className)
         throws IOException,URISyntaxException{
-        File sourceFile = new File(getFilePath(programLanguage,workDirPath,className));
+        File sourceFile = new File(getFilePath(programLanguage,workDirPath,OJConstants.SOURCE_FILE_NAME));
         FileUtil.touch(sourceFile);
         File file = new File(getClass().getResource("/Main.ftl").toURI());
         String content = FileUtil.readString(file).replace("${_CLASS_NAME_}", className);

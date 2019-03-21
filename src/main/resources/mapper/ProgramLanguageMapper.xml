@@ -359,6 +359,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectAll" resultMap="BaseResultMap">
-    select * from program_language
+    select *
+    from program_language
   </select>
 </mapper>

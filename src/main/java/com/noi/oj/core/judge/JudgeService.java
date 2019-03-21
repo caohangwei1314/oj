@@ -2,18 +2,63 @@ package com.noi.oj.core.judge;
 
 import com.noi.oj.core.config.OJConfig;
 import com.noi.oj.core.config.OJConstants;
-import com.noi.oj.domain.Solution;
+import com.noi.oj.domain.*;
+import com.noi.oj.service.ProblemService;
+import com.noi.oj.service.UsersService;
 import jodd.format.Printf;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public final class JudgeService {
+@Component
+public final class JudgeService implements Serializable {
     public static final JudgeService me = new JudgeService();
 
     public static JudgeService me(){return me;}
+
+    @Autowired
+    private ProblemService problemServiceed;
+    private static ProblemService problemService;
+
+    @Autowired
+    private UsersService usersServiceed;
+    private static UsersService usersService;
+
+    @PostConstruct
+    public void init(){
+        problemService = this.problemServiceed;
+        usersService = this.usersServiceed;
+    }
+
+    public void judge(Solution solution){
+        if(solution instanceof Solution){
+            problemService.updateProblemSubmit(solution.getProblemId());
+            usersService.updateUsersSubmit(solution.getUserId());
+        }
+        startJudgeThread(solution,false);
+    }
+
+    private void startJudgeThread(Solution solution,boolean deleteTempDir){
+        synchronized (JudgeAdapter.class){
+            JudgeAdapter judgeThread = new NojJudgeAdapter(solution);
+            RejudgeTask task = new RejudgeTask(solution.getContestId(),solution.getSolutionId(),RejudgeType.SOLUTION);
+            task.setDeleteTempDir(deleteTempDir);
+            Thread thread = new Thread(judgeThread);
+            thread.start();
+//            try {
+//                thread.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+        }
+    }
 
     public int getDataFiles(Integer pid,List<String> inFiles,List<String> outFiles) throws IOException{
         File dataDir = new File(OJConfig.dataPath+File.separator+pid);
