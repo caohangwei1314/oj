@@ -36,6 +36,4 @@ public interface RuntimeinfoMapper {
     int updateByPrimaryKeySelective(Runtimeinfo record);
 
     int updateByPrimaryKeyWithBLOBs(Runtimeinfo record);
-
-    int updateByPrimaryKey(Runtimeinfo record);
 }

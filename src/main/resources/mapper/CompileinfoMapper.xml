@@ -3,8 +3,6 @@
 <mapper namespace="com.noi.oj.dao.CompileinfoMapper">
   <resultMap id="BaseResultMap" type="com.noi.oj.domain.Compileinfo">
     <id column="solution_id" jdbcType="INTEGER" property="solutionId" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.Compileinfo">
     <result column="error" jdbcType="LONGVARCHAR" property="error" />
@@ -68,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    solution_id, gmt_create, gmt_modified
+    solution_id
   </sql>
   <sql id="Blob_Column_List">
     error
@@ -130,22 +128,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.Compileinfo">
-    insert into compileinfo (solution_id, gmt_create, gmt_modified, 
-      error)
-    values (#{solutionId,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{error,jdbcType=LONGVARCHAR})
+    insert into compileinfo (solution_id, error)
+    values (#{solutionId,jdbcType=INTEGER}, #{error,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.Compileinfo">
     insert into compileinfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
         solution_id,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified,
       </if>
       <if test="error != null">
         error,
@@ -154,12 +144,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
         #{solutionId,jdbcType=INTEGER},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="error != null">
         #{error,jdbcType=LONGVARCHAR},
@@ -178,12 +162,6 @@
       <if test="record.solutionId != null">
         solution_id = #{record.solutionId,jdbcType=INTEGER},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.error != null">
         error = #{record.error,jdbcType=LONGVARCHAR},
       </if>
@@ -195,8 +173,6 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update compileinfo
     set solution_id = #{record.solutionId,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       error = #{record.error,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -204,9 +180,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update compileinfo
-    set solution_id = #{record.solutionId,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    set solution_id = #{record.solutionId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,12 +188,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.Compileinfo">
     update compileinfo
     <set>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
       <if test="error != null">
         error = #{error,jdbcType=LONGVARCHAR},
       </if>
@@ -228,15 +196,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.noi.oj.domain.Compileinfo">
     update compileinfo
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      error = #{error,jdbcType=LONGVARCHAR}
-    where solution_id = #{solutionId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.Compileinfo">
-    update compileinfo
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    set error = #{error,jdbcType=LONGVARCHAR}
     where solution_id = #{solutionId,jdbcType=INTEGER}
   </update>
 </mapper>

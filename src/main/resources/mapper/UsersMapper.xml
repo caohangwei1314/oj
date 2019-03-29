@@ -2,18 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noi.oj.dao.UsersMapper">
   <resultMap id="BaseResultMap" type="com.noi.oj.domain.Users">
-    <id column="pk_id" jdbcType="BIGINT" property="pkId" />
-    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="birthday" jdbcType="INTEGER" property="birthday" />
-    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
-    <result column="experience" jdbcType="VARCHAR" property="experience" />
-    <result column="province" jdbcType="VARCHAR" property="province" />
-    <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="school" jdbcType="VARCHAR" property="school" />
-    <result column="user_class" jdbcType="TINYINT" property="userClass" />
     <result column="submit" jdbcType="INTEGER" property="submit" />
     <result column="solved" jdbcType="INTEGER" property="solved" />
     <result column="defunct" jdbcType="CHAR" property="defunct" />
@@ -23,8 +13,16 @@
     <result column="language" jdbcType="INTEGER" property="language" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="user_class" jdbcType="TINYINT" property="userClass" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="experience" jdbcType="VARCHAR" property="experience" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -85,9 +83,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    pk_id, nick, email, image, sex, birthday, introduce, experience, province, city, 
-    school, user_class, submit, solved, defunct, ip, accesstime, volume, language, password, 
-    reg_time, gmt_create, gmt_modified
+    user_id, email, submit, solved, defunct, ip, accesstime, volume, language, password, 
+    reg_time, nick, school, image, user_class, city, province, experience, introduce, 
+    birthday, sex
   </sql>
   <select id="selectByExample" parameterType="com.noi.oj.domain.UsersExample" resultMap="BaseResultMap">
     select
@@ -113,13 +111,15 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
+    user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
+    reg_time, nick, school, image, user_class, city, province, experience, introduce,
+    birthday, sex
     from users
-    where pk_id = #{pkId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from users
-    where pk_id = #{pkId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.noi.oj.domain.UsersExample">
     delete from users
@@ -128,61 +128,29 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.Users">
-    insert into users (pk_id, nick, email, 
-      image, sex, birthday, 
-      introduce, experience, province, 
-      city, school, user_class, 
-      submit, solved, defunct, 
-      ip, accesstime, volume, 
-      language, password, reg_time, 
-      gmt_create, gmt_modified)
-    values (#{pkId,jdbcType=BIGINT}, #{nick,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{birthday,jdbcType=INTEGER}, 
-      #{introduce,jdbcType=VARCHAR}, #{experience,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{userClass,jdbcType=TINYINT}, 
-      #{submit,jdbcType=INTEGER}, #{solved,jdbcType=INTEGER}, #{defunct,jdbcType=CHAR}, 
-      #{ip,jdbcType=VARCHAR}, #{accesstime,jdbcType=TIMESTAMP}, #{volume,jdbcType=INTEGER}, 
-      #{language,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, 
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+    insert into users (user_id, email, submit, 
+      solved, defunct, ip, accesstime, 
+      volume, language, password, 
+      reg_time, nick, school, 
+      image, user_class, city, 
+      province, experience, introduce, 
+      birthday, sex)
+    values (#{userId,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{submit,jdbcType=INTEGER}, 
+      #{solved,jdbcType=INTEGER}, #{defunct,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR}, #{accesstime,jdbcType=TIMESTAMP}, 
+      #{volume,jdbcType=INTEGER}, #{language,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{regTime,jdbcType=TIMESTAMP}, #{nick,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{userClass,jdbcType=TINYINT}, #{city,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{experience,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=TIMESTAMP}, #{sex,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.Users">
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="pkId != null">
-        pk_id,
-      </if>
-      <if test="nick != null">
-        nick,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="email != null">
         email,
-      </if>
-      <if test="image != null">
-        image,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="introduce != null">
-        introduce,
-      </if>
-      <if test="experience != null">
-        experience,
-      </if>
-      <if test="province != null">
-        province,
-      </if>
-      <if test="city != null">
-        city,
-      </if>
-      <if test="school != null">
-        school,
-      </if>
-      <if test="userClass != null">
-        user_class,
       </if>
       <if test="submit != null">
         submit,
@@ -211,49 +179,43 @@
       <if test="regTime != null">
         reg_time,
       </if>
-      <if test="gmtCreate != null">
-        gmt_create,
+      <if test="nick != null">
+        nick,
       </if>
-      <if test="gmtModified != null">
-        gmt_modified,
+      <if test="school != null">
+        school,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="userClass != null">
+        user_class,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="experience != null">
+        experience,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="pkId != null">
-        #{pkId,jdbcType=BIGINT},
-      </if>
-      <if test="nick != null">
-        #{nick,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=INTEGER},
-      </if>
-      <if test="introduce != null">
-        #{introduce,jdbcType=VARCHAR},
-      </if>
-      <if test="experience != null">
-        #{experience,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null">
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null">
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="school != null">
-        #{school,jdbcType=VARCHAR},
-      </if>
-      <if test="userClass != null">
-        #{userClass,jdbcType=TINYINT},
       </if>
       <if test="submit != null">
         #{submit,jdbcType=INTEGER},
@@ -282,11 +244,35 @@
       <if test="regTime != null">
         #{regTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
+      <if test="nick != null">
+        #{nick,jdbcType=VARCHAR},
       </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="userClass != null">
+        #{userClass,jdbcType=TINYINT},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -299,41 +285,11 @@
   <update id="updateByExampleSelective" parameterType="map">
     update users
     <set>
-      <if test="record.pkId != null">
-        pk_id = #{record.pkId,jdbcType=BIGINT},
-      </if>
-      <if test="record.nick != null">
-        nick = #{record.nick,jdbcType=VARCHAR},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
       </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
-      </if>
-      <if test="record.image != null">
-        image = #{record.image,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=TINYINT},
-      </if>
-      <if test="record.birthday != null">
-        birthday = #{record.birthday,jdbcType=INTEGER},
-      </if>
-      <if test="record.introduce != null">
-        introduce = #{record.introduce,jdbcType=VARCHAR},
-      </if>
-      <if test="record.experience != null">
-        experience = #{record.experience,jdbcType=VARCHAR},
-      </if>
-      <if test="record.province != null">
-        province = #{record.province,jdbcType=VARCHAR},
-      </if>
-      <if test="record.city != null">
-        city = #{record.city,jdbcType=VARCHAR},
-      </if>
-      <if test="record.school != null">
-        school = #{record.school,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userClass != null">
-        user_class = #{record.userClass,jdbcType=TINYINT},
       </if>
       <if test="record.submit != null">
         submit = #{record.submit,jdbcType=INTEGER},
@@ -362,11 +318,35 @@
       <if test="record.regTime != null">
         reg_time = #{record.regTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      <if test="record.nick != null">
+        nick = #{record.nick,jdbcType=VARCHAR},
       </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userClass != null">
+        user_class = #{record.userClass,jdbcType=TINYINT},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experience != null">
+        experience = #{record.experience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduce != null">
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -375,18 +355,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update users
-    set pk_id = #{record.pkId,jdbcType=BIGINT},
-      nick = #{record.nick,jdbcType=VARCHAR},
+    set user_id = #{record.userId,jdbcType=BIGINT},
       email = #{record.email,jdbcType=VARCHAR},
-      image = #{record.image,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=TINYINT},
-      birthday = #{record.birthday,jdbcType=INTEGER},
-      introduce = #{record.introduce,jdbcType=VARCHAR},
-      experience = #{record.experience,jdbcType=VARCHAR},
-      province = #{record.province,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      school = #{record.school,jdbcType=VARCHAR},
-      user_class = #{record.userClass,jdbcType=TINYINT},
       submit = #{record.submit,jdbcType=INTEGER},
       solved = #{record.solved,jdbcType=INTEGER},
       defunct = #{record.defunct,jdbcType=CHAR},
@@ -396,8 +366,16 @@
       language = #{record.language,jdbcType=INTEGER},
       password = #{record.password,jdbcType=VARCHAR},
       reg_time = #{record.regTime,jdbcType=TIMESTAMP},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+      nick = #{record.nick,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      user_class = #{record.userClass,jdbcType=TINYINT},
+      city = #{record.city,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      experience = #{record.experience,jdbcType=VARCHAR},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      sex = #{record.sex,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -405,38 +383,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.Users">
     update users
     <set>
-      <if test="nick != null">
-        nick = #{nick,jdbcType=VARCHAR},
-      </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        image = #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=INTEGER},
-      </if>
-      <if test="introduce != null">
-        introduce = #{introduce,jdbcType=VARCHAR},
-      </if>
-      <if test="experience != null">
-        experience = #{experience,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null">
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null">
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="school != null">
-        school = #{school,jdbcType=VARCHAR},
-      </if>
-      <if test="userClass != null">
-        user_class = #{userClass,jdbcType=TINYINT},
       </if>
       <if test="submit != null">
         submit = #{submit,jdbcType=INTEGER},
@@ -465,28 +413,42 @@
       <if test="regTime != null">
         reg_time = #{regTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      <if test="nick != null">
+        nick = #{nick,jdbcType=VARCHAR},
       </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="userClass != null">
+        user_class = #{userClass,jdbcType=TINYINT},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        experience = #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
       </if>
     </set>
-    where pk_id = #{pkId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.Users">
     update users
-    set nick = #{nick,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=TINYINT},
-      birthday = #{birthday,jdbcType=INTEGER},
-      introduce = #{introduce,jdbcType=VARCHAR},
-      experience = #{experience,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      school = #{school,jdbcType=VARCHAR},
-      user_class = #{userClass,jdbcType=TINYINT},
+    set email = #{email,jdbcType=VARCHAR},
       submit = #{submit,jdbcType=INTEGER},
       solved = #{solved,jdbcType=INTEGER},
       defunct = #{defunct,jdbcType=CHAR},
@@ -496,19 +458,19 @@
       language = #{language,jdbcType=INTEGER},
       password = #{password,jdbcType=VARCHAR},
       reg_time = #{regTime,jdbcType=TIMESTAMP},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
-    where pk_id = #{pkId,jdbcType=BIGINT}
+      nick = #{nick,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      user_class = #{userClass,jdbcType=TINYINT},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      experience = #{experience,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=TINYINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
   <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where email = #{email,jdbcType=VARCHAR}
+    select * from users where email = #{email,jdbcType=VARCHAR}
   </select>
-    <select id="selectUserInfo" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select nick,email,image,sex,birthday,introduce,experience,province,city,school,user_class,submit,solved,volume,language
-        from users
-        where pk_id = #{pkId,jdbcType=BIGINT}
-    </select>
 </mapper>

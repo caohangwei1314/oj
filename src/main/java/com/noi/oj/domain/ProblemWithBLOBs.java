@@ -91,8 +91,6 @@ public class ProblemWithBLOBs extends Problem implements Serializable {
             && (this.getAccepted() == null ? other.getAccepted() == null : this.getAccepted().equals(other.getAccepted()))
             && (this.getSubmit() == null ? other.getSubmit() == null : this.getSubmit().equals(other.getSubmit()))
             && (this.getSolved() == null ? other.getSolved() == null : this.getSolved().equals(other.getSolved()))
-            && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
-            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getInput() == null ? other.getInput() == null : this.getInput().equals(other.getInput()))
             && (this.getOutput() == null ? other.getOutput() == null : this.getOutput().equals(other.getOutput()))
@@ -116,8 +114,6 @@ public class ProblemWithBLOBs extends Problem implements Serializable {
         result = prime * result + ((getAccepted() == null) ? 0 : getAccepted().hashCode());
         result = prime * result + ((getSubmit() == null) ? 0 : getSubmit().hashCode());
         result = prime * result + ((getSolved() == null) ? 0 : getSolved().hashCode());
-        result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
-        result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getInput() == null) ? 0 : getInput().hashCode());
         result = prime * result + ((getOutput() == null) ? 0 : getOutput().hashCode());

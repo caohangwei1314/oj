@@ -20,7 +20,7 @@ public class Solution implements Serializable {
 
     private Date inDate;
 
-    private Integer result;
+    private Short result;
 
     private Integer language;
 
@@ -38,7 +38,9 @@ public class Solution implements Serializable {
 
     private BigDecimal passRate;
 
-    private String code;
+    private Integer lintError;
+
+    private String judger;
 
     private static final long serialVersionUID = 1L;
 
@@ -90,11 +92,11 @@ public class Solution implements Serializable {
         this.inDate = inDate;
     }
 
-    public Integer getResult() {
+    public Short getResult() {
         return result;
     }
 
-    public void setResult(Integer result) {
+    public void setResult(Short result) {
         this.result = result;
     }
 
@@ -162,12 +164,20 @@ public class Solution implements Serializable {
         this.passRate = passRate;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getLintError() {
+        return lintError;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLintError(Integer lintError) {
+        this.lintError = lintError;
+    }
+
+    public String getJudger() {
+        return judger;
+    }
+
+    public void setJudger(String judger) {
+        this.judger = judger;
     }
 
     @Override
@@ -196,7 +206,9 @@ public class Solution implements Serializable {
             && (this.getNum() == null ? other.getNum() == null : this.getNum().equals(other.getNum()))
             && (this.getCodeLength() == null ? other.getCodeLength() == null : this.getCodeLength().equals(other.getCodeLength()))
             && (this.getJudgetime() == null ? other.getJudgetime() == null : this.getJudgetime().equals(other.getJudgetime()))
-            && (this.getPassRate() == null ? other.getPassRate() == null : this.getPassRate().equals(other.getPassRate()));
+            && (this.getPassRate() == null ? other.getPassRate() == null : this.getPassRate().equals(other.getPassRate()))
+            && (this.getLintError() == null ? other.getLintError() == null : this.getLintError().equals(other.getLintError()))
+            && (this.getJudger() == null ? other.getJudger() == null : this.getJudger().equals(other.getJudger()));
     }
 
     @Override
@@ -218,6 +230,8 @@ public class Solution implements Serializable {
         result = prime * result + ((getCodeLength() == null) ? 0 : getCodeLength().hashCode());
         result = prime * result + ((getJudgetime() == null) ? 0 : getJudgetime().hashCode());
         result = prime * result + ((getPassRate() == null) ? 0 : getPassRate().hashCode());
+        result = prime * result + ((getLintError() == null) ? 0 : getLintError().hashCode());
+        result = prime * result + ((getJudger() == null) ? 0 : getJudger().hashCode());
         return result;
     }
 
@@ -242,6 +256,8 @@ public class Solution implements Serializable {
         sb.append(", codeLength=").append(codeLength);
         sb.append(", judgetime=").append(judgetime);
         sb.append(", passRate=").append(passRate);
+        sb.append(", lintError=").append(lintError);
+        sb.append(", judger=").append(judger);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

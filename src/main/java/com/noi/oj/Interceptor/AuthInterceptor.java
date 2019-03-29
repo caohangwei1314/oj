@@ -37,9 +37,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
                 response.setCharacterEncoding("UTF-8");
                 response.setContentType("application/json; charset=utf-8");
                 response.sendError(401,"登录过期");
+                return false;
             }
         }
-        return true;
     }
 
     /**

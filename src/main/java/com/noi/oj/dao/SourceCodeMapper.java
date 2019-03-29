@@ -36,6 +36,4 @@ public interface SourceCodeMapper {
     int updateByPrimaryKeySelective(SourceCode record);
 
     int updateByPrimaryKeyWithBLOBs(SourceCode record);
-
-    int updateByPrimaryKey(SourceCode record);
 }

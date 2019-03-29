@@ -15,7 +15,7 @@ public interface UsersMapper {
 
     int deleteByExample(UsersExample example);
 
-    int deleteByPrimaryKey(Long pkId);
+    int deleteByPrimaryKey(Long userId);
 
     int insert(Users record);
 
@@ -23,7 +23,7 @@ public interface UsersMapper {
 
     List<Users> selectByExample(UsersExample example);
 
-    Users selectByPrimaryKey(Long pkId);
+    Users selectByPrimaryKey(Long userId);
 
     int updateByExampleSelective(@Param("record") Users record, @Param("example") UsersExample example);
 
@@ -33,7 +33,5 @@ public interface UsersMapper {
 
     int updateByPrimaryKey(Users record);
 
-    Users selectByEmail(String email);
-
-    Users selectUserInfo(Long pkId);
+    Users selectByEmail(@Param("email") String email);
 }

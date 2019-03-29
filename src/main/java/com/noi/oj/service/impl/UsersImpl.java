@@ -35,8 +35,6 @@ public class UsersImpl implements UsersService {
         Date date = new Date();
         record.setAccesstime(date);
         record.setRegTime(date);
-        record.setGmtCreate(date);
-        record.setGmtModified(date);
         record.setPassword(Sha2Util.SHA256(record.getPassword()));
         return usersMapper.insertSelective(record);
     }
@@ -55,22 +53,21 @@ public class UsersImpl implements UsersService {
 
     @Override
     public Users selectUserInfo(Long pkId){
-        Users users = usersMapper.selectUserInfo(pkId);
-        users.setImage(getUrl(users.getImage()));
+        Users users = usersMapper.selectByPrimaryKey(pkId);
+        if(users.getImage()!=null && !"".equals(users.getImage()))
+            users.setImage(getUrl(users.getImage()));
         return users;
     }
 
     @Override
     public int updateByPrimaryKeySelective(Users record)
     {
-        record.setGmtModified(new Date());
         return usersMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(Users record)
     {
-        record.setGmtModified(new Date());
         return usersMapper.updateByPrimaryKey(record);
     }
 
@@ -131,7 +128,6 @@ public class UsersImpl implements UsersService {
     public boolean updateUsersSubmit(Long pkId){
         Users users = selectByPrimaryKey(pkId);
         users.setSubmit(users.getSubmit()+1);
-        users.setGmtModified(new Date());
         return updateByPrimaryKeySelective(users)>0;
     }
 }

@@ -8,7 +8,7 @@
     <result column="time" jdbcType="INTEGER" property="time" />
     <result column="memory" jdbcType="INTEGER" property="memory" />
     <result column="in_date" jdbcType="TIMESTAMP" property="inDate" />
-    <result column="result" jdbcType="INTEGER" property="result" />
+    <result column="result" jdbcType="SMALLINT" property="result" />
     <result column="language" jdbcType="INTEGER" property="language" />
     <result column="ip" jdbcType="CHAR" property="ip" />
     <result column="contest_id" jdbcType="INTEGER" property="contestId" />
@@ -17,6 +17,8 @@
     <result column="code_length" jdbcType="INTEGER" property="codeLength" />
     <result column="judgetime" jdbcType="TIMESTAMP" property="judgetime" />
     <result column="pass_rate" jdbcType="DECIMAL" property="passRate" />
+    <result column="lint_error" jdbcType="INTEGER" property="lintError" />
+    <result column="judger" jdbcType="CHAR" property="judger" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List">
     solution_id, problem_id, user_id, time, memory, in_date, result, language, ip, contest_id, 
-    valid, num, code_length, judgetime, pass_rate
+    valid, num, code_length, judgetime, pass_rate, lint_error, judger
   </sql>
   <select id="selectByExample" parameterType="com.noi.oj.domain.SolutionExample" resultMap="BaseResultMap">
     select
@@ -123,16 +125,16 @@
       time, memory, in_date, 
       result, language, ip, 
       contest_id, valid, num, 
-      code_length, judgetime, pass_rate
-      )
+      code_length, judgetime, pass_rate, 
+      lint_error, judger)
     values (#{solutionId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
       #{time,jdbcType=INTEGER}, #{memory,jdbcType=INTEGER}, #{inDate,jdbcType=TIMESTAMP}, 
-      #{result,jdbcType=INTEGER}, #{language,jdbcType=INTEGER}, #{ip,jdbcType=CHAR}, 
+      #{result,jdbcType=SMALLINT}, #{language,jdbcType=INTEGER}, #{ip,jdbcType=CHAR}, 
       #{contestId,jdbcType=INTEGER}, #{valid,jdbcType=TINYINT}, #{num,jdbcType=TINYINT}, 
-      #{codeLength,jdbcType=INTEGER}, #{judgetime,jdbcType=TIMESTAMP}, #{passRate,jdbcType=DECIMAL}
-      )
+      #{codeLength,jdbcType=INTEGER}, #{judgetime,jdbcType=TIMESTAMP}, #{passRate,jdbcType=DECIMAL}, 
+      #{lintError,jdbcType=INTEGER}, #{judger,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.Solution" useGeneratedKeys="true" keyProperty="solutionId">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.Solution">
     insert into solution
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
@@ -180,6 +182,12 @@
       <if test="passRate != null">
         pass_rate,
       </if>
+      <if test="lintError != null">
+        lint_error,
+      </if>
+      <if test="judger != null">
+        judger,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
@@ -201,7 +209,7 @@
         #{inDate,jdbcType=TIMESTAMP},
       </if>
       <if test="result != null">
-        #{result,jdbcType=INTEGER},
+        #{result,jdbcType=SMALLINT},
       </if>
       <if test="language != null">
         #{language,jdbcType=INTEGER},
@@ -226,6 +234,12 @@
       </if>
       <if test="passRate != null">
         #{passRate,jdbcType=DECIMAL},
+      </if>
+      <if test="lintError != null">
+        #{lintError,jdbcType=INTEGER},
+      </if>
+      <if test="judger != null">
+        #{judger,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -257,7 +271,7 @@
         in_date = #{record.inDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.result != null">
-        result = #{record.result,jdbcType=INTEGER},
+        result = #{record.result,jdbcType=SMALLINT},
       </if>
       <if test="record.language != null">
         language = #{record.language,jdbcType=INTEGER},
@@ -283,6 +297,12 @@
       <if test="record.passRate != null">
         pass_rate = #{record.passRate,jdbcType=DECIMAL},
       </if>
+      <if test="record.lintError != null">
+        lint_error = #{record.lintError,jdbcType=INTEGER},
+      </if>
+      <if test="record.judger != null">
+        judger = #{record.judger,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -296,7 +316,7 @@
       time = #{record.time,jdbcType=INTEGER},
       memory = #{record.memory,jdbcType=INTEGER},
       in_date = #{record.inDate,jdbcType=TIMESTAMP},
-      result = #{record.result,jdbcType=INTEGER},
+      result = #{record.result,jdbcType=SMALLINT},
       language = #{record.language,jdbcType=INTEGER},
       ip = #{record.ip,jdbcType=CHAR},
       contest_id = #{record.contestId,jdbcType=INTEGER},
@@ -304,7 +324,9 @@
       num = #{record.num,jdbcType=TINYINT},
       code_length = #{record.codeLength,jdbcType=INTEGER},
       judgetime = #{record.judgetime,jdbcType=TIMESTAMP},
-      pass_rate = #{record.passRate,jdbcType=DECIMAL}
+      pass_rate = #{record.passRate,jdbcType=DECIMAL},
+      lint_error = #{record.lintError,jdbcType=INTEGER},
+      judger = #{record.judger,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -328,7 +350,7 @@
         in_date = #{inDate,jdbcType=TIMESTAMP},
       </if>
       <if test="result != null">
-        result = #{result,jdbcType=INTEGER},
+        result = #{result,jdbcType=SMALLINT},
       </if>
       <if test="language != null">
         language = #{language,jdbcType=INTEGER},
@@ -354,6 +376,12 @@
       <if test="passRate != null">
         pass_rate = #{passRate,jdbcType=DECIMAL},
       </if>
+      <if test="lintError != null">
+        lint_error = #{lintError,jdbcType=INTEGER},
+      </if>
+      <if test="judger != null">
+        judger = #{judger,jdbcType=CHAR},
+      </if>
     </set>
     where solution_id = #{solutionId,jdbcType=INTEGER}
   </update>
@@ -364,7 +392,7 @@
       time = #{time,jdbcType=INTEGER},
       memory = #{memory,jdbcType=INTEGER},
       in_date = #{inDate,jdbcType=TIMESTAMP},
-      result = #{result,jdbcType=INTEGER},
+      result = #{result,jdbcType=SMALLINT},
       language = #{language,jdbcType=INTEGER},
       ip = #{ip,jdbcType=CHAR},
       contest_id = #{contestId,jdbcType=INTEGER},
@@ -372,7 +400,9 @@
       num = #{num,jdbcType=TINYINT},
       code_length = #{codeLength,jdbcType=INTEGER},
       judgetime = #{judgetime,jdbcType=TIMESTAMP},
-      pass_rate = #{passRate,jdbcType=DECIMAL}
+      pass_rate = #{passRate,jdbcType=DECIMAL},
+      lint_error = #{lintError,jdbcType=INTEGER},
+      judger = #{judger,jdbcType=CHAR}
     where solution_id = #{solutionId,jdbcType=INTEGER}
   </update>
 </mapper>

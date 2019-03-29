@@ -53,10 +53,15 @@ public class UsersController extends BaseController{
         msg.clear();
         try {
             Users findUsers = usersService.selectByEmail(users.getEmail());
+            if(findUsers==null){
+                msg.put("code","0");
+                msg.put("msg","用户不存在");
+                return msg;
+            }
             if(Sha2Util.SHA256(users.getPassword()).equals(findUsers.getPassword()))
             {
                 JwtUtil jwtUtil = new JwtUtil();
-                String token = jwtUtil.createJWT(findUsers.getPkId().toString(),findUsers.getEmail(),1000*60*60*2);
+                String token = jwtUtil.createJWT(findUsers.getUserId().toString(),findUsers.getEmail(),1000*60*60*2);
                 msg.put("code","1");
                 msg.put("msg","成功");
                 msg.put("token",token);
@@ -93,7 +98,7 @@ public class UsersController extends BaseController{
     {
         msg.clear();
         Long usersId=Long.parseLong(request.getAttribute("userId").toString());
-        users.setPkId(usersId);
+        users.setUserId(usersId);
         if(usersService.updateByPrimaryKeySelective(users)>0)
         {
             msg.put("code","1");

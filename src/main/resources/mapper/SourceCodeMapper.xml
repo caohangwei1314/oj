@@ -3,8 +3,6 @@
 <mapper namespace="com.noi.oj.dao.SourceCodeMapper">
   <resultMap id="BaseResultMap" type="com.noi.oj.domain.SourceCode">
     <id column="solution_id" jdbcType="INTEGER" property="solutionId" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.SourceCode">
     <result column="source" jdbcType="LONGVARCHAR" property="source" />
@@ -68,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    solution_id, gmt_create, gmt_modified
+    solution_id
   </sql>
   <sql id="Blob_Column_List">
     source
@@ -130,22 +128,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.SourceCode">
-    insert into source_code (solution_id, gmt_create, gmt_modified, 
-      source)
-    values (#{solutionId,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{source,jdbcType=LONGVARCHAR})
+    insert into source_code (solution_id, source)
+    values (#{solutionId,jdbcType=INTEGER}, #{source,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.SourceCode">
     insert into source_code
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
         solution_id,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified,
       </if>
       <if test="source != null">
         source,
@@ -154,12 +144,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
         #{solutionId,jdbcType=INTEGER},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="source != null">
         #{source,jdbcType=LONGVARCHAR},
@@ -178,12 +162,6 @@
       <if test="record.solutionId != null">
         solution_id = #{record.solutionId,jdbcType=INTEGER},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.source != null">
         source = #{record.source,jdbcType=LONGVARCHAR},
       </if>
@@ -195,8 +173,6 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update source_code
     set solution_id = #{record.solutionId,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       source = #{record.source,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -204,9 +180,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update source_code
-    set solution_id = #{record.solutionId,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    set solution_id = #{record.solutionId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,12 +188,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.SourceCode">
     update source_code
     <set>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
       <if test="source != null">
         source = #{source,jdbcType=LONGVARCHAR},
       </if>
@@ -228,15 +196,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.noi.oj.domain.SourceCode">
     update source_code
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      source = #{source,jdbcType=LONGVARCHAR}
-    where solution_id = #{solutionId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.SourceCode">
-    update source_code
-    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    set source = #{source,jdbcType=LONGVARCHAR}
     where solution_id = #{solutionId,jdbcType=INTEGER}
   </update>
 </mapper>

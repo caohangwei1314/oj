@@ -1,17 +1,12 @@
 package com.noi.oj.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author 
  */
 public class Runtimeinfo implements Serializable {
     private Integer solutionId;
-
-    private Date gmtCreate;
-
-    private Date gmtModified;
 
     private String error;
 
@@ -23,22 +18,6 @@ public class Runtimeinfo implements Serializable {
 
     public void setSolutionId(Integer solutionId) {
         this.solutionId = solutionId;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
     }
 
     public String getError() {
@@ -62,8 +41,6 @@ public class Runtimeinfo implements Serializable {
         }
         Runtimeinfo other = (Runtimeinfo) that;
         return (this.getSolutionId() == null ? other.getSolutionId() == null : this.getSolutionId().equals(other.getSolutionId()))
-            && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
-            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
             && (this.getError() == null ? other.getError() == null : this.getError().equals(other.getError()));
     }
 
@@ -72,8 +49,6 @@ public class Runtimeinfo implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getSolutionId() == null) ? 0 : getSolutionId().hashCode());
-        result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
-        result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
         result = prime * result + ((getError() == null) ? 0 : getError().hashCode());
         return result;
     }
@@ -85,8 +60,6 @@ public class Runtimeinfo implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", solutionId=").append(solutionId);
-        sb.append(", gmtCreate=").append(gmtCreate);
-        sb.append(", gmtModified=").append(gmtModified);
         sb.append(", error=").append(error);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

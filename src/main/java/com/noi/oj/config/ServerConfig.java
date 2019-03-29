@@ -1,5 +1,6 @@
 package com.noi.oj.config;
 
+import com.noi.oj.utils.SystemConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,14 @@ public class ServerConfig{
 
 
     public String getHost(){
-        InetAddress address = null;
-        try {
-            address = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return address.getHostAddress();
+//        InetAddress address = null;
+//        try {
+//            address = InetAddress.getLocalHost();
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+//        return address.getHostAddress();
+        return SystemConstant.IP;
     }
 
     public String getUrl(){

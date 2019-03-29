@@ -29,10 +29,6 @@ public class Problem implements Serializable {
 
     private Integer solved;
 
-    private Date gmtCreate;
-
-    private Date gmtModified;
-
     private static final long serialVersionUID = 1L;
 
     public Integer getProblemId() {
@@ -123,22 +119,6 @@ public class Problem implements Serializable {
         this.solved = solved;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -161,9 +141,7 @@ public class Problem implements Serializable {
             && (this.getDefunct() == null ? other.getDefunct() == null : this.getDefunct().equals(other.getDefunct()))
             && (this.getAccepted() == null ? other.getAccepted() == null : this.getAccepted().equals(other.getAccepted()))
             && (this.getSubmit() == null ? other.getSubmit() == null : this.getSubmit().equals(other.getSubmit()))
-            && (this.getSolved() == null ? other.getSolved() == null : this.getSolved().equals(other.getSolved()))
-            && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
-            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()));
+            && (this.getSolved() == null ? other.getSolved() == null : this.getSolved().equals(other.getSolved()));
     }
 
     @Override
@@ -181,8 +159,6 @@ public class Problem implements Serializable {
         result = prime * result + ((getAccepted() == null) ? 0 : getAccepted().hashCode());
         result = prime * result + ((getSubmit() == null) ? 0 : getSubmit().hashCode());
         result = prime * result + ((getSolved() == null) ? 0 : getSolved().hashCode());
-        result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
-        result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
         return result;
     }
 
@@ -203,8 +179,6 @@ public class Problem implements Serializable {
         sb.append(", accepted=").append(accepted);
         sb.append(", submit=").append(submit);
         sb.append(", solved=").append(solved);
-        sb.append(", gmtCreate=").append(gmtCreate);
-        sb.append(", gmtModified=").append(gmtModified);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

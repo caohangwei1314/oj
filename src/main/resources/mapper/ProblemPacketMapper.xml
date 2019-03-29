@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noi.oj.dao.ProblemPacketMapper">
+  <resultMap id="BaseResultMap" type="com.noi.oj.domain.ProblemPacket">
+    <id column="packet_id" jdbcType="INTEGER" property="packetId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="origin_class" jdbcType="TINYINT" property="originClass" />
+    <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.ProblemPacket">
+    <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    packet_id, user_id, name, image, author, origin_class, release_date
+  </sql>
+  <sql id="Blob_Column_List">
+    introduce
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.noi.oj.domain.ProblemPacketExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from problem_packet
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.noi.oj.domain.ProblemPacketExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from problem_packet
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from problem_packet
+    where packet_id = #{packetId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from problem_packet
+    where packet_id = #{packetId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.noi.oj.domain.ProblemPacketExample">
+    delete from problem_packet
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.noi.oj.domain.ProblemPacket">
+    insert into problem_packet (packet_id, user_id, name, 
+      image, author, origin_class, 
+      release_date, introduce)
+    values (#{packetId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{originClass,jdbcType=TINYINT}, 
+      #{releaseDate,jdbcType=TIMESTAMP}, #{introduce,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemPacket">
+    insert into problem_packet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="packetId != null">
+        packet_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="originClass != null">
+        origin_class,
+      </if>
+      <if test="releaseDate != null">
+        release_date,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="packetId != null">
+        #{packetId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="originClass != null">
+        #{originClass,jdbcType=TINYINT},
+      </if>
+      <if test="releaseDate != null">
+        #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.noi.oj.domain.ProblemPacketExample" resultType="java.lang.Long">
+    select count(*) from problem_packet
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update problem_packet
+    <set>
+      <if test="record.packetId != null">
+        packet_id = #{record.packetId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null">
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originClass != null">
+        origin_class = #{record.originClass,jdbcType=TINYINT},
+      </if>
+      <if test="record.releaseDate != null">
+        release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.introduce != null">
+        introduce = #{record.introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update problem_packet
+    set packet_id = #{record.packetId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      origin_class = #{record.originClass,jdbcType=TINYINT},
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      introduce = #{record.introduce,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update problem_packet
+    set packet_id = #{record.packetId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      origin_class = #{record.originClass,jdbcType=TINYINT},
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.ProblemPacket">
+    update problem_packet
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="originClass != null">
+        origin_class = #{originClass,jdbcType=TINYINT},
+      </if>
+      <if test="releaseDate != null">
+        release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where packet_id = #{packetId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.noi.oj.domain.ProblemPacket">
+    update problem_packet
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      origin_class = #{originClass,jdbcType=TINYINT},
+      release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      introduce = #{introduce,jdbcType=LONGVARCHAR}
+    where packet_id = #{packetId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.ProblemPacket">
+    update problem_packet
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      origin_class = #{originClass,jdbcType=TINYINT},
+      release_date = #{releaseDate,jdbcType=TIMESTAMP}
+    where packet_id = #{packetId,jdbcType=INTEGER}
+  </update>
+</mapper>

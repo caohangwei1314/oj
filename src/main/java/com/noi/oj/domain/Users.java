@@ -7,32 +7,9 @@ import java.util.Date;
  * @author 
  */
 public class Users implements Serializable {
-    private Long pkId;
-
-    private String nick;
+    private Long userId;
 
     private String email;
-
-    private String image;
-
-    private Byte sex;
-
-    private Integer birthday;
-
-    private String introduce;
-
-    private String experience;
-
-    private String province;
-
-    private String city;
-
-    private String school;
-
-    /**
-     * 0:初中 1:高中
-     */
-    private Byte userClass;
 
     private Integer submit;
 
@@ -52,26 +29,34 @@ public class Users implements Serializable {
 
     private Date regTime;
 
-    private Date gmtCreate;
+    private String nick;
 
-    private Date gmtModified;
+    private String school;
+
+    private String image;
+
+    private Byte userClass;
+
+    private String city;
+
+    private String province;
+
+    private String experience;
+
+    private String introduce;
+
+    private Date birthday;
+
+    private Byte sex;
 
     private static final long serialVersionUID = 1L;
 
-    public Long getPkId() {
-        return pkId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setPkId(Long pkId) {
-        this.pkId = pkId;
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -80,78 +65,6 @@ public class Users implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Byte getSex() {
-        return sex;
-    }
-
-    public void setSex(Byte sex) {
-        this.sex = sex;
-    }
-
-    public Integer getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Integer birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
-    public Byte getUserClass() {
-        return userClass;
-    }
-
-    public void setUserClass(Byte userClass) {
-        this.userClass = userClass;
     }
 
     public Integer getSubmit() {
@@ -226,20 +139,84 @@ public class Users implements Serializable {
         this.regTime = regTime;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public String getNick() {
+        return nick;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public String getSchool() {
+        return school;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Byte getUserClass() {
+        return userClass;
+    }
+
+    public void setUserClass(Byte userClass) {
+        this.userClass = userClass;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Byte getSex() {
+        return sex;
+    }
+
+    public void setSex(Byte sex) {
+        this.sex = sex;
     }
 
     @Override
@@ -254,18 +231,8 @@ public class Users implements Serializable {
             return false;
         }
         Users other = (Users) that;
-        return (this.getPkId() == null ? other.getPkId() == null : this.getPkId().equals(other.getPkId()))
-            && (this.getNick() == null ? other.getNick() == null : this.getNick().equals(other.getNick()))
+        return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getImage() == null ? other.getImage() == null : this.getImage().equals(other.getImage()))
-            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
-            && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
-            && (this.getIntroduce() == null ? other.getIntroduce() == null : this.getIntroduce().equals(other.getIntroduce()))
-            && (this.getExperience() == null ? other.getExperience() == null : this.getExperience().equals(other.getExperience()))
-            && (this.getProvince() == null ? other.getProvince() == null : this.getProvince().equals(other.getProvince()))
-            && (this.getCity() == null ? other.getCity() == null : this.getCity().equals(other.getCity()))
-            && (this.getSchool() == null ? other.getSchool() == null : this.getSchool().equals(other.getSchool()))
-            && (this.getUserClass() == null ? other.getUserClass() == null : this.getUserClass().equals(other.getUserClass()))
             && (this.getSubmit() == null ? other.getSubmit() == null : this.getSubmit().equals(other.getSubmit()))
             && (this.getSolved() == null ? other.getSolved() == null : this.getSolved().equals(other.getSolved()))
             && (this.getDefunct() == null ? other.getDefunct() == null : this.getDefunct().equals(other.getDefunct()))
@@ -275,26 +242,24 @@ public class Users implements Serializable {
             && (this.getLanguage() == null ? other.getLanguage() == null : this.getLanguage().equals(other.getLanguage()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getRegTime() == null ? other.getRegTime() == null : this.getRegTime().equals(other.getRegTime()))
-            && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
-            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()));
+            && (this.getNick() == null ? other.getNick() == null : this.getNick().equals(other.getNick()))
+            && (this.getSchool() == null ? other.getSchool() == null : this.getSchool().equals(other.getSchool()))
+            && (this.getImage() == null ? other.getImage() == null : this.getImage().equals(other.getImage()))
+            && (this.getUserClass() == null ? other.getUserClass() == null : this.getUserClass().equals(other.getUserClass()))
+            && (this.getCity() == null ? other.getCity() == null : this.getCity().equals(other.getCity()))
+            && (this.getProvince() == null ? other.getProvince() == null : this.getProvince().equals(other.getProvince()))
+            && (this.getExperience() == null ? other.getExperience() == null : this.getExperience().equals(other.getExperience()))
+            && (this.getIntroduce() == null ? other.getIntroduce() == null : this.getIntroduce().equals(other.getIntroduce()))
+            && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
+            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getPkId() == null) ? 0 : getPkId().hashCode());
-        result = prime * result + ((getNick() == null) ? 0 : getNick().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-        result = prime * result + ((getImage() == null) ? 0 : getImage().hashCode());
-        result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
-        result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
-        result = prime * result + ((getIntroduce() == null) ? 0 : getIntroduce().hashCode());
-        result = prime * result + ((getExperience() == null) ? 0 : getExperience().hashCode());
-        result = prime * result + ((getProvince() == null) ? 0 : getProvince().hashCode());
-        result = prime * result + ((getCity() == null) ? 0 : getCity().hashCode());
-        result = prime * result + ((getSchool() == null) ? 0 : getSchool().hashCode());
-        result = prime * result + ((getUserClass() == null) ? 0 : getUserClass().hashCode());
         result = prime * result + ((getSubmit() == null) ? 0 : getSubmit().hashCode());
         result = prime * result + ((getSolved() == null) ? 0 : getSolved().hashCode());
         result = prime * result + ((getDefunct() == null) ? 0 : getDefunct().hashCode());
@@ -304,8 +269,16 @@ public class Users implements Serializable {
         result = prime * result + ((getLanguage() == null) ? 0 : getLanguage().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getRegTime() == null) ? 0 : getRegTime().hashCode());
-        result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
-        result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
+        result = prime * result + ((getNick() == null) ? 0 : getNick().hashCode());
+        result = prime * result + ((getSchool() == null) ? 0 : getSchool().hashCode());
+        result = prime * result + ((getImage() == null) ? 0 : getImage().hashCode());
+        result = prime * result + ((getUserClass() == null) ? 0 : getUserClass().hashCode());
+        result = prime * result + ((getCity() == null) ? 0 : getCity().hashCode());
+        result = prime * result + ((getProvince() == null) ? 0 : getProvince().hashCode());
+        result = prime * result + ((getExperience() == null) ? 0 : getExperience().hashCode());
+        result = prime * result + ((getIntroduce() == null) ? 0 : getIntroduce().hashCode());
+        result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
+        result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         return result;
     }
 
@@ -315,18 +288,8 @@ public class Users implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", pkId=").append(pkId);
-        sb.append(", nick=").append(nick);
+        sb.append(", userId=").append(userId);
         sb.append(", email=").append(email);
-        sb.append(", image=").append(image);
-        sb.append(", sex=").append(sex);
-        sb.append(", birthday=").append(birthday);
-        sb.append(", introduce=").append(introduce);
-        sb.append(", experience=").append(experience);
-        sb.append(", province=").append(province);
-        sb.append(", city=").append(city);
-        sb.append(", school=").append(school);
-        sb.append(", userClass=").append(userClass);
         sb.append(", submit=").append(submit);
         sb.append(", solved=").append(solved);
         sb.append(", defunct=").append(defunct);
@@ -336,8 +299,16 @@ public class Users implements Serializable {
         sb.append(", language=").append(language);
         sb.append(", password=").append(password);
         sb.append(", regTime=").append(regTime);
-        sb.append(", gmtCreate=").append(gmtCreate);
-        sb.append(", gmtModified=").append(gmtModified);
+        sb.append(", nick=").append(nick);
+        sb.append(", school=").append(school);
+        sb.append(", image=").append(image);
+        sb.append(", userClass=").append(userClass);
+        sb.append(", city=").append(city);
+        sb.append(", province=").append(province);
+        sb.append(", experience=").append(experience);
+        sb.append(", introduce=").append(introduce);
+        sb.append(", birthday=").append(birthday);
+        sb.append(", sex=").append(sex);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

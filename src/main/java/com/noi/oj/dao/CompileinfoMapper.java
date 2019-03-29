@@ -36,6 +36,4 @@ public interface CompileinfoMapper {
     int updateByPrimaryKeySelective(Compileinfo record);
 
     int updateByPrimaryKeyWithBLOBs(Compileinfo record);
-
-    int updateByPrimaryKey(Compileinfo record);
 }

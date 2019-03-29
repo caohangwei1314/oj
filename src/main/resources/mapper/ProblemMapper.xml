@@ -13,8 +13,6 @@
     <result column="accepted" jdbcType="INTEGER" property="accepted" />
     <result column="submit" jdbcType="INTEGER" property="submit" />
     <result column="solved" jdbcType="INTEGER" property="solved" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.ProblemWithBLOBs">
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
@@ -84,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List">
     problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted, 
-    submit, solved, gmt_create, gmt_modified
+    submit, solved
   </sql>
   <sql id="Blob_Column_List">
     description, input, output, sample_input, sample_output, hint
@@ -149,19 +147,17 @@
     insert into problem (problem_id, title, spj, 
       source, in_date, time_limit, 
       memory_limit, defunct, accepted, 
-      submit, solved, gmt_create, 
-      gmt_modified, description, input, 
-      output, sample_input, sample_output, 
-      hint)
+      submit, solved, description, 
+      input, output, sample_input, 
+      sample_output, hint)
     values (#{problemId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{spj,jdbcType=CHAR}, 
       #{source,jdbcType=VARCHAR}, #{inDate,jdbcType=TIMESTAMP}, #{timeLimit,jdbcType=INTEGER}, 
       #{memoryLimit,jdbcType=INTEGER}, #{defunct,jdbcType=CHAR}, #{accepted,jdbcType=INTEGER}, 
-      #{submit,jdbcType=INTEGER}, #{solved,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}, #{input,jdbcType=LONGVARCHAR}, 
-      #{output,jdbcType=LONGVARCHAR}, #{sampleInput,jdbcType=LONGVARCHAR}, #{sampleOutput,jdbcType=LONGVARCHAR}, 
-      #{hint,jdbcType=LONGVARCHAR})
+      #{submit,jdbcType=INTEGER}, #{solved,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR}, 
+      #{input,jdbcType=LONGVARCHAR}, #{output,jdbcType=LONGVARCHAR}, #{sampleInput,jdbcType=LONGVARCHAR}, 
+      #{sampleOutput,jdbcType=LONGVARCHAR}, #{hint,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemWithBLOBs">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemWithBLOBs" useGeneratedKeys="true" keyProperty="problemId">
     insert into problem
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="problemId != null">
@@ -196,12 +192,6 @@
       </if>
       <if test="solved != null">
         solved,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified,
       </if>
       <if test="description != null">
         description,
@@ -255,12 +245,6 @@
       </if>
       <if test="solved != null">
         #{solved,jdbcType=INTEGER},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="description != null">
         #{description,jdbcType=LONGVARCHAR},
@@ -324,12 +308,6 @@
       <if test="record.solved != null">
         solved = #{record.solved,jdbcType=INTEGER},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.description != null">
         description = #{record.description,jdbcType=LONGVARCHAR},
       </if>
@@ -366,8 +344,6 @@
       accepted = #{record.accepted,jdbcType=INTEGER},
       submit = #{record.submit,jdbcType=INTEGER},
       solved = #{record.solved,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       description = #{record.description,jdbcType=LONGVARCHAR},
       input = #{record.input,jdbcType=LONGVARCHAR},
       output = #{record.output,jdbcType=LONGVARCHAR},
@@ -390,9 +366,7 @@
       defunct = #{record.defunct,jdbcType=CHAR},
       accepted = #{record.accepted,jdbcType=INTEGER},
       submit = #{record.submit,jdbcType=INTEGER},
-      solved = #{record.solved,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+      solved = #{record.solved,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -430,12 +404,6 @@
       <if test="solved != null">
         solved = #{solved,jdbcType=INTEGER},
       </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
       <if test="description != null">
         description = #{description,jdbcType=LONGVARCHAR},
       </if>
@@ -469,8 +437,6 @@
       accepted = #{accepted,jdbcType=INTEGER},
       submit = #{submit,jdbcType=INTEGER},
       solved = #{solved,jdbcType=INTEGER},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       description = #{description,jdbcType=LONGVARCHAR},
       input = #{input,jdbcType=LONGVARCHAR},
       output = #{output,jdbcType=LONGVARCHAR},
@@ -490,9 +456,37 @@
       defunct = #{defunct,jdbcType=CHAR},
       accepted = #{accepted,jdbcType=INTEGER},
       submit = #{submit,jdbcType=INTEGER},
-      solved = #{solved,jdbcType=INTEGER},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      solved = #{solved,jdbcType=INTEGER}
     where problem_id = #{problemId,jdbcType=INTEGER}
   </update>
+  <select id="count" resultType="java.lang.Integer">
+    select count(*) from problem
+    where problem_id in
+    <foreach collection="list" item="item" open="(" close=")" separator=",">
+      #{item,jdbcType=INTEGER}
+    </foreach>
+  </select>
+  <select id="getList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from problem
+    where 1=1
+    <if test="title != null">
+      and title like concat('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="list != null and list.size() > 0">
+      and problem_id in
+      <foreach collection="list" item="item" open="(" close=")" separator=",">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+    <if test="offset == null">
+      limit ${limit}
+    </if>
+    </if>
+  </select>
 </mapper>

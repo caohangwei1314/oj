@@ -496,52 +496,52 @@ public class SolutionExample {
             return (Criteria) this;
         }
 
-        public Criteria andResultEqualTo(Integer value) {
+        public Criteria andResultEqualTo(Short value) {
             addCriterion("result =", value, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultNotEqualTo(Integer value) {
+        public Criteria andResultNotEqualTo(Short value) {
             addCriterion("result <>", value, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultGreaterThan(Integer value) {
+        public Criteria andResultGreaterThan(Short value) {
             addCriterion("result >", value, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultGreaterThanOrEqualTo(Integer value) {
+        public Criteria andResultGreaterThanOrEqualTo(Short value) {
             addCriterion("result >=", value, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultLessThan(Integer value) {
+        public Criteria andResultLessThan(Short value) {
             addCriterion("result <", value, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultLessThanOrEqualTo(Integer value) {
+        public Criteria andResultLessThanOrEqualTo(Short value) {
             addCriterion("result <=", value, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultIn(List<Integer> values) {
+        public Criteria andResultIn(List<Short> values) {
             addCriterion("result in", values, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultNotIn(List<Integer> values) {
+        public Criteria andResultNotIn(List<Short> values) {
             addCriterion("result not in", values, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultBetween(Integer value1, Integer value2) {
+        public Criteria andResultBetween(Short value1, Short value2) {
             addCriterion("result between", value1, value2, "result");
             return (Criteria) this;
         }
 
-        public Criteria andResultNotBetween(Integer value1, Integer value2) {
+        public Criteria andResultNotBetween(Short value1, Short value2) {
             addCriterion("result not between", value1, value2, "result");
             return (Criteria) this;
         }
@@ -1033,6 +1033,136 @@ public class SolutionExample {
 
         public Criteria andPassRateNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("pass_rate not between", value1, value2, "passRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorIsNull() {
+            addCriterion("lint_error is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorIsNotNull() {
+            addCriterion("lint_error is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorEqualTo(Integer value) {
+            addCriterion("lint_error =", value, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorNotEqualTo(Integer value) {
+            addCriterion("lint_error <>", value, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorGreaterThan(Integer value) {
+            addCriterion("lint_error >", value, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorGreaterThanOrEqualTo(Integer value) {
+            addCriterion("lint_error >=", value, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorLessThan(Integer value) {
+            addCriterion("lint_error <", value, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorLessThanOrEqualTo(Integer value) {
+            addCriterion("lint_error <=", value, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorIn(List<Integer> values) {
+            addCriterion("lint_error in", values, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorNotIn(List<Integer> values) {
+            addCriterion("lint_error not in", values, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorBetween(Integer value1, Integer value2) {
+            addCriterion("lint_error between", value1, value2, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andLintErrorNotBetween(Integer value1, Integer value2) {
+            addCriterion("lint_error not between", value1, value2, "lintError");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerIsNull() {
+            addCriterion("judger is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerIsNotNull() {
+            addCriterion("judger is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerEqualTo(String value) {
+            addCriterion("judger =", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerNotEqualTo(String value) {
+            addCriterion("judger <>", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerGreaterThan(String value) {
+            addCriterion("judger >", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerGreaterThanOrEqualTo(String value) {
+            addCriterion("judger >=", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerLessThan(String value) {
+            addCriterion("judger <", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerLessThanOrEqualTo(String value) {
+            addCriterion("judger <=", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerLike(String value) {
+            addCriterion("judger like", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerNotLike(String value) {
+            addCriterion("judger not like", value, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerIn(List<String> values) {
+            addCriterion("judger in", values, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerNotIn(List<String> values) {
+            addCriterion("judger not in", values, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerBetween(String value1, String value2) {
+            addCriterion("judger between", value1, value2, "judger");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgerNotBetween(String value1, String value2) {
+            addCriterion("judger not between", value1, value2, "judger");
             return (Criteria) this;
         }
     }

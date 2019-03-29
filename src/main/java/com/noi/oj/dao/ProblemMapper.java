@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Repository
 @Mapper
@@ -39,4 +40,8 @@ public interface ProblemMapper {
     int updateByPrimaryKeyWithBLOBs(ProblemWithBLOBs record);
 
     int updateByPrimaryKey(Problem record);
+
+    int count(List<Integer> list);
+
+    List<Problem> getList(@Param("limit") Integer limit,@Param("offset") Integer offset,String title,List<Integer> list);
 }
