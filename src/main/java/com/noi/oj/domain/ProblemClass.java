@@ -14,6 +14,10 @@ public class ProblemClass implements Serializable {
 
     private Byte type;
 
+    private Byte isFree;
+
+    private Long userId;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getClassId() {
@@ -48,6 +52,22 @@ public class ProblemClass implements Serializable {
         this.type = type;
     }
 
+    public Byte getIsFree() {
+        return isFree;
+    }
+
+    public void setIsFree(Byte isFree) {
+        this.isFree = isFree;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -63,7 +83,8 @@ public class ProblemClass implements Serializable {
         return (this.getClassId() == null ? other.getClassId() == null : this.getClassId().equals(other.getClassId()))
             && (this.getProblemId() == null ? other.getProblemId() == null : this.getProblemId().equals(other.getProblemId()))
             && (this.getDifficulty() == null ? other.getDifficulty() == null : this.getDifficulty().equals(other.getDifficulty()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()));
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getIsFree() == null ? other.getIsFree() == null : this.getIsFree().equals(other.getIsFree()));
     }
 
     @Override
@@ -74,6 +95,7 @@ public class ProblemClass implements Serializable {
         result = prime * result + ((getProblemId() == null) ? 0 : getProblemId().hashCode());
         result = prime * result + ((getDifficulty() == null) ? 0 : getDifficulty().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getIsFree() == null) ? 0 : getIsFree().hashCode());
         return result;
     }
 
@@ -87,6 +109,7 @@ public class ProblemClass implements Serializable {
         sb.append(", problemId=").append(problemId);
         sb.append(", difficulty=").append(difficulty);
         sb.append(", type=").append(type);
+        sb.append(", isFree=").append(isFree);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

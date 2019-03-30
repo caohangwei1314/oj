@@ -363,6 +363,66 @@ public class ProblemClassExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andIsFreeIsNull() {
+            addCriterion("is_free is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeIsNotNull() {
+            addCriterion("is_free is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeEqualTo(Byte value) {
+            addCriterion("is_free =", value, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeNotEqualTo(Byte value) {
+            addCriterion("is_free <>", value, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeGreaterThan(Byte value) {
+            addCriterion("is_free >", value, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("is_free >=", value, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeLessThan(Byte value) {
+            addCriterion("is_free <", value, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeLessThanOrEqualTo(Byte value) {
+            addCriterion("is_free <=", value, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeIn(List<Byte> values) {
+            addCriterion("is_free in", values, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeNotIn(List<Byte> values) {
+            addCriterion("is_free not in", values, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeBetween(Byte value1, Byte value2) {
+            addCriterion("is_free between", value1, value2, "isFree");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFreeNotBetween(Byte value1, Byte value2) {
+            addCriterion("is_free not between", value1, value2, "isFree");
+            return (Criteria) this;
+        }
     }
 
     /**

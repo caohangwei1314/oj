@@ -186,4 +186,12 @@
       problem_id = #{problemId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteByProblemId">
+    delete from problem_packet_ship
+    where problem_id = #{problemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPacketId">
+    delete from problem_packet_ship
+    where packet_id = #{packetId,jdbcType=INTEGER}
+  </delete>
 </mapper>

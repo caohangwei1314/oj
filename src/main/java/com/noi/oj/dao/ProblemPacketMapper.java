@@ -1,10 +1,16 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.ProblemPacket;
 import com.noi.oj.domain.ProblemPacketExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Mapper
 public interface ProblemPacketMapper {
     long countByExample(ProblemPacketExample example);
 
@@ -33,4 +39,8 @@ public interface ProblemPacketMapper {
     int updateByPrimaryKeyWithBLOBs(ProblemPacket record);
 
     int updateByPrimaryKey(ProblemPacket record);
+
+    int count(String name);
+
+    List<ProblemPacket> selectList(Conditions record);
 }

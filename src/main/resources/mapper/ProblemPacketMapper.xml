@@ -9,6 +9,7 @@
     <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="origin_class" jdbcType="TINYINT" property="originClass" />
     <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.ProblemPacket">
     <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    packet_id, user_id, name, image, author, origin_class, release_date
+    packet_id, user_id, name, image, author, origin_class, release_date, price
   </sql>
   <sql id="Blob_Column_List">
     introduce
@@ -136,10 +137,12 @@
   <insert id="insert" parameterType="com.noi.oj.domain.ProblemPacket">
     insert into problem_packet (packet_id, user_id, name, 
       image, author, origin_class, 
-      release_date, introduce)
+      release_date, price, introduce
+      )
     values (#{packetId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{image,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{originClass,jdbcType=TINYINT}, 
-      #{releaseDate,jdbcType=TIMESTAMP}, #{introduce,jdbcType=LONGVARCHAR})
+      #{releaseDate,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, #{introduce,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemPacket">
     insert into problem_packet
@@ -164,6 +167,9 @@
       </if>
       <if test="releaseDate != null">
         release_date,
+      </if>
+      <if test="price != null">
+        price,
       </if>
       <if test="introduce != null">
         introduce,
@@ -190,6 +196,9 @@
       </if>
       <if test="releaseDate != null">
         #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="introduce != null">
         #{introduce,jdbcType=LONGVARCHAR},
@@ -226,6 +235,9 @@
       <if test="record.releaseDate != null">
         release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
       <if test="record.introduce != null">
         introduce = #{record.introduce,jdbcType=LONGVARCHAR},
       </if>
@@ -243,6 +255,7 @@
       author = #{record.author,jdbcType=VARCHAR},
       origin_class = #{record.originClass,jdbcType=TINYINT},
       release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      price = #{record.price,jdbcType=DECIMAL},
       introduce = #{record.introduce,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -256,7 +269,8 @@
       image = #{record.image,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
       origin_class = #{record.originClass,jdbcType=TINYINT},
-      release_date = #{record.releaseDate,jdbcType=TIMESTAMP}
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      price = #{record.price,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -282,8 +296,14 @@
       <if test="releaseDate != null">
         release_date = #{releaseDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
       <if test="introduce != null">
         introduce = #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT}
       </if>
     </set>
     where packet_id = #{packetId,jdbcType=INTEGER}
@@ -296,6 +316,7 @@
       author = #{author,jdbcType=VARCHAR},
       origin_class = #{originClass,jdbcType=TINYINT},
       release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DECIMAL},
       introduce = #{introduce,jdbcType=LONGVARCHAR}
     where packet_id = #{packetId,jdbcType=INTEGER}
   </update>
@@ -306,7 +327,50 @@
       image = #{image,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
       origin_class = #{originClass,jdbcType=TINYINT},
-      release_date = #{releaseDate,jdbcType=TIMESTAMP}
+      release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DECIMAL}
     where packet_id = #{packetId,jdbcType=INTEGER}
   </update>
+  <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
+    select count(*)
+    from problem_packet
+    where statuss != 0
+    <if test="title != null">
+      and name = #{title,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectList" parameterType="com.noi.oj.domain.Conditions">
+    select
+    <include refid="Base_Column_List"/>
+    from problem_packet
+    where statuss != 0
+    <if test="title != null">
+      and name = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="limit !=null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="searchProblemsId" resultType="java.lang.Integer">
+    select problem_id
+    from problem_class
+    where 1=1
+    <if test="difficulty != null">
+      and difficulty=#{difficulty,jdbcType=TINYINT}
+    </if>
+    <if test="type != null">
+      and type = #{type,jdbcType=TINYINT}
+    </if>
+    <if test="list !=null">
+      and problem_id in
+      <foreach collection="list" item="item" open="(" close=")" separator=",">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    </if>
+  </select>
 </mapper>

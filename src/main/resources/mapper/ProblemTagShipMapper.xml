@@ -194,7 +194,7 @@
   </insert>
   <delete id="deleteByProblemId" parameterType="java.lang.Integer">
     delete from problem_tag_ship
-    where problem_id = #{problem_id,jdbcType=INTEGER}
+    where problem_id = #{problemId,jdbcType=INTEGER}
   </delete>
   <select id="searchProblemsId" resultType="java.lang.Integer">
     select problem_id

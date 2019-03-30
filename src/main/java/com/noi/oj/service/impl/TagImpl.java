@@ -16,7 +16,7 @@ public class TagImpl implements TagService {
 
     @Override
     public int insert(Tag record){
-        return tagMapper.insert(record);
+        return tagMapper.insertSelective(record);
     }
 
     @Override

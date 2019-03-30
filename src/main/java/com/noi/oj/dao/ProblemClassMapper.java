@@ -33,9 +33,9 @@ public interface ProblemClassMapper {
 
     int updateByPrimaryKey(ProblemClass record);
 
-    int updateByProblemIdSelective(ProblemClass record);
+    List<Integer> searchProblemsId(List<Integer> list,Byte difficulty,Byte type,Byte isFree);
 
-    int deleteByProblemId(Integer ProblemId);
+    int updateByProblemIdSelective(@Param("record") ProblemClass record);
 
-    List<Integer> searchProblemsId(List<Integer> list,Byte difficulty,Byte type);
+    int deleteByProblemId(Integer problemId);
 }

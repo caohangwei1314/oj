@@ -2,11 +2,9 @@ package com.noi.oj.service.impl;
 
 import com.noi.oj.dao.ProblemClassMapper;
 import com.noi.oj.dao.ProblemMapper;
+import com.noi.oj.dao.ProblemPacketShipMapper;
 import com.noi.oj.dao.ProblemTagShipMapper;
-import com.noi.oj.domain.Problem;
-import com.noi.oj.domain.ProblemClass;
-import com.noi.oj.domain.ProblemTagShip;
-import com.noi.oj.domain.ProblemWithBLOBs;
+import com.noi.oj.domain.*;
 import com.noi.oj.service.ProblemService;
 import com.noi.oj.utils.PageBean;
 import com.noi.oj.utils.SystemConstant;
@@ -33,19 +31,23 @@ public class ProblemImpl implements ProblemService {
     @Autowired
     private ProblemTagShipMapper problemTagShipMapper;
 
+    @Autowired
+    private ProblemPacketShipMapper problemPacketShipMapper;
+
     @Override
     public int deleteByPrimaryKey(Integer problemId){
         int flag=0;
         if(deleteDir(SystemConstant.LINUX_Problem_PATH + problemId))
-            if(problemTagShipMapper.deleteByProblemId(problemId)>0)
-                if(problemClassMapper.deleteByProblemId(problemId)>0)
-                    if(problemMapper.deleteByPrimaryKey(problemId)>0)
-                        flag=1;
+            if(problemPacketShipMapper.deleteByProblemId(problemId)>0)
+                if(problemTagShipMapper.deleteByProblemId(problemId)>0)
+                    if(problemClassMapper.deleteByProblemId(problemId)>0)
+                        if(problemMapper.deleteByPrimaryKey(problemId)>0)
+                            flag=1;
         return flag;
     }
 
     @Override
-    public int insertSelective(Map<String,Object> map) throws RuntimeException {
+    public int insertSelective(Map<String,Object> map,Long userId) throws RuntimeException {
         int flag = 0;
         ProblemWithBLOBs record = getProblemMap(map);
         if (problemMapper.insertSelective(record) > 0) {
@@ -53,10 +55,15 @@ public class ProblemImpl implements ProblemService {
             if(uploadSample(record)>0){
                 ProblemClass problemClass = getProblemClassMap(map);
                 problemClass.setProblemId(problemId);
+                problemClass.setUserId(userId);
                 if(problemClassMapper.insert(problemClass)>0){
                     List<ProblemTagShip> list = getTagShips(map,problemId);
-                    if(problemTagShipMapper.insertList(list)>0)
-                        flag = 1;
+                    if(problemTagShipMapper.insertList(list)>0){
+                        ProblemPacketShip packetShip = getProblemPacketShip(map);
+                        packetShip.setProblemId(problemId);
+                        if(problemPacketShipMapper.insertSelective(packetShip)>0)
+                            flag=1;
+                    }
                 }
             }
         }
@@ -69,18 +76,17 @@ public class ProblemImpl implements ProblemService {
     }
 
     @Override
-    public PageBean selectList(Integer limit,Integer page,Map<String,Object> map){
-        ProblemClass problemClass = getProblemClassMap(map);
-        List<ProblemTagShip> ships = getTagShips(map,null);
-        List<Integer> problemIds = null;
-        if(ships!=null)
-            problemIds=problemTagShipMapper.searchProblemsId(ships);
-        problemIds = problemClassMapper.searchProblemsId(problemIds,problemClass.getDifficulty(),problemClass.getType());
-        if(problemIds==null || problemIds.size()<1)
+    public PageBean selectList(Conditions record){
+        if(record == null)
             return null;
-        PageBean pageBean = new PageBean(page,problemIds.size(),limit);
-        String title = map.get("title").toString();
-        List<Problem> problems = problemMapper.getList(limit,pageBean.getStart(),title,problemIds);
+        int count = problemMapper.count(record);
+        if(count<1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        record.setOffset(pageBean.getStart());
+        List<Problem> problems = problemMapper.getList(record);
+        if(problems==null || problems.size()<1)
+            return null;
         pageBean.setList(problems);
         return pageBean;
     }
@@ -237,11 +243,30 @@ public class ProblemImpl implements ProblemService {
             record.setType(null);
         else
             record.setType(new Byte(map.get("type").toString()));
+        if(isEmpty(map.get("isFree")))
+            record.setIsFree(null);
+        else
+            record.setIsFree(new Byte(map.get("isFree").toString()));
+        return record;
+    }
+
+    private ProblemPacketShip getProblemPacketShip(Map<String,Object> map){
+        if(map==null)
+            return null;
+        ProblemPacketShip record = new ProblemPacketShip();
+        if(isEmpty(map.get("packetId")))
+            record.setPacketId(null);
+        else
+            record.setPacketId(Integer.parseInt(map.get("packetId").toString()));
         return record;
     }
 
     private List<ProblemTagShip> getTagShips(Map<String,Object> map,Integer problemId){
-        String[] tagIds = map.get("tags").toString().split(",");
+        String[] tagIds;
+        if(isEmpty(map.get("tags")))
+            return null;
+        else
+           tagIds = map.get("tags").toString().split(",");
         if(tagIds==null)
             return null;
         List<ProblemTagShip> list = new ArrayList<>();

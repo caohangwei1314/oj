@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Problem;
 import com.noi.oj.domain.ProblemExample;
 import com.noi.oj.domain.ProblemWithBLOBs;
@@ -41,7 +42,7 @@ public interface ProblemMapper {
 
     int updateByPrimaryKey(Problem record);
 
-    int count(List<Integer> list);
+    int count(Conditions record);
 
-    List<Problem> getList(@Param("limit") Integer limit,@Param("offset") Integer offset,String title,List<Integer> list);
+    List<Problem> getList(Conditions record);
 }

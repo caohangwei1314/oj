@@ -61,7 +61,7 @@ public class UsersController extends BaseController{
             if(Sha2Util.SHA256(users.getPassword()).equals(findUsers.getPassword()))
             {
                 JwtUtil jwtUtil = new JwtUtil();
-                String token = jwtUtil.createJWT(findUsers.getUserId().toString(),findUsers.getEmail(),1000*60*60*2);
+                String token = jwtUtil.createJWT(findUsers.getUserId().toString(),findUsers.getEmail(),1000*60*60*24*24);
                 msg.put("code","1");
                 msg.put("msg","成功");
                 msg.put("token",token);

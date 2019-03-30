@@ -35,7 +35,7 @@ public interface ProblemTagShipMapper {
 
     int insertList(List<ProblemTagShip> problemTagShips);
 
-    int deleteByProblemId(Integer problemTagId);
+    int deleteByProblemId(Integer problemId);
 
     List<Integer> searchProblemsId(List<ProblemTagShip> list);
 }

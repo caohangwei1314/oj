@@ -3,8 +3,13 @@ package com.noi.oj.dao;
 import com.noi.oj.domain.ProblemPacketShip;
 import com.noi.oj.domain.ProblemPacketShipExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Mapper
 public interface ProblemPacketShipMapper {
     long countByExample(ProblemPacketShipExample example);
 
@@ -27,4 +32,8 @@ public interface ProblemPacketShipMapper {
     int updateByPrimaryKeySelective(ProblemPacketShip record);
 
     int updateByPrimaryKey(ProblemPacketShip record);
+
+    int deleteByProblemId(Integer problemId);
+
+    int deleteByPacketId(Integer packetId);
 }

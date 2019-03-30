@@ -1,6 +1,7 @@
 package com.noi.oj.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,7 +22,11 @@ public class ProblemPacket implements Serializable {
 
     private Date releaseDate;
 
+    private BigDecimal price;
+
     private String introduce;
+
+    private Byte statuss;
 
     private static final long serialVersionUID = 1L;
 
@@ -81,12 +86,28 @@ public class ProblemPacket implements Serializable {
         this.releaseDate = releaseDate;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     public String getIntroduce() {
         return introduce;
     }
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+    public Byte getStatus() {
+        return statuss;
+    }
+
+    public void setStatus(Byte statuss) {
+        this.statuss = statuss;
     }
 
     @Override
@@ -108,6 +129,7 @@ public class ProblemPacket implements Serializable {
             && (this.getAuthor() == null ? other.getAuthor() == null : this.getAuthor().equals(other.getAuthor()))
             && (this.getOriginClass() == null ? other.getOriginClass() == null : this.getOriginClass().equals(other.getOriginClass()))
             && (this.getReleaseDate() == null ? other.getReleaseDate() == null : this.getReleaseDate().equals(other.getReleaseDate()))
+            && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
             && (this.getIntroduce() == null ? other.getIntroduce() == null : this.getIntroduce().equals(other.getIntroduce()));
     }
 
@@ -122,6 +144,7 @@ public class ProblemPacket implements Serializable {
         result = prime * result + ((getAuthor() == null) ? 0 : getAuthor().hashCode());
         result = prime * result + ((getOriginClass() == null) ? 0 : getOriginClass().hashCode());
         result = prime * result + ((getReleaseDate() == null) ? 0 : getReleaseDate().hashCode());
+        result = prime * result + ((getPrice() == null) ? 0 : getPrice().hashCode());
         result = prime * result + ((getIntroduce() == null) ? 0 : getIntroduce().hashCode());
         return result;
     }
@@ -139,6 +162,7 @@ public class ProblemPacket implements Serializable {
         sb.append(", author=").append(author);
         sb.append(", originClass=").append(originClass);
         sb.append(", releaseDate=").append(releaseDate);
+        sb.append(", price=").append(price);
         sb.append(", introduce=").append(introduce);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

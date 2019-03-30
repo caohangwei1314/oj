@@ -6,6 +6,7 @@
     <result column="problem_id" jdbcType="INTEGER" property="problemId" />
     <result column="difficulty" jdbcType="TINYINT" property="difficulty" />
     <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="is_free" jdbcType="TINYINT" property="isFree" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    class_id, problem_id, difficulty, type
+    class_id, problem_id, difficulty, type, is_free
   </sql>
   <select id="selectByExample" parameterType="com.noi.oj.domain.ProblemClassExample" resultMap="BaseResultMap">
     select
@@ -108,9 +109,9 @@
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.ProblemClass">
     insert into problem_class (class_id, problem_id, difficulty, 
-      type)
+      type, is_free,user_id)
     values (#{classId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, #{difficulty,jdbcType=TINYINT}, 
-      #{type,jdbcType=TINYINT})
+      #{type,jdbcType=TINYINT}, #{isFree,jdbcType=TINYINT},#{userId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemClass">
     insert into problem_class
@@ -127,6 +128,12 @@
       <if test="type != null">
         type,
       </if>
+      <if test="isFree != null">
+        is_free,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="classId != null">
@@ -140,6 +147,12 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=TINYINT},
+      </if>
+      <if test="isFree != null">
+        #{isFree,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -164,6 +177,9 @@
       <if test="record.type != null">
         type = #{record.type,jdbcType=TINYINT},
       </if>
+      <if test="record.isFree != null">
+        is_free = #{record.isFree,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -174,7 +190,8 @@
     set class_id = #{record.classId,jdbcType=INTEGER},
       problem_id = #{record.problemId,jdbcType=INTEGER},
       difficulty = #{record.difficulty,jdbcType=TINYINT},
-      type = #{record.type,jdbcType=TINYINT}
+      type = #{record.type,jdbcType=TINYINT},
+      is_free = #{record.isFree,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -191,6 +208,9 @@
       <if test="type != null">
         type = #{type,jdbcType=TINYINT},
       </if>
+      <if test="isFree != null">
+        is_free = #{isFree,jdbcType=TINYINT},
+      </if>
     </set>
     where class_id = #{classId,jdbcType=INTEGER}
   </update>
@@ -198,25 +218,10 @@
     update problem_class
     set problem_id = #{problemId,jdbcType=INTEGER},
       difficulty = #{difficulty,jdbcType=TINYINT},
-      type = #{type,jdbcType=TINYINT}
+      type = #{type,jdbcType=TINYINT},
+      is_free = #{isFree,jdbcType=TINYINT}
     where class_id = #{classId,jdbcType=INTEGER}
   </update>
-  <update id="updateByProblemIdSelective" parameterType="com.noi.oj.domain.ProblemClass">
-    update problem_class
-    <set>
-      <if test="difficulty != null">
-        difficulty = #{difficulty,jdbcType=TINYINT},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
-      </if>
-    </set>
-    where problem_id = #{problemId,jdbcType=INTEGER}
-  </update>
-  <delete id="deleteByProblemId" parameterType="java.lang.Integer">
-    delete from problem_class
-    where problem_id = #{problemId,jdbcType=INTEGER}
-  </delete>
   <select id="searchProblemsId" resultType="java.lang.Integer">
     select problem_id
     from problem_class
@@ -227,6 +232,9 @@
     <if test="type != null">
       and type = #{type,jdbcType=TINYINT}
     </if>
+    <if test="isFree != null">
+      and is_free = #{isFree,jdbcType=TINYINT}
+    </if>
     <if test="list !=null">
       and problem_id in
       <foreach collection="list" item="item" open="(" close=")" separator=",">
@@ -234,4 +242,23 @@
       </foreach>
     </if>
   </select>
+  <update id="updateByProblemIdSelective">
+    update problem_class
+    <set>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="isFree != null">
+        is_free = #{isFree,jdbcType=TINYINT},
+      </if>
+    </set>
+    where problem_id = #{problemId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByProblemId" parameterType="java.lang.Integer">
+    delete from problem_class
+    where problem_id = #{problemId,jdbcType=INTEGER}
+  </delete>
 </mapper>

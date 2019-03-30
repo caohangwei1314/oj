@@ -29,6 +29,16 @@ public class Problem implements Serializable {
 
     private Integer solved;
 
+    private Integer packetId;
+
+    private String name;
+
+    private Byte isFree;
+
+    private Byte difficulty;
+
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getProblemId() {
@@ -117,6 +127,46 @@ public class Problem implements Serializable {
 
     public void setSolved(Integer solved) {
         this.solved = solved;
+    }
+
+    public Integer getPacketId() {
+        return packetId;
+    }
+
+    public void setPacketId(Integer packetId) {
+        this.packetId = packetId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Byte getIsFree() {
+        return isFree;
+    }
+
+    public void setIsFree(Byte isFree) {
+        this.isFree = isFree;
+    }
+
+    public Byte getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Byte difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getType() {
+        return type;
     }
 
     @Override
