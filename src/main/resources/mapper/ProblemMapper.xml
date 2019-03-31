@@ -466,27 +466,33 @@
   </update>
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
     select count(a.problem_id)
-    from (select problem_id from problem
+    from
+    (select problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted,
+    submit, solved from problem
     <if test="title != null">
-        where title like concat('%',#{title,jdbcType=VARCHAR},'%')
+      where title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if> ) as a
-    inner join(select problem_id from problem_tag_ship
-    <if test="tags!=null">
-    where tag_id in
-    <foreach collection="tags" item="item" open="(" close=")" separator=",">
-        #{item,jdbcType=INTEGER}
-    </foreach>
-    </if> ) as b on a.problem_id = b.problem_id
-     inner join (select problem_id from problem_class where 1=1
-     <if test="difficulty != null">
-         and difficulty = #{difficulty,jdbcType=TINYINT}
-     </if>
-     <if test="type != null">
-         and type = #{type,jdbcType=TINYINT}
-     </if>
-     <if test="isFree != null">
-         and is_free = #{isFree,jdbcType=TINYINT}
-     </if>) as c on a.problem_id=c.problem_id
+    inner join (select packet_id,problem_id from problem_packet_ship) as b
+    on a.problem_id = b.problem_id
+    inner join (select packet_id,name from problem_packet) as c
+    on b.packet_id = c.packet_id
+    inner join (select distinct problem_id from problem_tag_ship as f
+    <if test="tags != null">
+      where 1=1
+      <foreach collection="tags" item="item" index="index">
+        and problem_id in (select problem_id from problem_tag_ship where tag_id = #{item})
+      </foreach>
+    </if>) as d on a.problem_id = d.problem_id
+    inner join (select problem_id,difficulty,is_free,type from problem_class where 1=1
+    <if test="difficulty != null">
+      and difficulty = #{difficulty,jdbcType=TINYINT}
+    </if>
+    <if test="type != null">
+      and type = #{type,jdbcType=TINYINT}
+    </if>
+    <if test="isFree != null">
+      and is_free = #{isFree,jdbcType=TINYINT}
+    </if> ) as e on a.problem_id=e.problem_id
   </select>
   <select id="getList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select a.*,b.packet_id,c.name,e.difficulty,e.is_free,e.type
@@ -504,7 +510,7 @@
     <if test="tags != null">
         where 1=1
         <foreach collection="tags" item="item" index="index">
-            and problem_id = (select problem_id from problem_tag_ship where tag_id = #{item})
+            and problem_id in (select problem_id from problem_tag_ship where tag_id = #{item})
         </foreach>
     </if>) as d on a.problem_id = d.problem_id
     inner join (select problem_id,difficulty,is_free,type from problem_class where 1=1
