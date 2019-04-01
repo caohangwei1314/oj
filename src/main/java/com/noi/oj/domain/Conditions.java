@@ -18,6 +18,8 @@ public class Conditions {
 
     private Integer offset;
 
+    private Integer problemId;
+
     public void setLimit(Integer limit){
         this.limit=limit;
     }
@@ -80,5 +82,13 @@ public class Conditions {
 
     public Integer getOffset() {
         return offset;
+    }
+
+    public void setProblemId(Integer problemId) {
+        this.problemId = problemId;
+    }
+
+    public Integer getProblemId() {
+        return problemId;
     }
 }

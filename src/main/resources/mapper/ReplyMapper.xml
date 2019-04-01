@@ -2,15 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noi.oj.dao.ReplyMapper">
   <resultMap id="BaseResultMap" type="com.noi.oj.domain.Reply">
-    <id column="rid" jdbcType="INTEGER" property="rid" />
-    <result column="author_id" jdbcType="VARCHAR" property="authorId" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="reply_id" jdbcType="INTEGER" property="replyId" />
     <result column="topic_id" jdbcType="INTEGER" property="topicId" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="ip" jdbcType="VARCHAR" property="ip" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.Reply">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,27 +68,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    rid, author_id, time, topic_id, status, ip
+    id, content, create_at, is_delete, reply_id, topic_id
   </sql>
-  <sql id="Blob_Column_List">
-    content
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.noi.oj.domain.ReplyExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from reply
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.noi.oj.domain.ReplyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -114,17 +92,15 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from reply
-    where rid = #{rid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from reply
-    where rid = #{rid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.noi.oj.domain.ReplyExample">
     delete from reply
@@ -133,59 +109,53 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.Reply">
-    insert into reply (rid, author_id, time, 
-      topic_id, status, ip, 
-      content)
-    values (#{rid,jdbcType=INTEGER}, #{authorId,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{topicId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into reply (id, content, create_at, 
+      is_delete, reply_id, topic_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=TINYINT}, #{replyId,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.Reply">
     insert into reply
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="rid != null">
-        rid,
-      </if>
-      <if test="authorId != null">
-        author_id,
-      </if>
-      <if test="time != null">
-        time,
-      </if>
-      <if test="topicId != null">
-        topic_id,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="ip != null">
-        ip,
+      <if test="id != null">
+        id,
       </if>
       <if test="content != null">
         content,
       </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="replyId != null">
+        reply_id,
+      </if>
+      <if test="topicId != null">
+        topic_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="rid != null">
-        #{rid,jdbcType=INTEGER},
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="authorId != null">
-        #{authorId,jdbcType=VARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="replyId != null">
+        #{replyId,jdbcType=INTEGER},
       </if>
       <if test="topicId != null">
         #{topicId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="ip != null">
-        #{ip,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,53 +168,37 @@
   <update id="updateByExampleSelective" parameterType="map">
     update reply
     <set>
-      <if test="record.rid != null">
-        rid = #{record.rid,jdbcType=INTEGER},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.authorId != null">
-        author_id = #{record.authorId,jdbcType=VARCHAR},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.time != null">
-        time = #{record.time,jdbcType=TIMESTAMP},
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="record.replyId != null">
+        reply_id = #{record.replyId,jdbcType=INTEGER},
       </if>
       <if test="record.topicId != null">
         topic_id = #{record.topicId,jdbcType=INTEGER},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
-      </if>
-      <if test="record.ip != null">
-        ip = #{record.ip,jdbcType=VARCHAR},
-      </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update reply
-    set rid = #{record.rid,jdbcType=INTEGER},
-      author_id = #{record.authorId,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      topic_id = #{record.topicId,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      ip = #{record.ip,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByExample" parameterType="map">
     update reply
-    set rid = #{record.rid,jdbcType=INTEGER},
-      author_id = #{record.authorId,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      topic_id = #{record.topicId,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      ip = #{record.ip,jdbcType=VARCHAR}
+    set id = #{record.id,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      is_delete = #{record.isDelete,jdbcType=TINYINT},
+      reply_id = #{record.replyId,jdbcType=INTEGER},
+      topic_id = #{record.topicId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -252,44 +206,31 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.Reply">
     update reply
     <set>
-      <if test="authorId != null">
-        author_id = #{authorId,jdbcType=VARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="replyId != null">
+        reply_id = #{replyId,jdbcType=INTEGER},
       </if>
       <if test="topicId != null">
         topic_id = #{topicId,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="ip != null">
-        ip = #{ip,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where rid = #{rid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.noi.oj.domain.Reply">
-    update reply
-    set author_id = #{authorId,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      topic_id = #{topicId,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      ip = #{ip,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where rid = #{rid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.Reply">
     update reply
-    set author_id = #{authorId,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      topic_id = #{topicId,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      ip = #{ip,jdbcType=VARCHAR}
-    where rid = #{rid,jdbcType=INTEGER}
+    set content = #{content,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      reply_id = #{replyId,jdbcType=INTEGER},
+      topic_id = #{topicId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

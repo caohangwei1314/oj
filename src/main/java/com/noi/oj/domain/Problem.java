@@ -2,6 +2,7 @@ package com.noi.oj.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
@@ -38,6 +39,8 @@ public class Problem implements Serializable {
     private Byte difficulty;
 
     private Integer type;
+
+    private List<Tag> tags;
 
     private static final long serialVersionUID = 1L;
 
@@ -167,6 +170,14 @@ public class Problem implements Serializable {
 
     public Integer getType() {
         return type;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
     }
 
     @Override

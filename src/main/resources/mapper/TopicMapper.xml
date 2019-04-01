@@ -3,14 +3,14 @@
 <mapper namespace="com.noi.oj.dao.TopicMapper">
   <resultMap id="BaseResultMap" type="com.noi.oj.domain.Topic">
     <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="top_level" jdbcType="INTEGER" property="topLevel" />
     <result column="cid" jdbcType="INTEGER" property="cid" />
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="author_id" jdbcType="BIGINT" property="authorId" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.Topic">
-    <result column="title" jdbcType="VARBINARY" property="title" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,27 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    tid, status, top_level, cid, pid, author_id
+    tid, title, status, top_level, cid, pid, author_id,create_at,content
   </sql>
-  <sql id="Blob_Column_List">
-    title
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.noi.oj.domain.TopicExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from topic
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.noi.oj.domain.TopicExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -114,11 +95,9 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from topic
     where tid = #{tid,jdbcType=INTEGER}
   </select>
@@ -133,18 +112,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.Topic">
-    insert into topic (tid, status, top_level, 
-      cid, pid, author_id, 
-      title)
-    values (#{tid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{topLevel,jdbcType=INTEGER}, 
-      #{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{authorId,jdbcType=BIGINT}, 
-      #{title,jdbcType=VARBINARY})
+    insert into topic (tid, title, status, 
+      top_level, cid, pid, 
+      author_id)
+    values (#{tid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{topLevel,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
+      #{authorId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.noi.oj.domain.Topic">
     insert into topic
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tid != null">
         tid,
+      </if>
+      <if test="title != null">
+        title,
       </if>
       <if test="status != null">
         status,
@@ -161,13 +143,19 @@
       <if test="authorId != null">
         author_id,
       </if>
-      <if test="title != null">
-        title,
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="content != null">
+        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="tid != null">
         #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -184,8 +172,11 @@
       <if test="authorId != null">
         #{authorId,jdbcType=BIGINT},
       </if>
-      <if test="title != null">
-        #{title,jdbcType=VARBINARY},
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -200,6 +191,9 @@
     <set>
       <if test="record.tid != null">
         tid = #{record.tid,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -216,23 +210,7 @@
       <if test="record.authorId != null">
         author_id = #{record.authorId,jdbcType=BIGINT},
       </if>
-      <if test="record.title != null">
-        title = #{record.title,jdbcType=VARBINARY},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update topic
-    set tid = #{record.tid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      top_level = #{record.topLevel,jdbcType=INTEGER},
-      cid = #{record.cid,jdbcType=INTEGER},
-      pid = #{record.pid,jdbcType=INTEGER},
-      author_id = #{record.authorId,jdbcType=BIGINT},
-      title = #{record.title,jdbcType=VARBINARY}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -240,6 +218,7 @@
   <update id="updateByExample" parameterType="map">
     update topic
     set tid = #{record.tid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       top_level = #{record.topLevel,jdbcType=INTEGER},
       cid = #{record.cid,jdbcType=INTEGER},
@@ -252,6 +231,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.Topic">
     update topic
     <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -267,29 +249,37 @@
       <if test="authorId != null">
         author_id = #{authorId,jdbcType=BIGINT},
       </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARBINARY},
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where tid = #{tid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.noi.oj.domain.Topic">
-    update topic
-    set status = #{status,jdbcType=INTEGER},
-      top_level = #{topLevel,jdbcType=INTEGER},
-      cid = #{cid,jdbcType=INTEGER},
-      pid = #{pid,jdbcType=INTEGER},
-      author_id = #{authorId,jdbcType=BIGINT},
-      title = #{title,jdbcType=VARBINARY}
-    where tid = #{tid,jdbcType=INTEGER}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.Topic">
     update topic
-    set status = #{status,jdbcType=INTEGER},
+    set title = #{title,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       top_level = #{topLevel,jdbcType=INTEGER},
       cid = #{cid,jdbcType=INTEGER},
       pid = #{pid,jdbcType=INTEGER},
       author_id = #{authorId,jdbcType=BIGINT}
     where tid = #{tid,jdbcType=INTEGER}
   </update>
+  <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*)
+    from topic
+    <if test="problemId != null">
+      where pid = #{problemId,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select a.*,b.title,c.nick
+    from (select tid,title,pid,author_id,create_at,content from topic
+    where status = 0
+    <if test="problemId != null">
+      and pid = #{problemId,jdbcType=INTEGER}
+    </if> ) as a
+     inner join (select problem_id,title from problem) as b on a.pid=b.problem_id
+     inner join (select user_id,nick from users) as c on a.author_id=c.user_id
+  </select>
 </mapper>

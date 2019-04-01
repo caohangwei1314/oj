@@ -34,4 +34,6 @@ public interface TagMapper {
     int updateByPrimaryKey(Tag record);
 
     List<Tag> selectAll();
+
+    List<Tag> selectByProblemId(Integer problemId);
 }

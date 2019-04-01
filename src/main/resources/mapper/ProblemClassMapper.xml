@@ -211,6 +211,9 @@
       <if test="isFree != null">
         is_free = #{isFree,jdbcType=TINYINT},
       </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=TINYINT},
+      </if>
     </set>
     where class_id = #{classId,jdbcType=INTEGER}
   </update>
@@ -242,7 +245,7 @@
       </foreach>
     </if>
   </select>
-  <update id="updateByProblemIdSelective">
+  <update id="updateByProblemIdSelective" parameterType="com.noi.oj.domain.ProblemClass">
     update problem_class
     <set>
       <if test="difficulty != null">

@@ -1,9 +1,6 @@
 package com.noi.oj.service.impl;
 
-import com.noi.oj.dao.ProblemClassMapper;
-import com.noi.oj.dao.ProblemMapper;
-import com.noi.oj.dao.ProblemPacketShipMapper;
-import com.noi.oj.dao.ProblemTagShipMapper;
+import com.noi.oj.dao.*;
 import com.noi.oj.domain.*;
 import com.noi.oj.service.ProblemService;
 import com.noi.oj.utils.PageBean;
@@ -33,6 +30,9 @@ public class ProblemImpl implements ProblemService {
 
     @Autowired
     private ProblemPacketShipMapper problemPacketShipMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer problemId){
@@ -72,7 +72,9 @@ public class ProblemImpl implements ProblemService {
 
     @Override
     public ProblemWithBLOBs selectByPrimaryKey(Integer problemId){
-        return problemMapper.selectByPrimaryKey(problemId);
+        ProblemWithBLOBs problem = problemMapper.selectByPrimaryKey(problemId);
+        problem.setTags(tagMapper.selectByProblemId(problemId));
+        return problem;
     }
 
     @Override
