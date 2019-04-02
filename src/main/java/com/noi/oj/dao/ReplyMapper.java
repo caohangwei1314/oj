@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Reply;
 import com.noi.oj.domain.ReplyExample;
 import java.util.List;
@@ -32,4 +33,8 @@ public interface ReplyMapper {
     int updateByPrimaryKeySelective(Reply record);
 
     int updateByPrimaryKey(Reply record);
+
+    int count(Conditions record);
+
+    List<Reply> selectList(Conditions record);
 }

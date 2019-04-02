@@ -20,6 +20,10 @@ public class Conditions {
 
     private Integer problemId;
 
+    private Integer topicId;
+
+    private String orderBy;
+
     public void setLimit(Integer limit){
         this.limit=limit;
     }
@@ -90,5 +94,21 @@ public class Conditions {
 
     public Integer getProblemId() {
         return problemId;
+    }
+
+    public void setTopicId(Integer topicId) {
+        this.topicId = topicId;
+    }
+
+    public Integer getTopicId() {
+        return topicId;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
     }
 }

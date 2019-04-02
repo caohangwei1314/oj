@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 public class ServerConfig{
 
-    private int serverPort=8080;
+    private int serverPort=9999;
 
     public int getServerPort(){
         return this.serverPort;
@@ -18,18 +18,18 @@ public class ServerConfig{
 
 
     public String getHost(){
-//        InetAddress address = null;
-//        try {
-//            address = InetAddress.getLocalHost();
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
-//        return address.getHostAddress();
-        return SystemConstant.IP;
+        InetAddress address = null;
+        try {
+            address = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return address.getHostAddress();
+//        return SystemConstant.IP;
     }
 
     public String getUrl(){
-        String address = getHost();
+        String address = SystemConstant.IP;
         return "http://" + address + ":" + getServerPort();
     }
 

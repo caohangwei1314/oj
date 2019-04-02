@@ -233,4 +233,14 @@
       topic_id = #{topicId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
+    select count(*)
+    from reply
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
+  <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
+    select *
+    from reply
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
 </mapper>

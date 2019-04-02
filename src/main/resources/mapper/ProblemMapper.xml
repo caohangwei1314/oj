@@ -499,7 +499,7 @@
     select a.*,b.packet_id,c.name,e.difficulty,e.is_free,e.type
     from
     (select problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted,
-    submit, solved from problem
+    submit, solved,rate from problem
     <if test="title != null">
         where title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if> ) as a
@@ -524,6 +524,9 @@
     <if test="isFree != null">
         and is_free = #{isFree,jdbcType=TINYINT}
     </if> ) as e on a.problem_id=e.problem_id
+    <if test="orderBy != null">
+      order by #{orderBy,jdbcType=VARCHAR} desc
+    </if>
     <if test="limit != null">
         <if test="offset != null">
             limit ${offset},${limit}

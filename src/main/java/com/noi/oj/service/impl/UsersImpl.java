@@ -84,13 +84,23 @@ public class UsersImpl implements UsersService {
             // 默认以原来的头像名称为新头像的名称，这样可以直接替换掉文件夹中对应的旧头像
             String newProfileName = profilePathAndNameDB;
             // 若头像名称不存在
+            String[] originName = profile.getOriginalFilename().split("\\.");
+            String suffix = originName[originName.length-1];
             if(profilePathAndNameDB == null || "".equals(profilePathAndNameDB)){
-                String[] originName = profile.getOriginalFilename().split("\\.");
-                String suffix = originName[originName.length-1];
                 newProfileName = UUID.randomUUID().toString() + System.currentTimeMillis() + "." + suffix;
                 // 路径存库
                 users.setImage(newProfileName);
                 updateByPrimaryKeySelective(users);
+            }else{
+                String[] profiles = profilePathAndNameDB.split("\\.");
+                if(!suffix.equals(profiles[profiles.length-1])){
+                    File file = new File(profilePath + profilePathAndNameDB);
+                    if(file.exists())
+                        file.delete();
+                    newProfileName = profiles[0] + "." + suffix;
+                    users.setImage(newProfileName);
+                    updateByPrimaryKeySelective(users);
+                }
             }
             //磁盘保存
             BufferedOutputStream out = null;

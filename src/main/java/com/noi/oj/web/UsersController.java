@@ -137,7 +137,7 @@ public class UsersController extends BaseController{
     }
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public Map<String,Object> setUserProfile(@RequestParam("profile") MultipartFile profile,HttpServletRequest request){
+    public Map<String,Object> setUserProfile(@RequestParam("file") MultipartFile profile,HttpServletRequest request){
         msg.clear();
         if(usersService.setUserProfile(profile,request)){
             msg.put("code","1");

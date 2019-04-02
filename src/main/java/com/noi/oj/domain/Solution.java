@@ -42,6 +42,8 @@ public class Solution implements Serializable {
 
     private String judger;
 
+    private String source;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSolutionId() {
@@ -178,6 +180,14 @@ public class Solution implements Serializable {
 
     public void setJudger(String judger) {
         this.judger = judger;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     @Override
