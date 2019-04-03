@@ -144,7 +144,7 @@
       #{releaseDate,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, #{introduce,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemPacket">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.ProblemPacket" useGeneratedKeys="true" keyProperty="packetId">
     insert into problem_packet
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="packetId != null">
@@ -303,7 +303,10 @@
         introduce = #{introduce,jdbcType=LONGVARCHAR},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=TINYINT}
+        statuss = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="releaseDate != null">
+        release_date = #{releaseDate,jdbcType=TIMESTAMP}
       </if>
     </set>
     where packet_id = #{packetId,jdbcType=INTEGER}
@@ -332,21 +335,44 @@
     where packet_id = #{packetId,jdbcType=INTEGER}
   </update>
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
-    select count(*)
+    select count(a.user_id)
+    from (select packet_id, user_id, name, image,origin_class, release_date, price
     from problem_packet
     where statuss != 0
     <if test="title != null">
       and name = #{title,jdbcType=VARCHAR}
     </if>
+    <if test="originClass != null">
+      and origin_class = #{originClass,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      and statuss = #{status,jdbcType=TINYINT}
+    </if>) as a
+    inner join (select user_id,nick from users where 1=1
+    <if test="nick != null">
+      and nick = #{nick,jdbcType=VARCHAR}
+    </if> ) as b
+    on a.user_id=b.user_id
   </select>
-  <select id="selectList" parameterType="com.noi.oj.domain.Conditions">
-    select
-    <include refid="Base_Column_List"/>
+  <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
+    select a.*,b.nick as author
+    from (select packet_id, user_id, name, image,origin_class, release_date, price
     from problem_packet
     where statuss != 0
     <if test="title != null">
       and name = #{title,jdbcType=VARCHAR}
     </if>
+    <if test="originClass != null">
+      and origin_class = #{originClass,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      and statuss = #{status,jdbcType=TINYINT}
+    </if>) as a
+    inner join (select user_id,nick from users where 1=1
+    <if test="nick != null">
+     and nick = #{nick,jdbcType=VARCHAR}
+    </if> ) as b
+     on a.user_id=b.user_id
     <if test="limit !=null">
       <if test="offset != null">
         limit ${offset},${limit}

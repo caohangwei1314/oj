@@ -473,7 +473,10 @@
     <if test="title != null">
       where title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if> ) as a
-    inner join (select packet_id,problem_id from problem_packet_ship) as b
+    inner join (select packet_id,problem_id from problem_packet_ship where 1=1
+    <if test="packetId != null">
+      and packet_id = #{packetId,jdbcType=INTEGER}
+    </if>) as b
     on a.problem_id = b.problem_id
     inner join (select packet_id,name from problem_packet) as c
     on b.packet_id = c.packet_id
@@ -503,7 +506,10 @@
     <if test="title != null">
         where title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if> ) as a
-    inner join (select packet_id,problem_id from problem_packet_ship) as b
+    inner join (select packet_id,problem_id from problem_packet_ship where 1=1
+    <if test="packetId != null">
+      and packet_id = #{packetId,jdbcType=INTEGER}
+    </if>) as b
     on a.problem_id = b.problem_id
     inner join (select packet_id,name from problem_packet) as c
     on b.packet_id = c.packet_id

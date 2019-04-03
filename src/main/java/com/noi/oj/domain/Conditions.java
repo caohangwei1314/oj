@@ -24,6 +24,16 @@ public class Conditions {
 
     private String orderBy;
 
+    private Integer originClass;
+
+    private Long userId;
+
+    private String nick;
+
+    private Byte status;
+
+    private Integer packetId;
+
     public void setLimit(Integer limit){
         this.limit=limit;
     }
@@ -110,5 +120,45 @@ public class Conditions {
 
     public String getOrderBy() {
         return orderBy;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setOriginClass(Integer originClass) {
+        this.originClass = originClass;
+    }
+
+    public Integer getOriginClass() {
+        return originClass;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setPacketId(Integer packetId) {
+        this.packetId = packetId;
+    }
+
+    public Integer getPacketId() {
+        return packetId;
     }
 }

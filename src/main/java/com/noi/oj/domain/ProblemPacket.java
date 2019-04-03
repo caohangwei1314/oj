@@ -28,6 +28,8 @@ public class ProblemPacket implements Serializable {
 
     private Byte statuss;
 
+    private Integer count;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getPacketId() {
@@ -108,6 +110,14 @@ public class ProblemPacket implements Serializable {
 
     public void setStatus(Byte statuss) {
         this.statuss = statuss;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override

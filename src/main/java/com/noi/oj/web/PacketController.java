@@ -7,6 +7,7 @@ import com.noi.oj.service.ProblemService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class PacketController extends BaseController{
 
     @RequestMapping(method = RequestMethod.POST)
     public Map<String,Object> insert(@RequestBody ProblemPacket record, HttpServletRequest request){
-        setMsg(packetService.insertSelective(record,request),null,null);
+        setMsg(packetService.insertSelective(record,request),null,record.getPacketId());
         return msg;
     }
 
@@ -53,6 +54,29 @@ public class PacketController extends BaseController{
     @RequestMapping(method = RequestMethod.DELETE)
     public Map<String,Object> delete(@RequestParam("id") Integer id){
         setMsg(packetService.deleteByPrimaryKey(id),null,null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    public Map<String,Object> setUserProfile(@RequestParam("file") MultipartFile profile,@RequestParam("id") Integer pkId){
+        msg.clear();
+        if(packetService.setPacketProfile(profile,pkId)){
+            setMsg(1,null,null);
+        }else{
+            setMsg(0,null,null);
+        }
+        return msg;
+    }
+
+    @RequestMapping(value = "/temp",method = RequestMethod.POST)
+    public Map<String,Object> setUserProfile(@RequestParam("file") MultipartFile profile){
+        msg.clear();
+        String url =packetService.setPacketProfile(profile);
+        if(url!=null){
+            setMsg(1,null,url);
+        }else{
+            setMsg(0,null,null);
+        }
         return msg;
     }
 }

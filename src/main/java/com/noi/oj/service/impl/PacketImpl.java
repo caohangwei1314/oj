@@ -1,5 +1,6 @@
 package com.noi.oj.service.impl;
 
+import com.noi.oj.dao.ProblemMapper;
 import com.noi.oj.dao.ProblemPacketMapper;
 import com.noi.oj.dao.ProblemPacketShipMapper;
 import com.noi.oj.dao.UsersMapper;
@@ -10,20 +11,29 @@ import com.noi.oj.domain.Users;
 import com.noi.oj.service.PacketService;
 import com.noi.oj.service.ProblemService;
 import com.noi.oj.utils.PageBean;
+import com.noi.oj.utils.SystemConstant;
+import com.noi.oj.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PacketImpl implements PacketService {
+
+    private static final String NAME="packet";
 
     @Autowired
     private ProblemPacketMapper problemPacketMapper;
 
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private ProblemMapper problemMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer packetId){
@@ -43,7 +53,9 @@ public class PacketImpl implements PacketService {
 
     @Override
     public ProblemPacket selectByPrimaryKey(Integer packetId){
-        return problemPacketMapper.selectByPrimaryKey(packetId);
+        ProblemPacket problemPacket = problemPacketMapper.selectByPrimaryKey(packetId);
+        problemPacket.setImage(getUrl(problemPacket.getImage()));
+        return problemPacket;
     }
 
     @Override
@@ -54,8 +66,15 @@ public class PacketImpl implements PacketService {
         PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
         record.setOffset(pageBean.getStart());
         List<ProblemPacket> packets = problemPacketMapper.selectList(record);
-        if(packets!=null&&packets.size()>0)
+        if(packets!=null&&packets.size()>0){
+            Conditions conditions = new Conditions();
+            for(ProblemPacket packet : packets){
+                conditions.setPacketId(packet.getPacketId());
+                packet.setImage(getUrl(packet.getImage()));
+                packet.setCount(problemMapper.count(conditions));
+            }
             pageBean.setList(packets);
+        }
         else
             return null;
         return pageBean;
@@ -64,5 +83,41 @@ public class PacketImpl implements PacketService {
     @Override
     public int updateByPrimaryKeySelective(ProblemPacket record){
         return problemPacketMapper.updateByPrimaryKeySelective(record);
+    }
+
+
+    @Override
+    public String setPacketProfile(MultipartFile profile){
+        String[] originName = profile.getOriginalFilename().split("\\.");
+        String suffix = originName[originName.length - 1];
+        String name = UUID.randomUUID().toString() + System.currentTimeMillis() + "." + suffix;
+        if(UploadUtils.setProductProfile(profile,name, SystemConstant.LINUX_PACKET_PATH)){
+            return UploadUtils.getUrl(name,NAME);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public boolean setPacketProfile(MultipartFile profile,Integer pkId){
+        ProblemPacket packet = problemPacketMapper.selectByPrimaryKey(pkId);
+        String name = new String();
+        if("".equals(packet.getImage())||packet.getImage()==null){
+            String[] originName = profile.getOriginalFilename().split("\\.");
+            String suffix = originName[originName.length - 1];
+            name = UUID.randomUUID().toString() + System.currentTimeMillis() + "." + suffix;
+        }
+        if(UploadUtils.setProductProfile(profile,name,SystemConstant.LINUX_PACKET_PATH)){
+            packet.setImage(name);
+            return updateByPrimaryKeySelective(packet)>0;
+        }else{
+            return false;
+        }
+    }
+
+    private String getUrl(String path){
+        if("".equals(path) || path==null)
+            return null;
+        return UploadUtils.getUrl(path,NAME);
     }
 }
