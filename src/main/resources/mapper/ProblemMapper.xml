@@ -18,6 +18,7 @@
     <result column="is_free" jdbcType="TINYINT" property="isFree" />
     <result column="difficulty" jdbcType="TINYINT" property="difficulty" />
     <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="result" jdbcType="SMALLINT" property="result" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.ProblemWithBLOBs">
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
@@ -500,6 +501,9 @@
   </select>
   <select id="getList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select a.*,b.packet_id,c.name,e.difficulty,e.is_free,e.type
+    <if test="userId != null">
+      ,IFNULL(f.result,0) as result
+    </if>
     from
     (select problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted,
     submit, solved,rate from problem
@@ -530,6 +534,10 @@
     <if test="isFree != null">
         and is_free = #{isFree,jdbcType=TINYINT}
     </if> ) as e on a.problem_id=e.problem_id
+    <if test="userId != null">
+      left join (select problem_id,result from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as f
+      on a.problem_id = f.problem_id
+    </if>
     <if test="orderBy != null">
       order by #{orderBy,jdbcType=VARCHAR} desc
     </if>

@@ -30,6 +30,8 @@ public class ProblemPacket implements Serializable {
 
     private Integer count;
 
+    private Integer num;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getPacketId() {
@@ -118,6 +120,14 @@ public class ProblemPacket implements Serializable {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     @Override

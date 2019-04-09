@@ -132,7 +132,7 @@ public class UsersImpl implements UsersService {
     public String getUrl(String path){
         String[] limit = path.split("\\\\");
         ServerConfig serverConfig = new ServerConfig();
-        return serverConfig.getUrl() + "/profile/" + limit[limit.length-1];
+        return serverConfig.getUrl() + "/profile/users/" + limit[limit.length-1];
     }
 
     public boolean updateUsersSubmit(Long pkId){

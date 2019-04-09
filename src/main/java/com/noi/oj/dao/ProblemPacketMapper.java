@@ -40,7 +40,7 @@ public interface ProblemPacketMapper {
 
     int updateByPrimaryKey(ProblemPacket record);
 
-    int count(String name);
+    int count(Conditions record);
 
     List<ProblemPacket> selectList(Conditions record);
 }

@@ -3,7 +3,9 @@ package com.noi.oj.web;
 import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.ProblemWithBLOBs;
 import com.noi.oj.service.ProblemService;
+import com.noi.oj.utils.JwtUtil;
 import com.noi.oj.utils.PageBean;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +46,17 @@ public class ProblemController extends BaseController{
     }
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
-    public Map<String, Object> selectList(@RequestBody Conditions record) {
+    public Map<String, Object> selectList(@RequestBody Conditions record, HttpServletRequest request) {
+        String header = request.getHeader("X-Token");
+        if(header!=null){
+            try {
+                JwtUtil jwtUtil = new JwtUtil();
+                Claims claims = jwtUtil.parseJWT(header);
+                record.setUserId(Long.parseLong(claims.getId()));
+            } catch (Exception e) {
+                record.setUserId(null);
+            }
+        }
         PageBean pageBean = problemService.selectList(record);
         if (pageBean != null) {
             setMsg(1, null, pageBean);

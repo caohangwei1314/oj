@@ -10,6 +10,8 @@
     <result column="origin_class" jdbcType="TINYINT" property="originClass" />
     <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
     <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="statuss" jdbcType="TINYINT" property="status" />
+    <result column="num" jdbcType="INTEGER" property="num" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.ProblemPacket">
     <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
@@ -73,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    packet_id, user_id, name, image, author, origin_class, release_date, price
+    packet_id, user_id, name, image, author, origin_class, release_date, price,statuss,num
   </sql>
   <sql id="Blob_Column_List">
     introduce
@@ -336,11 +338,14 @@
   </update>
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
     select count(a.user_id)
-    from (select packet_id, user_id, name, image,origin_class, release_date, price
+    from (select packet_id, user_id
     from problem_packet
-    where statuss != 0
+    where statuss != -2
+    <if test="userId != null">
+       and user_id = #{userId,jdbcType=BIGINT}
+    </if>
     <if test="title != null">
-      and name = #{title,jdbcType=VARCHAR}
+      and name like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if>
     <if test="originClass != null">
       and origin_class = #{originClass,jdbcType=INTEGER}
@@ -356,11 +361,14 @@
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select a.*,b.nick as author
-    from (select packet_id, user_id, name, image,origin_class, release_date, price
+    from (select packet_id, user_id, name, image,origin_class, release_date, price,statuss,num
     from problem_packet
-    where statuss != 0
+    where statuss != -2
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
     <if test="title != null">
-      and name = #{title,jdbcType=VARCHAR}
+      and name like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if>
     <if test="originClass != null">
       and origin_class = #{originClass,jdbcType=INTEGER}

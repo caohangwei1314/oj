@@ -60,7 +60,7 @@ public class PacketImpl implements PacketService {
 
     @Override
     public PageBean selectList(Conditions record){
-        int count = problemPacketMapper.count(record.getTitle());
+        int count = problemPacketMapper.count(record);
         if(count<1)
             return null;
         PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());

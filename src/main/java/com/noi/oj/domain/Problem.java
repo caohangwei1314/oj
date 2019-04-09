@@ -42,6 +42,8 @@ public class Problem implements Serializable {
 
     private List<Tag> tags;
 
+    private Short result;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getProblemId() {
@@ -178,6 +180,14 @@ public class Problem implements Serializable {
 
     public List<Tag> getTags() {
         return tags;
+    }
+
+    public void setResult(Short result) {
+        this.result = result;
+    }
+
+    public Short getResult() {
+        return result;
     }
 
     @Override
