@@ -43,4 +43,6 @@ public interface ProblemPacketMapper {
     int count(Conditions record);
 
     List<ProblemPacket> selectList(Conditions record);
+
+    ProblemPacket isBuy(ProblemPacket record);
 }

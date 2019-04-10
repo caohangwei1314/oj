@@ -23,4 +23,6 @@ public interface PacketService {
 
     boolean setPacketProfile(MultipartFile profile,Integer pkId);
 
+    int isBuy(ProblemPacket record);
+
 }

@@ -79,4 +79,13 @@ public class PacketController extends BaseController{
         }
         return msg;
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Map<String,Object> isBuy(@RequestParam("id") Integer id, HttpServletRequest request){
+        ProblemPacket packet = new ProblemPacket();
+        packet.setPacketId(id);
+        packet.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
+        setMsg(packetService.isBuy(packet),null,null);
+        return msg;
+    }
 }

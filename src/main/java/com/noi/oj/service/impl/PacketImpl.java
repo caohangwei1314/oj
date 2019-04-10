@@ -115,6 +115,14 @@ public class PacketImpl implements PacketService {
         }
     }
 
+    @Override
+    public int isBuy(ProblemPacket record){
+        if(problemPacketMapper.isBuy(record) != null)
+            return 1;
+        else
+            return 0;
+    }
+
     private String getUrl(String path){
         if("".equals(path) || path==null)
             return null;
