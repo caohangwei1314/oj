@@ -444,6 +444,9 @@
       <if test="sex != null">
         sex = #{sex,jdbcType=TINYINT},
       </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>

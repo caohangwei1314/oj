@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -139,5 +140,12 @@ public class UsersImpl implements UsersService {
         Users users = selectByPrimaryKey(pkId);
         users.setSubmit(users.getSubmit()+1);
         return updateByPrimaryKeySelective(users)>0;
+    }
+
+    @Override
+    public int userRecharge(Users users){
+        Users usered = selectByPrimaryKey(users.getUserId());
+        users.setBalance(usered.getBalance().add(users.getBalance()));
+        return updateByPrimaryKeySelective(users);
     }
 }

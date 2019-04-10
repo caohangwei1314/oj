@@ -164,4 +164,11 @@ public class UsersController extends BaseController{
         }
         return msg;
     }
+
+    @RequestMapping(value = "/balance",method = RequestMethod.POST)
+    public Map<String,Object> recharge(@RequestBody Users users,HttpServletRequest request){
+        users.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
+        setMsg(usersService.userRecharge(users),null,null);
+        return msg;
+    }
 }

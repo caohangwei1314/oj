@@ -22,4 +22,6 @@ public interface UsersService {
     boolean setUserProfile(MultipartFile profile, HttpServletRequest request);
 
     boolean updateUsersSubmit(Long pkId);
+
+    int userRecharge(Users users);
 }
