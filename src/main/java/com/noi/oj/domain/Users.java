@@ -1,6 +1,7 @@
 package com.noi.oj.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -48,6 +49,8 @@ public class Users implements Serializable {
     private Date birthday;
 
     private Byte sex;
+
+    private BigDecimal balance;
 
     private static final long serialVersionUID = 1L;
 
@@ -217,6 +220,14 @@ public class Users implements Serializable {
 
     public void setSex(Byte sex) {
         this.sex = sex;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     @Override
