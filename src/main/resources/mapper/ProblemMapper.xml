@@ -132,13 +132,14 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select a.*,c.name
+    select a.*,c.name,c.packet_id,d.difficulty
     from (select problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted,
     submit, solved, description, input, output, sample_input, sample_output, hint
     from problem
     where problem_id = #{problemId,jdbcType=INTEGER}) as a
     inner join problem_packet_ship as b on a.problem_id=b.problem_id
     inner join problem_packet as c on b.packet_id = c.packet_id
+    inner join problem_class as d on a.problem_id = d.problem_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from problem
