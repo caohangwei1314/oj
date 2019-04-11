@@ -6,6 +6,7 @@ import com.noi.oj.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,8 @@ public class ReplyController extends BaseController{
     private ReplyService replyService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Reply record){
+    public Map<String,Object> insert(@RequestBody Reply record, HttpServletRequest request){
+        record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
         setMsg(replyService.insert(record),null,null);
         return msg;
     }

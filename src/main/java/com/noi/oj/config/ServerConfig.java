@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+@Component
 public class ServerConfig{
 
     private int serverPort=9999;

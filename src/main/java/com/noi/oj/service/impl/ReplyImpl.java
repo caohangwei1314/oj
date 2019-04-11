@@ -4,6 +4,7 @@ import com.noi.oj.dao.ReplyMapper;
 import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Reply;
 import com.noi.oj.service.ReplyService;
+import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class ReplyImpl implements ReplyService {
 
     @Autowired
     private ReplyMapper replyMapper;
+
+    @Autowired
+    private UsersService usersService;
 
     @Override
     public int insert(Reply record){
@@ -39,7 +43,10 @@ public class ReplyImpl implements ReplyService {
         int count = replyMapper.count(record);
         if(count<1)
             return null;
-        return replyMapper.selectList(record);
+        List<Reply> replies = replyMapper.selectList(record);
+        for(Reply reply:replies)
+            reply.setUsers(usersService.selectUserInfo(reply.getUserId()));
+        return replies;
     }
 
 }

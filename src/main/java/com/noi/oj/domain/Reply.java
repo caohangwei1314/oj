@@ -19,6 +19,10 @@ public class Reply implements Serializable {
 
     private Integer topicId;
 
+    private Long userId;
+
+    private Users users;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -67,6 +71,22 @@ public class Reply implements Serializable {
 
     public void setTopicId(Integer topicId) {
         this.topicId = topicId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override

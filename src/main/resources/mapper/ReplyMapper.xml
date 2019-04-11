@@ -8,6 +8,7 @@
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
     <result column="reply_id" jdbcType="INTEGER" property="replyId" />
     <result column="topic_id" jdbcType="INTEGER" property="topicId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -137,6 +138,9 @@
       <if test="topicId != null">
         topic_id,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -156,6 +160,9 @@
       </if>
       <if test="topicId != null">
         #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
