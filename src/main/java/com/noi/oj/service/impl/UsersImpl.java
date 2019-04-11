@@ -5,6 +5,7 @@ import com.noi.oj.dao.UsersMapper;
 import com.noi.oj.domain.Users;
 import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.IpUtil;
+import com.noi.oj.utils.PageBean;
 import com.noi.oj.utils.Sha2Util;
 import com.noi.oj.utils.SystemConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -147,5 +149,10 @@ public class UsersImpl implements UsersService {
         Users usered = selectByPrimaryKey(users.getUserId());
         users.setBalance(usered.getBalance().add(users.getBalance()));
         return updateByPrimaryKeySelective(users);
+    }
+
+    @Override
+    public List<Users> rank(){
+        return usersMapper.rank();
     }
 }

@@ -1,10 +1,12 @@
 package com.noi.oj.service;
 
 import com.noi.oj.domain.Users;
+import com.noi.oj.utils.PageBean;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public interface UsersService {
     int insertSelective(Users record);
@@ -24,4 +26,6 @@ public interface UsersService {
     boolean updateUsersSubmit(Long pkId);
 
     int userRecharge(Users users);
+
+    List<Users> rank();
 }

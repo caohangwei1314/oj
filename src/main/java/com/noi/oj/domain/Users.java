@@ -52,6 +52,8 @@ public class Users implements Serializable {
 
     private BigDecimal balance;
 
+    private Integer count;
+
     private static final long serialVersionUID = 1L;
 
     public Long getUserId() {
@@ -228,6 +230,14 @@ public class Users implements Serializable {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override

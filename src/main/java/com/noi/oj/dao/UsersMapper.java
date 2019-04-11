@@ -34,4 +34,6 @@ public interface UsersMapper {
     int updateByPrimaryKey(Users record);
 
     Users selectByEmail(@Param("email") String email);
+
+    List<Users> rank();
 }

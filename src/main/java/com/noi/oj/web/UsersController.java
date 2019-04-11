@@ -171,4 +171,10 @@ public class UsersController extends BaseController{
         setMsg(usersService.userRecharge(users),null,null);
         return msg;
     }
+
+    @RequestMapping(value = "/rank",method = RequestMethod.GET)
+    public Map<String,Object> rank(){
+        setMsg(1,null,usersService.rank());
+        return msg;
+    }
 }
