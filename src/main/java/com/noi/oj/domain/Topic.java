@@ -25,6 +25,8 @@ public class Topic implements Serializable {
 
     private Date createAt;
 
+    private Users users;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getTid() {
@@ -97,6 +99,14 @@ public class Topic implements Serializable {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override

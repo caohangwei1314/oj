@@ -4,12 +4,16 @@ import com.noi.oj.config.ServerConfig;
 import com.noi.oj.dao.SolutionMapper;
 import com.noi.oj.dao.SourceCodeMapper;
 import com.noi.oj.dao.SourceCodeUserMapper;
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Solution;
 import com.noi.oj.domain.SourceCode;
 import com.noi.oj.domain.SourceCodeUser;
 import com.noi.oj.service.SolutionService;
+import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SolutionImpl implements SolutionService {
@@ -47,6 +51,20 @@ public class SolutionImpl implements SolutionService {
             if(record.getSource()!=null)
                 flag = updateSourceCode(record);
         return flag;
+    }
+
+    @Override
+    public PageBean selectList(Conditions record){
+        int count = solutionMapper.count(record);
+        if(count<1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        record.setOffset(pageBean.getStart());
+        List<Solution> solutions = solutionMapper.selectList(record);
+        if(solutions==null || solutions.size()<1)
+            return null;
+        pageBean.setList(solutions);
+        return pageBean;
     }
 
     private int insertSourceCode(Solution record){

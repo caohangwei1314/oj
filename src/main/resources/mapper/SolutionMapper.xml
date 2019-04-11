@@ -405,4 +405,22 @@
       judger = #{judger,jdbcType=CHAR}
     where solution_id = #{solutionId,jdbcType=INTEGER}
   </update>
+  <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
+    select count(*)
+    from solution
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
+    select *
+    from solution
+    where user_id = #{userId,jdbcType=BIGINT}
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
 </mapper>

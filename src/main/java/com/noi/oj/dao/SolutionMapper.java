@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Solution;
 import com.noi.oj.domain.SolutionExample;
 import java.util.List;
@@ -32,4 +33,8 @@ public interface SolutionMapper {
     int updateByPrimaryKeySelective(Solution record);
 
     int updateByPrimaryKey(Solution record);
+
+    int count(Conditions record);
+
+    List<Solution> selectList(Conditions record);
 }
