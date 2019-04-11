@@ -536,7 +536,7 @@
         and is_free = #{isFree,jdbcType=TINYINT}
     </if> ) as e on a.problem_id=e.problem_id
     <if test="userId != null">
-      left join (select problem_id,result from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as f
+      left join (select distinct problem_id,result from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as f
       on a.problem_id = f.problem_id
     </if>
     <if test="orderBy != null">

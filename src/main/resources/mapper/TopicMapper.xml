@@ -268,8 +268,9 @@
   <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(*)
     from topic
+    where status = 0
     <if test="problemId != null">
-      where pid = #{problemId,jdbcType=INTEGER}
+      and pid = #{problemId,jdbcType=INTEGER}
     </if>
   </select>
   <select id="selectList" resultMap="BaseResultMap">
