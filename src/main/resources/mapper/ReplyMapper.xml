@@ -249,5 +249,6 @@
     select *
     from reply
     where topic_id = #{topicId,jdbcType=INTEGER}
+    order by create_at desc
   </select>
 </mapper>
