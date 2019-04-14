@@ -408,12 +408,25 @@
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
     select count(*)
     from solution
-    where user_id = #{userId,jdbcType=BIGINT}
+    where 1=1
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="problemId != null">
+      and problem_id = #{problemId,jdbcType=INTEGER}
+    </if>
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select *
     from solution
-    where user_id = #{userId,jdbcType=BIGINT}
+    where 1=1
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="problemId != null">
+      and problem_id = #{problemId,jdbcType=INTEGER}
+    </if>
+    order by in_date desc
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}
