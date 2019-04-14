@@ -9,5 +9,5 @@ public class SystemConstant {
 
     public static final String LINUX_Problem_PATH = "/home/judge/data/";
 
-    public static final String IP = "192.168.10.112";
+    public static final String IP = "47.100.24.46";
 }

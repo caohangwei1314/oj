@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 @Component
 public class ServerConfig{
 
-    private int serverPort=9999;
+    private int serverPort=8080;
 
     public int getServerPort(){
         return this.serverPort;
