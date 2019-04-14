@@ -19,6 +19,7 @@
     <result column="pass_rate" jdbcType="DECIMAL" property="passRate" />
     <result column="lint_error" jdbcType="INTEGER" property="lintError" />
     <result column="judger" jdbcType="CHAR" property="judger" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -417,7 +418,8 @@
     </if>
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
-    select *
+    select a.*,b.title
+    from (select *
     from solution
     where 1=1
     <if test="userId != null">
@@ -425,8 +427,10 @@
     </if>
     <if test="problemId != null">
       and problem_id = #{problemId,jdbcType=INTEGER}
-    </if>
-    order by in_date desc
+    </if>) as a
+    inner join (select problem_id,title from problem) as b
+    on a.problem_id = b.problem_id
+    order by a.in_date desc
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}

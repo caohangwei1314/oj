@@ -44,6 +44,8 @@ public class Solution implements Serializable {
 
     private String source;
 
+    private String title;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSolutionId() {
@@ -188,6 +190,14 @@ public class Solution implements Serializable {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
