@@ -54,6 +54,9 @@ public class PacketImpl implements PacketService {
     @Override
     public ProblemPacket selectByPrimaryKey(Integer packetId){
         ProblemPacket problemPacket = problemPacketMapper.selectByPrimaryKey(packetId);
+        Conditions record = new Conditions();
+        record.setPacketId(problemPacket.getPacketId());
+        problemPacket.setCount(problemPacketMapper.count(record));
         problemPacket.setImage(getUrl(problemPacket.getImage()));
         return problemPacket;
     }
