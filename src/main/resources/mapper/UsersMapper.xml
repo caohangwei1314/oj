@@ -478,14 +478,22 @@
   <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from users where email = #{email,jdbcType=VARCHAR}
   </select>
-  <select id="rank" resultMap="BaseResultMap">
+  <select id="rank" resultMap="BaseResultMap" parameterType="com.noi.oj.domain.Users">
     select a.*,IFNULL(b.count,0) as count
     from (select user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
     reg_time, nick, school, image, user_class, city, province, experience, introduce,
-    birthday, sex,balance from users) as a
+    birthday, sex,balance from users
+    where 1=1
+    <if test="nick != null">
+      and nick like concat('%',#{nick,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="school != null">
+      and school like concat('%',#{nick,jdbcType=VARCHAR},'%')
+    </if>
+    ) as a
     left join (select count(user_id) as count,user_id from solution GROUP BY user_id) as b
     on a.user_id = b.user_id
-	ORDER BY b.count desc
+	ORDER BY count desc
 	limit 50
   </select>
 </mapper>

@@ -27,5 +27,5 @@ public interface UsersService {
 
     int userRecharge(Users users);
 
-    List<Users> rank();
+    List<Users> rank(Users users);
 }

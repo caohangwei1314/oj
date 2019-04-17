@@ -152,7 +152,7 @@ public class UsersImpl implements UsersService {
     }
 
     @Override
-    public List<Users> rank(){
-        return usersMapper.rank();
+    public List<Users> rank(Users users){
+        return usersMapper.rank(users);
     }
 }

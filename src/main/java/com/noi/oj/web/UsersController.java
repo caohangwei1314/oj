@@ -5,12 +5,14 @@ import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.IpUtil;
 import com.noi.oj.utils.JwtUtil;
 import com.noi.oj.utils.Sha2Util;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -172,9 +174,14 @@ public class UsersController extends BaseController{
         return msg;
     }
 
-    @RequestMapping(value = "/rank",method = RequestMethod.GET)
-    public Map<String,Object> rank(){
-        setMsg(1,null,usersService.rank());
+    @RequestMapping(value = "/rank",method = RequestMethod.POST)
+    public Map<String,Object> rank(@RequestBody Users users){
+        List<Users> userList = usersService.rank(users);
+        if(userList.size()>0&&userList!=null){
+            setMsg(1,null,userList);
+        }else{
+            setMsg(0,"查询失败",null);
+        }
         return msg;
     }
 }

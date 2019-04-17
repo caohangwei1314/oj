@@ -35,5 +35,5 @@ public interface UsersMapper {
 
     Users selectByEmail(@Param("email") String email);
 
-    List<Users> rank();
+    List<Users> rank(Users record);
 }
