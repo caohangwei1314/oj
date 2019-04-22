@@ -119,7 +119,7 @@ public class UsersController extends BaseController{
         Long usersId = Long.parseLong(request.getAttribute("userId").toString());
         String password = record.get("password").toString();
         String resetPassword = record.get("resetPassword").toString();
-        Users users = usersService.selectByPrimaryKey(usersId);
+        Users users = usersService.selectPasswordByPrimaryKey(usersId);
         if(users.getPassword().equals(Sha2Util.SHA256(password)))
         {
             users.setPassword(Sha2Util.SHA256(resetPassword));

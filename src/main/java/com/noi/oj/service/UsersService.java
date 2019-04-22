@@ -28,4 +28,6 @@ public interface UsersService {
     int userRecharge(Users users);
 
     List<Users> rank(Users users);
+
+    Users selectPasswordByPrimaryKey(Long pkId);
 }

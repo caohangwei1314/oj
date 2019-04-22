@@ -36,4 +36,6 @@ public interface UsersMapper {
     Users selectByEmail(@Param("email") String email);
 
     List<Users> rank(Users record);
+
+    Users selectPasswordByPrimaryKey(Long pkId);
 }

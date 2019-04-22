@@ -496,4 +496,9 @@
 	ORDER BY count desc
 	limit 50
   </select>
+  <select id="selectPasswordByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select password,user_id
+    from users
+    where user_id = #{pkId,jdbcType=BIGINT}
+  </select>
 </mapper>

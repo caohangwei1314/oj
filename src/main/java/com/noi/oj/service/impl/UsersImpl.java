@@ -112,4 +112,10 @@ public class UsersImpl implements UsersService {
     public List<Users> rank(Users users){
         return usersMapper.rank(users);
     }
+
+    @Override
+    public Users selectPasswordByPrimaryKey(Long pkId){
+        return usersMapper.selectPasswordByPrimaryKey(pkId);
+    }
+
 }
