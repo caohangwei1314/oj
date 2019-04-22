@@ -194,4 +194,9 @@
     delete from problem_packet_ship
     where packet_id = #{packetId,jdbcType=INTEGER}
   </delete>
+  <select id="selectPacketIdByProblemId" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
+    select packet_id
+    from problem_packet_ship
+    where problem_id = #{problemId,jdbcType=INTEGER}
+  </select>
 </mapper>

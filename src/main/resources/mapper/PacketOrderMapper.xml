@@ -217,14 +217,17 @@
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
-    select count(*)
-    from packet_order
-    where 1=1
+    select count(a.packet_id)
+    from (select packet_id from packet_order where 1=1
     <if test="userId != null">
       and user_id = #{userId,jdbcType=BIGINT}
     </if>
     <if test="packetId != null">
       and packet_id = #{packetId,jdbcType=INTEGER}
+    </if>)as a
+    <if test="problemId != null">
+      inner join (select packet_id from problem_packet_ship where problem_id = #{problemId,jdbcType=INTEGER})as b
+      on a.packet_id=b.packet_id
     </if>
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">

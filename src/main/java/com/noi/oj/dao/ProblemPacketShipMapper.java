@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.ProblemPacketShip;
 import com.noi.oj.domain.ProblemPacketShipExample;
 import java.util.List;
@@ -36,4 +37,6 @@ public interface ProblemPacketShipMapper {
     int deleteByProblemId(Integer problemId);
 
     int deleteByPacketId(Integer packetId);
+
+    int selectPacketIdByProblemId(Conditions record);
 }

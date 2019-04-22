@@ -86,4 +86,18 @@ public class ProblemController extends BaseController{
         }
         return msg;
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Map<String,Object> isBuy(@RequestParam("id") Integer id,HttpServletRequest request){
+        try {
+            Conditions record = new Conditions();
+            record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
+            record.setProblemId(id);
+            Map<String,Object> map = problemService.isBuy(record);
+            setMsg(1,null,map);
+        }catch (Exception e){
+            setMsg(0,e.getMessage(),null);
+        }
+        return msg;
+    }
 }

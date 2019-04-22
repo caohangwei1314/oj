@@ -18,4 +18,6 @@ public interface ProblemService {
 
     int updateByPrimaryKeySelective(Map<String,Object> map);
 
+    Map<String,Object> isBuy(Conditions id);
+
 }
