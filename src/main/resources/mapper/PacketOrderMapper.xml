@@ -234,6 +234,10 @@
     select
     <include refid="Base_Column_List"/>
     from packet_order
+    where 1=1
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}
