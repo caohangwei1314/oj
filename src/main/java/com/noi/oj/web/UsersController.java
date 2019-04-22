@@ -6,6 +6,7 @@ import com.noi.oj.utils.IpUtil;
 import com.noi.oj.utils.JwtUtil;
 import com.noi.oj.utils.Sha2Util;
 import org.apache.catalina.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,6 +93,16 @@ public class UsersController extends BaseController{
             msg.put("code","0");
             msg.put("msg","失败");
         }
+        return msg;
+    }
+
+    @RequestMapping(value = "/detail",method = RequestMethod.GET)
+    public Map<String,Object> getdetail(@RequestParam("id") Long userId){
+        Users users = usersService.selectByPrimaryKey(userId);
+        if(users!=null)
+            setMsg(1,null,users);
+        else
+            setMsg(0,null,null);
         return msg;
     }
 
