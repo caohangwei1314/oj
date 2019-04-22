@@ -1,7 +1,9 @@
 package com.noi.oj.service.impl;
 
 import com.noi.oj.config.ServerConfig;
+import com.noi.oj.dao.PacketOrderMapper;
 import com.noi.oj.dao.UsersMapper;
+import com.noi.oj.domain.PacketOrder;
 import com.noi.oj.domain.Users;
 import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.*;
@@ -28,6 +30,9 @@ public class UsersImpl implements UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private PacketOrderMapper packetOrderMapper;
 
     @Override
     public int insertSelective(Users record)
@@ -103,9 +108,20 @@ public class UsersImpl implements UsersService {
 
     @Override
     public int userRecharge(Users users){
-        Users usered = selectByPrimaryKey(users.getUserId());
-        users.setBalance(usered.getBalance().add(users.getBalance()));
-        return updateByPrimaryKeySelective(users);
+        PacketOrder order = new PacketOrder();
+        order.setUserId(users.getUserId());
+        order.setCreateDate(new Date());
+        order.setPacketId(-1);
+        order.setPrice(users.getBalance());
+        if(packetOrderMapper.insertSelective(order)>0){
+            Users usered = selectByPrimaryKey(users.getUserId());
+            users.setBalance(usered.getBalance().add(users.getBalance()));
+            return updateByPrimaryKeySelective(users);
+        }
+        else{
+            return 0;
+        }
+
     }
 
     @Override

@@ -117,7 +117,7 @@ public class PacketImpl implements PacketService {
 
     @Override
     public int isBuy(Conditions record){
-        return packetOrderMapper.count(record);
+        return packetOrderMapper.count(record) > 0 ? 1 : 0;
     }
 
     private String getUrl(String path){

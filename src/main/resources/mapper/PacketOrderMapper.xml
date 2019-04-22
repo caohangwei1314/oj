@@ -7,6 +7,7 @@
     <result column="packet_id" jdbcType="INTEGER" property="packetId" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="name" jdbcType="VARCHAR" property="name"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -218,7 +219,7 @@
   </update>
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
     select count(a.packet_id)
-    from (select packet_id from packet_order where 1=1
+    from (select packet_id from packet_order where packet_id != -1
     <if test="userId != null">
       and user_id = #{userId,jdbcType=BIGINT}
     </if>
@@ -231,13 +232,14 @@
     </if>
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from packet_order
-    where 1=1
+    select a.*,IFNULL(b.name,"充值") as name
+    from (select * from packet_order where 1=1
     <if test="userId != null">
       and user_id = #{userId,jdbcType=BIGINT}
-    </if>
+    </if>) as a
+    left join (select packet_id,name from problem_packet) as b
+    on a.packet_id = b.packet_id
+    order by a.create_date desc
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}

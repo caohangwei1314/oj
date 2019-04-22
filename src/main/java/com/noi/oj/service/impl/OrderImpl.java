@@ -27,10 +27,17 @@ public class OrderImpl implements OrderService {
         if(users.getBalance().compareTo(record.getPrice()) < 0)
             return 0;
         users.setBalance(users.getBalance().subtract(record.getPrice()));
-        if(usersMapper.updateByPrimaryKeySelective(users)>0)
+        if(usersMapper.updateByPrimaryKeySelective(users)>0){
+            Conditions records = new Conditions();
+            records.setUserId(record.getUserId());
+            records.setPacketId(record.getPacketId());
+            if(packetOrderMapper.count(records)>0)
+                return 0;
             return packetOrderMapper.insert(record);
-        else
+        }
+        else{
             return 0;
+        }
     }
 
     @Override
