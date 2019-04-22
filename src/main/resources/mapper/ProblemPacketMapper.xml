@@ -410,6 +410,6 @@
   <select id="isBuy" parameterType="com.noi.oj.domain.ProblemPacket" resultMap="ResultMapWithBLOBs">
     select *
     from problem_packet
-    where packet_id = #{packetId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=BIGINT}
+    where packet_id = #{packetId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=BIGINT} or packet_id = 0
   </select>
 </mapper>
