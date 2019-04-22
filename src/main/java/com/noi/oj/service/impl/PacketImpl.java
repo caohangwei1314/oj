@@ -1,13 +1,7 @@
 package com.noi.oj.service.impl;
 
-import com.noi.oj.dao.ProblemMapper;
-import com.noi.oj.dao.ProblemPacketMapper;
-import com.noi.oj.dao.ProblemPacketShipMapper;
-import com.noi.oj.dao.UsersMapper;
-import com.noi.oj.domain.Conditions;
-import com.noi.oj.domain.ProblemPacket;
-import com.noi.oj.domain.ProblemPacketShip;
-import com.noi.oj.domain.Users;
+import com.noi.oj.dao.*;
+import com.noi.oj.domain.*;
 import com.noi.oj.service.PacketService;
 import com.noi.oj.service.ProblemService;
 import com.noi.oj.utils.PageBean;
@@ -34,6 +28,9 @@ public class PacketImpl implements PacketService {
 
     @Autowired
     private ProblemMapper problemMapper;
+
+    @Autowired
+    private PacketOrderMapper packetOrderMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer packetId){
@@ -119,11 +116,8 @@ public class PacketImpl implements PacketService {
     }
 
     @Override
-    public int isBuy(ProblemPacket record){
-        if(problemPacketMapper.isBuy(record) != null)
-            return 1;
-        else
-            return 0;
+    public int isBuy(Conditions record){
+        return packetOrderMapper.count(record);
     }
 
     private String getUrl(String path){

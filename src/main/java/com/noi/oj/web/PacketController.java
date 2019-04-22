@@ -1,6 +1,7 @@
 package com.noi.oj.web;
 
 import com.noi.oj.domain.Conditions;
+import com.noi.oj.domain.PacketOrder;
 import com.noi.oj.domain.ProblemPacket;
 import com.noi.oj.service.PacketService;
 import com.noi.oj.service.ProblemService;
@@ -82,7 +83,7 @@ public class PacketController extends BaseController{
 
     @RequestMapping(method = RequestMethod.GET)
     public Map<String,Object> isBuy(@RequestParam("id") Integer id, HttpServletRequest request){
-        ProblemPacket packet = new ProblemPacket();
+        Conditions packet = new Conditions();
         packet.setPacketId(id);
         packet.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
         setMsg(packetService.isBuy(packet),null,null);

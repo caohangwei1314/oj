@@ -219,7 +219,13 @@
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
     select count(*)
     from packet_order
-    where user_id = #{userId,jdbcType=BIGINT}
+    where 1=1
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="packetId != null">
+      and packet_id = #{packetId,jdbcType=INTEGER}
+    </if>
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select
