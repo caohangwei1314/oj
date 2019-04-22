@@ -69,7 +69,7 @@ public class UsersImpl implements UsersService {
     public int updateByPrimaryKey(Users record)
     {
         record.setImage(null);
-        return usersMapper.updateByPrimaryKey(record);
+        return usersMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
@@ -116,6 +116,11 @@ public class UsersImpl implements UsersService {
     @Override
     public Users selectPasswordByPrimaryKey(Long pkId){
         return usersMapper.selectPasswordByPrimaryKey(pkId);
+    }
+
+    @Override
+    public int selectUserBalance(Long pkId){
+        return usersMapper.selectUserBalance(pkId);
     }
 
 }

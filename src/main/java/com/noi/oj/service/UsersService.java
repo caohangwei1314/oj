@@ -30,4 +30,6 @@ public interface UsersService {
     List<Users> rank(Users users);
 
     Users selectPasswordByPrimaryKey(Long pkId);
+
+    int selectUserBalance(Long pkId);
 }

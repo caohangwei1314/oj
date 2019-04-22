@@ -185,6 +185,13 @@ public class UsersController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/balance",method = RequestMethod.GET)
+    public Map<String,Object> selectBalance(HttpServletRequest request){
+        Long userId = Long.parseLong(request.getAttribute("userId").toString());
+        setMsg(1,null,usersService.selectUserBalance(userId));
+        return msg;
+    }
+
     @RequestMapping(value = "/rank",method = RequestMethod.POST)
     public Map<String,Object> rank(@RequestBody Users users){
         List<Users> userList = usersService.rank(users);

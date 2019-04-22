@@ -33,6 +33,8 @@ public interface UsersMapper {
 
     int updateByPrimaryKey(Users record);
 
+    int selectUserBalance(Long pkId);
+
     Users selectByEmail(@Param("email") String email);
 
     List<Users> rank(Users record);

@@ -501,4 +501,9 @@
     from users
     where user_id = #{pkId,jdbcType=BIGINT}
   </select>
+  <select id="selectUserBalance" resultType="java.lang.Integer">
+    select balance
+    from users
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>
