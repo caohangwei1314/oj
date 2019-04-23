@@ -4,10 +4,7 @@ import com.noi.oj.config.ServerConfig;
 import com.noi.oj.dao.SolutionMapper;
 import com.noi.oj.dao.SourceCodeMapper;
 import com.noi.oj.dao.SourceCodeUserMapper;
-import com.noi.oj.domain.Conditions;
-import com.noi.oj.domain.Solution;
-import com.noi.oj.domain.SourceCode;
-import com.noi.oj.domain.SourceCodeUser;
+import com.noi.oj.domain.*;
 import com.noi.oj.service.SolutionService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +62,10 @@ public class SolutionImpl implements SolutionService {
             return null;
         pageBean.setList(solutions);
         return pageBean;
+    }
+
+    public List<SubmitMap> submit(Long userId){
+        return solutionMapper.submit(userId);
     }
 
     private int insertSourceCode(Solution record){

@@ -5,6 +5,7 @@ import com.noi.oj.domain.Solution;
 import com.noi.oj.domain.SolutionExample;
 import java.util.List;
 
+import com.noi.oj.domain.SubmitMap;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -37,4 +38,6 @@ public interface SolutionMapper {
     int count(Conditions record);
 
     List<Solution> selectList(Conditions record);
+
+    List<SubmitMap> submit(Long userId);
 }
