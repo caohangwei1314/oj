@@ -14,4 +14,6 @@ public interface TagService {
 
     int delete(Integer id);
 
+    List<Tag> statistic(Long userId);
+
 }

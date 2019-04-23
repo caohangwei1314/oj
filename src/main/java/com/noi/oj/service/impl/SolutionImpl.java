@@ -64,6 +64,7 @@ public class SolutionImpl implements SolutionService {
         return pageBean;
     }
 
+    @Override
     public List<SubmitMap> submit(Long userId){
         return solutionMapper.submit(userId);
     }

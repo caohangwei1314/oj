@@ -12,6 +12,8 @@ public class Tag implements Serializable {
 
     private Integer classId;
 
+    private int count;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getTagId() {
@@ -36,6 +38,14 @@ public class Tag implements Serializable {
 
     public void setClassId(Integer classId) {
         this.classId = classId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override

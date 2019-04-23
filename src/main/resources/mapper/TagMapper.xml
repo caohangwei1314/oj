@@ -195,4 +195,13 @@
     where tag_id in
     (select tag_id from problem_tag_ship where problem_id=#{problemId,jdbcType=INTEGER})
   </select>
+  <select id="statisticTags" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select c.*,count(c.tag_id) as count
+    from (select distinct problem_id from solution where user_id = #{userId,jdbcType=BIGINT}) as a
+    inner join (select problem_id,tag_id from problem_tag_ship) as b
+    on a.problem_id = b.problem_id
+    inner join tag as c
+    on b.tag_id = c.tag_id
+    group by c.tag_id
+  </select>
 </mapper>
