@@ -16,4 +16,6 @@ public interface TagService {
 
     List<Tag> statistic(Long userId);
 
+    List<Tag> statisticClass(Long userId);
+
 }

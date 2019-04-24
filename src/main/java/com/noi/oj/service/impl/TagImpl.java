@@ -39,4 +39,9 @@ public class TagImpl implements TagService {
         return tagMapper.statisticTags(userId);
     }
 
+    @Override
+    public List<Tag> statisticClass(Long userId){
+        return tagMapper.statisticClass(userId);
+    }
+
 }

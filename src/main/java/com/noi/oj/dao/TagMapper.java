@@ -38,4 +38,6 @@ public interface TagMapper {
     List<Tag> selectByProblemId(Integer problemId);
 
     List<Tag> statisticTags(Long userId);
+
+    List<Tag> statisticClass(Long userId);
 }
