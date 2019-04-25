@@ -443,7 +443,7 @@
   <select id="submit" parameterType="java.lang.Long" resultType="com.noi.oj.domain.SubmitMap">
     select DATE_FORMAT(in_date,'%Y-%m-%d') as date,count(solution_id) as count
     from solution
-    where user_id=#{userId,jdbcType=BIGINT} and YEAR(in_date) = YEAR (NOW())
+    where user_id=#{userId,jdbcType=BIGINT} and (YEAR(in_date) between YEAR (NOW())-1 AND YEAR (NOW()))
     group by date
   </select>
 </mapper>
