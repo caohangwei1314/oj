@@ -197,7 +197,7 @@
   </select>
   <select id="statisticTags" resultMap="BaseResultMap" parameterType="java.lang.Long">
     select c.*,count(c.class_id) as count
-    from (select distinct problem_id from solution where user_id = #{userId,jdbcType=BIGINT}) as a
+    from (select distinct problem_id from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as a
     inner join (select problem_id,tag_id from problem_tag_ship) as b
     on a.problem_id = b.problem_id
     inner join tag as c
@@ -206,7 +206,7 @@
   </select>
   <select id="statisticClass" resultMap="BaseResultMap" parameterType="java.lang.Long">
     select c.class_id,count(class_id) as count
-    from (select distinct problem_id from solution where user_id = #{userId,jdbcType=BIGINT}) as a
+    from (select distinct problem_id from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as a
     inner join (select problem_id,tag_id from problem_tag_ship) as b
     on a.problem_id = b.problem_id
     inner join tag as c
