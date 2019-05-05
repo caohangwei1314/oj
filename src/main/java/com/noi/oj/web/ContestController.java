@@ -1,5 +1,6 @@
 package com.noi.oj.web;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Contest;
 import com.noi.oj.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class ContestController extends BaseController{
     public Map<String,Object> insert(@RequestBody Contest record, HttpServletRequest request){
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
         setMsg(contestService.insertSelective(record),null,record.getContestId());
+        return msg;
+    }
+
+    @RequestMapping(value = "/rank",method = RequestMethod.POST)
+    public Map<String,Object> rank(@RequestBody Conditions record){
+        setMsg(1,null,contestService.rank(record));
         return msg;
     }
 

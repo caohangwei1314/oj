@@ -61,8 +61,8 @@ public class UploadUtils {
             return null;
         String[] limit = path.split("\\\\");
         ServerConfig serverConfig = new ServerConfig();
-        return serverConfig.getUrl() + File.separator + "profile"
-                + File.separator + name + File.separator + limit[limit.length-1];
+        return serverConfig.getUrl() + "/" + "profile"
+                + "/" + name + "/" + limit[limit.length-1];
     }
 
     public static List<String> getUrlList(String path,String name){

@@ -503,7 +503,7 @@
       </if>
     </if>
   </select>
-  <select id="count" resultType="java.lang.Integer" parameterType="com.noi.oj.domain.Users">
+  <select id="count" resultType="java.lang.Integer" parameterType="com.noi.oj.domain.Conditions">
     select count(*)
     from users
     where 1=1

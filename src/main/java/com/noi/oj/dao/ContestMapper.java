@@ -1,9 +1,11 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Contest;
 import com.noi.oj.domain.ContestExample;
 import java.util.List;
 
+import com.noi.oj.domain.Users;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -38,4 +40,8 @@ public interface ContestMapper {
     int updateByPrimaryKeyWithBLOBs(Contest record);
 
     int updateByPrimaryKey(Contest record);
+
+    int count(Conditions record);
+
+    List<Users> rank(Conditions record);
 }

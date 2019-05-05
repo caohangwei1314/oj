@@ -3,9 +3,13 @@ package com.noi.oj.service.impl;
 import com.noi.oj.dao.ContestMapper;
 import com.noi.oj.dao.ContestProblemMapper;
 import com.noi.oj.dao.ProblemMapper;
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Contest;
 import com.noi.oj.domain.ContestProblem;
+import com.noi.oj.domain.Users;
 import com.noi.oj.service.ContestService;
+import com.noi.oj.utils.PageBean;
+import com.noi.oj.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +49,19 @@ public class ContestImpl implements ContestService {
         }else{
             return 0;
         }
+    }
+
+    @Override
+    public PageBean rank(Conditions record){
+        int count = contestMapper.count(record);
+        if(count<1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        record.setOffset(pageBean.getStart());
+        List<Users> usersList = contestMapper.rank(record);
+        for(Users users : usersList)
+            users.setImage(UploadUtils.getUrl(users.getImage(),"users"));
+        pageBean.setList(usersList);
+        return pageBean;
     }
 }
