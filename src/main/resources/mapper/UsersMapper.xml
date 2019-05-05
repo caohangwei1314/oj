@@ -488,7 +488,7 @@
       and nick like concat('%',#{nick,jdbcType=VARCHAR},'%')
     </if>
     <if test="school != null">
-      and school like concat('%',#{nick,jdbcType=VARCHAR},'%')
+      and school like concat('%',#{school,jdbcType=VARCHAR},'%')
     </if>
     ) as a
     left join (select count(user_id) as count,user_id from solution GROUP BY user_id) as b

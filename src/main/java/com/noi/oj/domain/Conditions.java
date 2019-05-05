@@ -36,6 +36,16 @@ public class Conditions {
 
     private String school;
 
+    private Integer ContestId;
+
+    public Integer getContestId() {
+        return ContestId;
+    }
+
+    public void setContestId(Integer contestId) {
+        ContestId = contestId;
+    }
+
     public String getSchool() {
         return school;
     }
