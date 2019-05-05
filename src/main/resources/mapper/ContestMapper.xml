@@ -146,7 +146,7 @@
       #{langmask,jdbcType=INTEGER}, #{password,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, 
       #{description,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.Contest">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.Contest" useGeneratedKeys="true" keyProperty="contestId">
     insert into contest
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="contestId != null">

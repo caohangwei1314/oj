@@ -3,8 +3,13 @@ package com.noi.oj.dao;
 import com.noi.oj.domain.Contest;
 import com.noi.oj.domain.ContestExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Mapper
 public interface ContestMapper {
     long countByExample(ContestExample example);
 

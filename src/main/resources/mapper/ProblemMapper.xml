@@ -551,4 +551,8 @@
         </if>
     </if>
   </select>
+  <select id="selectPrimaryKey" resultType="java.lang.Integer">
+    select problem_id
+    from problem
+  </select>
 </mapper>
