@@ -494,7 +494,25 @@
     left join (select count(user_id) as count,user_id from solution GROUP BY user_id) as b
     on a.user_id = b.user_id
 	ORDER BY count desc
-	limit 50
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="limit == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="count" resultType="java.lang.Integer" parameterType="com.noi.oj.domain.Users">
+    select count(*)
+    from users
+    where 1=1
+    <if test="nick != null">
+      and nick like concat('%',#{nick,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="school != null">
+      and school like concat('%',#{school,jdbcType=VARCHAR},'%')
+    </if>
   </select>
   <select id="selectPasswordByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select password,user_id

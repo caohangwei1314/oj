@@ -34,6 +34,16 @@ public class Conditions {
 
     private Integer packetId;
 
+    private String school;
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
     public void setLimit(Integer limit){
         this.limit=limit;
     }

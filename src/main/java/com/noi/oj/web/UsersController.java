@@ -1,9 +1,11 @@
 package com.noi.oj.web;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Users;
 import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.IpUtil;
 import com.noi.oj.utils.JwtUtil;
+import com.noi.oj.utils.PageBean;
 import com.noi.oj.utils.Sha2Util;
 import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Param;
@@ -193,9 +195,9 @@ public class UsersController extends BaseController{
     }
 
     @RequestMapping(value = "/rank",method = RequestMethod.POST)
-    public Map<String,Object> rank(@RequestBody Users users){
-        List<Users> userList = usersService.rank(users);
-        if(userList.size()>0&&userList!=null){
+    public Map<String,Object> rank(@RequestBody Conditions record){
+        PageBean userList = usersService.rank(record);
+        if(userList!=null){
             setMsg(1,null,userList);
         }else{
             setMsg(0,"查询失败",null);

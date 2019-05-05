@@ -3,6 +3,7 @@ package com.noi.oj.service.impl;
 import com.noi.oj.config.ServerConfig;
 import com.noi.oj.dao.PacketOrderMapper;
 import com.noi.oj.dao.UsersMapper;
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.PacketOrder;
 import com.noi.oj.domain.Users;
 import com.noi.oj.service.UsersService;
@@ -125,8 +126,14 @@ public class UsersImpl implements UsersService {
     }
 
     @Override
-    public List<Users> rank(Users users){
-        return usersMapper.rank(users);
+    public PageBean rank(Conditions record){
+        int count = usersMapper.count(record);
+        if(count<1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        record.setOffset(pageBean.getStart());
+        pageBean.setList(usersMapper.rank(record));
+        return pageBean;
     }
 
     @Override
