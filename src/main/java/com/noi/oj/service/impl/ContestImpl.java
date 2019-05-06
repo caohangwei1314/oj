@@ -31,6 +31,10 @@ public class ContestImpl implements ContestService {
 
     @Override
     public int insertSelective(Contest record){
+        record.setStartTime(new Date());
+        record.setEndTime(new Date(System.currentTimeMillis() + 1000 * 60 * 90));
+        int id = contestMapper.selectMaxId() + 1;
+        record.setTitle("虚拟竞赛 " + id);
         if(contestMapper.insertSelective(record)>0){
             List<Integer> list = problemMapper.selectPrimaryKey();
             Set<Integer> set = new HashSet<>();

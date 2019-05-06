@@ -422,4 +422,8 @@
     from contest
     where user_id = #{userId,jdbcType=BIGINT} and NOW() &gt;= start_time and NOW() &lt;= end_time
   </select>
+  <select id="selectMaxId" resultType="java.lang.Integer">
+      select max(contest_id) as contest_id
+      from contest
+  </select>
 </mapper>

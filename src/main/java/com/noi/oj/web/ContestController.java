@@ -21,7 +21,8 @@ public class ContestController extends BaseController{
     private ContestService contestService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Contest record, HttpServletRequest request){
+    public Map<String,Object> insert(HttpServletRequest request){
+        Contest record = new Contest();
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
         setMsg(contestService.insertSelective(record),null,record.getContestId());
         return msg;

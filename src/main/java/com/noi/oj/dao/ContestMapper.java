@@ -49,4 +49,6 @@ public interface ContestMapper {
 
     Contest selectByUserId(Long userId);
 
+    int selectMaxId();
+
 }
