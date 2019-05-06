@@ -198,4 +198,7 @@
     set c_submit = c_submit + 1
     where problem_id = #{problemId,jdbcType=INTEGER} and contest_id = #{contestId,jdbcType=INTEGER}
   </update>
+  <delete id="deleteByContestId" parameterType="com.noi.oj.domain.Conditions">
+    delete from contest_problem where contest_id = #{contestId,jdbcType=INTEGER}
+  </delete>
 </mapper>

@@ -96,4 +96,12 @@ public class ContestImpl implements ContestService {
         pageBean.setList(contestMapper.selectList(record));
         return pageBean;
     }
+
+    @Override
+    public int deleteByContestIdAndUserId(Conditions record){
+        if(contestMapper.deleteByContestIdAndUserId(record)>0)
+            return contestProblemMapper.deleteByContestId(record);
+        else
+            return 0;
+    }
 }

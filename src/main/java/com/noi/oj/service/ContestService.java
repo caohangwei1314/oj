@@ -21,4 +21,6 @@ public interface ContestService {
     Contest isContest(Long userId);
 
     PageBean selectList(Conditions record);
+
+    int deleteByContestIdAndUserId(Conditions record);
 }

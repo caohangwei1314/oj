@@ -427,4 +427,7 @@
       select max(contest_id) as contest_id
       from contest
   </select>
+  <delete id="deleteByContestIdAndUserId" parameterType="com.noi.oj.domain.Conditions">
+    delete from contest where user_id = #{userId,jdbcType=BIGINT} and contest_id = #{contestId,jdbcType=INTEGER}
+  </delete>
 </mapper>

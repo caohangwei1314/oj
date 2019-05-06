@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.ContestProblem;
 import com.noi.oj.domain.ContestProblemExample;
 import java.util.List;
@@ -26,4 +27,6 @@ public interface ContestProblemMapper {
     int updateByExample(@Param("record") ContestProblem record, @Param("example") ContestProblemExample example);
 
     int updateByProblemIdAndContestId(ContestProblem record);
+
+    int deleteByContestId(Conditions record);
 }

@@ -13,7 +13,8 @@ public class BaseController {
 
     public void setMsg(Integer code,String str,Object data) {
         msg.clear();
-        msg.put("code",code);
+        if(code >= 1)
+            msg.put("code",1);
         if(str!=null){
             msg.put("msg",str);
         } else{

@@ -82,4 +82,12 @@ public class ContestController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    public Map<String,Object> delete(@RequestParam("id") Integer id,HttpServletRequest request){
+        Conditions record = new Conditions();
+        record.setContestId(id);
+        record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
+        setMsg(contestService.deleteByContestIdAndUserId(record),null,null);
+        return msg;
+    }
 }

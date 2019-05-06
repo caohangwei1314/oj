@@ -51,4 +51,6 @@ public interface ContestMapper {
 
     int selectMaxId();
 
+    int deleteByContestIdAndUserId(Conditions record);
+
 }
