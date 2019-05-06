@@ -43,4 +43,6 @@ public interface ContestMapper {
 
     List<Users> rank(Conditions record);
 
+    Contest selectByUserId(Long userId);
+
 }

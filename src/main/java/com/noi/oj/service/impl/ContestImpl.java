@@ -76,4 +76,9 @@ public class ContestImpl implements ContestService {
     public PageBean selectSolution(Conditions record){
         return solutionService.selectList(record);
     }
+
+    @Override
+    public Contest isContest(Long userId){
+        return contestMapper.selectByUserId(userId);
+    }
 }

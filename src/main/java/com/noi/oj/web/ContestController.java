@@ -59,4 +59,14 @@ public class ContestController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/status",method = RequestMethod.GET)
+    public Map<String,Object> rank(HttpServletRequest request){
+        Contest contest = contestService.isContest(Long.parseLong(request.getAttribute("userId").toString()));
+        if(contest != null)
+            setMsg(1,null,contest);
+        else
+            setMsg(0,null,null);
+        return msg;
+    }
+
 }
