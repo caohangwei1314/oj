@@ -199,4 +199,21 @@
     set source = #{source,jdbcType=LONGVARCHAR}
     where solution_id = #{solutionId,jdbcType=INTEGER}
   </update>
+  <select id="selectLoad" parameterType="com.noi.oj.domain.Conditions" resultMap="ResultMapWithBLOBs">
+    select c.*
+    from (
+    select solution_id,in_date
+    from solution
+    where 1=1
+    <if test="problemId != null">
+      and problem_id = #{problemId,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>) as a
+    inner join (select max(in_date) as in_date from solution) as b
+    on a.in_date=b.in_date
+    inner join source_code as c
+    on a.solution_id = c.solution_id
+  </select>
 </mapper>

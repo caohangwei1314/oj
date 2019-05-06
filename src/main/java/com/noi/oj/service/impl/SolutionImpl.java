@@ -69,6 +69,11 @@ public class SolutionImpl implements SolutionService {
         return solutionMapper.submit(userId);
     }
 
+    @Override
+    public SourceCode selectLoad(Conditions record){
+        return sourceCodeMapper.selectLoad(record);
+    }
+
     private int insertSourceCode(Solution record){
         int flag=0;
         SourceCode sourceCode = newSourceCode(record);
