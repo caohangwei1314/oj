@@ -32,6 +32,16 @@ public class Contest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer source;
+
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
     public Integer getContestId() {
         return contestId;
     }

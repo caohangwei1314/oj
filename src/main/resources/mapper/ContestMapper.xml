@@ -11,6 +11,7 @@
     <result column="langmask" jdbcType="INTEGER" property="langmask" />
     <result column="password" jdbcType="CHAR" property="password" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="source" jdbcType="INTEGER" property="source" />
   </resultMap>
   <resultMap id="UsersBaseResultMap" type="com.noi.oj.domain.Users">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
@@ -100,7 +101,7 @@
   </sql>
   <sql id="Base_Column_List">
     contest_id, title, start_time, end_time, defunct, is_private, langmask, password, 
-    user_id
+    user_id,source
   </sql>
   <sql id="Blob_Column_List">
     description
