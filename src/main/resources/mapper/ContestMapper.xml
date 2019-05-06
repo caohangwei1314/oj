@@ -402,7 +402,7 @@
     </if>
   </select>
   <select id="rank" resultMap="UsersBaseResultMap">
-    select c.*,sum(b.c_accepted) as count
+    select c.*,sum(IF(b.c_accepted>0,1,0)) as count
     from contest as a
     right join contest_problem as b
     on a.contest_id = b.contest_id

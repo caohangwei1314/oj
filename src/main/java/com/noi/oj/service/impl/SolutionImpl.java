@@ -1,10 +1,7 @@
 package com.noi.oj.service.impl;
 
 import com.noi.oj.config.ServerConfig;
-import com.noi.oj.dao.ProblemMapper;
-import com.noi.oj.dao.SolutionMapper;
-import com.noi.oj.dao.SourceCodeMapper;
-import com.noi.oj.dao.SourceCodeUserMapper;
+import com.noi.oj.dao.*;
 import com.noi.oj.domain.*;
 import com.noi.oj.service.ProblemService;
 import com.noi.oj.service.SolutionService;
@@ -29,6 +26,9 @@ public class SolutionImpl implements SolutionService {
     @Autowired
     private ProblemMapper problemMapper;
 
+    @Autowired
+    private ContestProblemMapper contestProblemMapper;
+
     @Override
     public int insert(Solution record) {
         int flag=0;
@@ -42,6 +42,12 @@ public class SolutionImpl implements SolutionService {
                 ProblemWithBLOBs problem = problemMapper.selectByPrimaryKey(record.getProblemId());
                 problem.setSubmit(problem.getSubmit()+1);
                 flag = problemMapper.updateByPrimaryKeySelective(problem);
+                if(record.getContestId()!=null){
+                    ContestProblem contestProblem = new ContestProblem();
+                    contestProblem.setContestId(record.getContestId());
+                    contestProblem.setProblemId(record.getProblemId());
+                    flag = contestProblemMapper.updateByProblemIdAndContestId(contestProblem);
+                }
             }
         }
         return flag;

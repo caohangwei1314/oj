@@ -24,4 +24,6 @@ public interface ContestProblemMapper {
     int updateByExampleSelective(@Param("record") ContestProblem record, @Param("example") ContestProblemExample example);
 
     int updateByExample(@Param("record") ContestProblem record, @Param("example") ContestProblemExample example);
+
+    int updateByProblemIdAndContestId(ContestProblem record);
 }
