@@ -3,7 +3,9 @@ package com.noi.oj.web;
 import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Contest;
 import com.noi.oj.domain.Problem;
+import com.noi.oj.domain.Solution;
 import com.noi.oj.service.ContestService;
+import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +38,18 @@ public class ContestController extends BaseController{
             setMsg(1,null,problems);
         else
             setMsg(0,null,null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/solution",method = RequestMethod.POST)
+    public Map<String,Object> solution(@RequestBody Conditions record, HttpServletRequest request){
+        Long userId = Long.parseLong(request.getAttribute("userId").toString());
+        record.setUserId(userId);
+        PageBean solutions = contestService.selectSolution(record);
+        if(solutions!=null)
+            setMsg(1,null,solutions);
+        else
+            setMsg(0,"暂无记录",null);
         return msg;
     }
 

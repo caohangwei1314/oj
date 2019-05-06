@@ -3,8 +3,10 @@ package com.noi.oj.service.impl;
 import com.noi.oj.dao.ContestMapper;
 import com.noi.oj.dao.ContestProblemMapper;
 import com.noi.oj.dao.ProblemMapper;
+import com.noi.oj.dao.SolutionMapper;
 import com.noi.oj.domain.*;
 import com.noi.oj.service.ContestService;
+import com.noi.oj.service.SolutionService;
 import com.noi.oj.utils.PageBean;
 import com.noi.oj.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class ContestImpl implements ContestService {
 
     @Autowired
     private ProblemMapper problemMapper;
+
+    @Autowired
+    private SolutionService solutionService;
 
     @Override
     public int insertSelective(Contest record){
@@ -65,5 +70,10 @@ public class ContestImpl implements ContestService {
     @Override
     public List<Problem> selectProblem(Conditions record){
         return problemMapper.selectContestProblem(record);
+    }
+
+    @Override
+    public PageBean selectSolution(Conditions record){
+        return solutionService.selectList(record);
     }
 }
