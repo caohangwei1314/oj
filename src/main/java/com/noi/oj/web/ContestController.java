@@ -41,6 +41,18 @@ public class ContestController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/record",method = RequestMethod.POST)
+    public Map<String,Object> list(@RequestBody Conditions record, HttpServletRequest request){
+        Long userId = Long.parseLong(request.getAttribute("userId").toString());
+        record.setUserId(userId);
+        PageBean problems = contestService.selectList(record);
+        if(problems!=null)
+            setMsg(1,null,problems);
+        else
+            setMsg(0,null,null);
+        return msg;
+    }
+
     @RequestMapping(value = "/solution",method = RequestMethod.POST)
     public Map<String,Object> solution(@RequestBody Conditions record, HttpServletRequest request){
         Long userId = Long.parseLong(request.getAttribute("userId").toString());

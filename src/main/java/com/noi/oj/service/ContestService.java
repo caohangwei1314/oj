@@ -19,4 +19,6 @@ public interface ContestService {
     PageBean selectSolution(Conditions record);
 
     Contest isContest(Long userId);
+
+    PageBean selectList(Conditions record);
 }

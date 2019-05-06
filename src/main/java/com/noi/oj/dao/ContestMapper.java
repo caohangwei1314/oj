@@ -39,7 +39,11 @@ public interface ContestMapper {
 
     int updateByPrimaryKey(Contest record);
 
+    int countUsers(Conditions record);
+
     int count(Conditions record);
+
+    List<Contest> selectList(Conditions record);
 
     List<Users> rank(Conditions record);
 

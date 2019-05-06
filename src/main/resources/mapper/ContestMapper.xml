@@ -371,9 +371,34 @@
       user_id = #{userId,jdbcType=BIGINT}
     where contest_id = #{contestId,jdbcType=INTEGER}
   </update>
-  <select id="count" resultType="java.lang.Integer">
+  <select id="countUsers" resultType="java.lang.Integer">
     select count(distinct user_id)
     from contest
+  </select>
+  <select id="count" resultType="java.lang.Integer">
+    select count(*)
+    from contest
+    where 1=1
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="com.noi.oj.domain.Conditions">
+    select *
+    from contest
+    where NOW() &gt;= end_time
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    order by start_time desc
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
   </select>
   <select id="rank" resultMap="UsersBaseResultMap">
     select c.*,sum(b.c_accepted) as count

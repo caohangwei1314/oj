@@ -55,7 +55,7 @@ public class ContestImpl implements ContestService {
 
     @Override
     public PageBean rank(Conditions record){
-        int count = contestMapper.count(record);
+        int count = contestMapper.countUsers(record);
         if(count<1)
             return null;
         PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
@@ -80,5 +80,16 @@ public class ContestImpl implements ContestService {
     @Override
     public Contest isContest(Long userId){
         return contestMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public PageBean selectList(Conditions record){
+        int count = contestMapper.count(record);
+        if(count<1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        record.setOffset(pageBean.getStart());
+        pageBean.setList(contestMapper.selectList(record));
+        return pageBean;
     }
 }
