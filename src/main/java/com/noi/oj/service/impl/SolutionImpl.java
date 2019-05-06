@@ -1,10 +1,12 @@
 package com.noi.oj.service.impl;
 
 import com.noi.oj.config.ServerConfig;
+import com.noi.oj.dao.ProblemMapper;
 import com.noi.oj.dao.SolutionMapper;
 import com.noi.oj.dao.SourceCodeMapper;
 import com.noi.oj.dao.SourceCodeUserMapper;
 import com.noi.oj.domain.*;
+import com.noi.oj.service.ProblemService;
 import com.noi.oj.service.SolutionService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class SolutionImpl implements SolutionService {
     @Autowired
     private SourceCodeUserMapper sourceCodeUserMapper;
 
+    @Autowired
+    private ProblemMapper problemMapper;
 
     @Override
     public int insert(Solution record) {
@@ -34,7 +38,11 @@ public class SolutionImpl implements SolutionService {
         record.setIp(serverConfig.getHost());
         record.setCodeLength(record.getSource().length());
         if(solutionMapper.insertSelective(record)>0){
-            flag = insertSourceCode(record);
+            if(insertSourceCode(record)>0){
+                ProblemWithBLOBs problem = problemMapper.selectByPrimaryKey(record.getProblemId());
+                problem.setSubmit(problem.getSubmit()+1);
+                flag = problemMapper.updateByPrimaryKeySelective(problem);
+            }
         }
         return flag;
     }
