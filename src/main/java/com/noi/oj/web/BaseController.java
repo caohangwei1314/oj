@@ -15,6 +15,8 @@ public class BaseController {
         msg.clear();
         if(code >= 1)
             msg.put("code",1);
+        else
+            msg.put("code",0);
         if(str!=null){
             msg.put("msg",str);
         } else{
@@ -22,7 +24,7 @@ public class BaseController {
                 case 0:
                     msg.put("msg","失败");
                     break;
-                case 1:
+                default:
                     msg.put("msg","成功");
             }
         }

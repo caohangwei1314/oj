@@ -31,6 +31,8 @@ public class ContestImpl implements ContestService {
 
     @Override
     public int insertSelective(Contest record){
+        if(isContest(record.getUserId())!=null)
+            return 0;
         record.setStartTime(new Date());
         record.setEndTime(new Date(System.currentTimeMillis() + 1000 * 60 * 90));
         int id = contestMapper.selectMaxId() + 1;
