@@ -6,6 +6,7 @@ import com.noi.oj.dao.ProblemMapper;
 import com.noi.oj.dao.SolutionMapper;
 import com.noi.oj.domain.*;
 import com.noi.oj.service.ContestService;
+import com.noi.oj.service.ProblemService;
 import com.noi.oj.service.SolutionService;
 import com.noi.oj.utils.PageBean;
 import com.noi.oj.utils.UploadUtils;
@@ -22,6 +23,9 @@ public class ContestImpl implements ContestService {
 
     @Autowired
     private ContestProblemMapper contestProblemMapper;
+
+    @Autowired
+    private ProblemService problemService;
 
     @Autowired
     private ProblemMapper problemMapper;
@@ -74,8 +78,8 @@ public class ContestImpl implements ContestService {
     }
 
     @Override
-    public List<Problem> selectProblem(Conditions record){
-        return problemMapper.selectContestProblem(record);
+    public PageBean selectProblem(Conditions record){
+        return problemService.selectList(record);
     }
 
     @Override

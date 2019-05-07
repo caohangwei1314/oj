@@ -14,7 +14,7 @@ public interface ContestService {
 
     PageBean rank(Conditions record);
 
-    List<Problem> selectProblem(Conditions record);
+    PageBean selectProblem(Conditions record);
 
     PageBean selectSolution(Conditions record);
 

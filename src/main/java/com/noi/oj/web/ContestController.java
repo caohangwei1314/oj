@@ -34,7 +34,7 @@ public class ContestController extends BaseController{
         Conditions record = new Conditions();
         record.setUserId(userId);
         record.setContestId(id);
-        List<Problem> problems = contestService.selectProblem(record);
+        PageBean problems = contestService.selectProblem(record);
         if(problems!=null)
             setMsg(1,null,problems);
         else
