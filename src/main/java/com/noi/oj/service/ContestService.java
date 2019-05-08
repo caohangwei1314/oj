@@ -23,4 +23,6 @@ public interface ContestService {
     PageBean selectList(Conditions record);
 
     int deleteByContestIdAndUserId(Conditions record);
+
+    Contest selectByPrimaryKey(Integer contestId);
 }

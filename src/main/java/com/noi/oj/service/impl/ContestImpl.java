@@ -110,4 +110,9 @@ public class ContestImpl implements ContestService {
         else
             return 0;
     }
+
+    @Override
+    public Contest selectByPrimaryKey(Integer contestId){
+        return contestMapper.selectByPrimaryKey(contestId);
+    }
 }
