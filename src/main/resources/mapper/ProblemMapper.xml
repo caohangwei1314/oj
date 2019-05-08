@@ -499,6 +499,14 @@
     <if test="isFree != null">
       and is_free = #{isFree,jdbcType=TINYINT}
     </if> ) as e on a.problem_id=e.problem_id
+    <if test="userId != null">
+      left join (select distinct problem_id,result from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as f
+      on a.problem_id = f.problem_id
+    </if>
+    <if test="contestId != null">
+      inner join (select problem_id from contest_problem where contest_id = #{contestId,jdbcType=INTEGER}) as g
+      on a.problem_id = g.problem_id
+    </if>
   </select>
   <select id="getList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select a.*,b.packet_id,c.name,e.difficulty,e.is_free,e.type
@@ -539,6 +547,10 @@
       left join (select distinct problem_id,result from solution where user_id = #{userId,jdbcType=BIGINT} and result = 4) as f
       on a.problem_id = f.problem_id
     </if>
+    <if test="contestId != null">
+      inner join (select problem_id from contest_problem where contest_id = #{contestId,jdbcType=INTEGER}) as g
+      on a.problem_id = g.problem_id
+    </if>
     <if test="orderBy != null">
       order by #{orderBy,jdbcType=VARCHAR} desc
     </if>
@@ -550,5 +562,17 @@
             limit ${limit}
         </if>
     </if>
+  </select>
+  <select id="selectPrimaryKey" resultType="java.lang.Integer">
+    select problem_id
+    from problem
+  </select>
+  <select id="selectContestProblem" resultMap="BaseResultMap" parameterType="com.noi.oj.domain.Conditions">
+    select c.*
+    from (select contest_id from contest where user_id=#{userId,jdbcType=BIGINT} and contest_id = #{contestId,jdbcType=INTEGER}) as a
+    inner join (select problem_id,contest_id from contest_problem) as b
+    on a.contest_id=b.contest_id
+    inner join problem as c
+    on b.problem_id = c.problem_id
   </select>
 </mapper>

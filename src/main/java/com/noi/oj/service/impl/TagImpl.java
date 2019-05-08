@@ -34,4 +34,14 @@ public class TagImpl implements TagService {
         return tagMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public List<Tag> statistic(Long userId){
+        return tagMapper.statisticTags(userId);
+    }
+
+    @Override
+    public List<Tag> statisticClass(Long userId){
+        return tagMapper.statisticClass(userId);
+    }
+
 }

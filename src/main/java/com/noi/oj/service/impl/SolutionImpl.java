@@ -1,13 +1,9 @@
 package com.noi.oj.service.impl;
 
 import com.noi.oj.config.ServerConfig;
-import com.noi.oj.dao.SolutionMapper;
-import com.noi.oj.dao.SourceCodeMapper;
-import com.noi.oj.dao.SourceCodeUserMapper;
-import com.noi.oj.domain.Conditions;
-import com.noi.oj.domain.Solution;
-import com.noi.oj.domain.SourceCode;
-import com.noi.oj.domain.SourceCodeUser;
+import com.noi.oj.dao.*;
+import com.noi.oj.domain.*;
+import com.noi.oj.service.ProblemService;
 import com.noi.oj.service.SolutionService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +23,11 @@ public class SolutionImpl implements SolutionService {
     @Autowired
     private SourceCodeUserMapper sourceCodeUserMapper;
 
+    @Autowired
+    private ProblemMapper problemMapper;
+
+    @Autowired
+    private ContestProblemMapper contestProblemMapper;
 
     @Override
     public int insert(Solution record) {
@@ -37,7 +38,17 @@ public class SolutionImpl implements SolutionService {
         record.setIp(serverConfig.getHost());
         record.setCodeLength(record.getSource().length());
         if(solutionMapper.insertSelective(record)>0){
-            flag = insertSourceCode(record);
+            if(insertSourceCode(record)>0){
+                ProblemWithBLOBs problem = problemMapper.selectByPrimaryKey(record.getProblemId());
+                problem.setSubmit(problem.getSubmit()+1);
+                flag = problemMapper.updateByPrimaryKeySelective(problem);
+                if(record.getContestId()!=null){
+                    ContestProblem contestProblem = new ContestProblem();
+                    contestProblem.setContestId(record.getContestId());
+                    contestProblem.setProblemId(record.getProblemId());
+                    flag = contestProblemMapper.updateByProblemIdAndContestId(contestProblem);
+                }
+            }
         }
         return flag;
     }
@@ -65,6 +76,16 @@ public class SolutionImpl implements SolutionService {
             return null;
         pageBean.setList(solutions);
         return pageBean;
+    }
+
+    @Override
+    public List<SubmitMap> submit(Long userId){
+        return solutionMapper.submit(userId);
+    }
+
+    @Override
+    public SourceCode selectLoad(Conditions record){
+        return sourceCodeMapper.selectLoad(record);
     }
 
     private int insertSourceCode(Solution record){

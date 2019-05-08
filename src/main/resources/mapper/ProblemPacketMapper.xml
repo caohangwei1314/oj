@@ -381,6 +381,7 @@
      and nick = #{nick,jdbcType=VARCHAR}
     </if> ) as b
      on a.user_id=b.user_id
+    order by a.num desc,a.release_date desc
     <if test="limit !=null">
       <if test="offset != null">
         limit ${offset},${limit}
@@ -406,10 +407,5 @@
         #{item,jdbcType=INTEGER}
       </foreach>
     </if>
-  </select>
-  <select id="isBuy" parameterType="com.noi.oj.domain.ProblemPacket" resultMap="ResultMapWithBLOBs">
-    select *
-    from problem_packet
-    where packet_id = #{packetId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=BIGINT}
   </select>
 </mapper>

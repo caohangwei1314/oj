@@ -45,4 +45,8 @@ public interface ProblemMapper {
     int count(Conditions record);
 
     List<Problem> getList(Conditions record);
+
+    List<Integer> selectPrimaryKey();
+
+    List<Problem> selectContestProblem(Conditions record);
 }

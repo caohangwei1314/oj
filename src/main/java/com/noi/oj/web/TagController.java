@@ -5,6 +5,7 @@ import com.noi.oj.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -59,4 +60,23 @@ public class TagController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/class",method = RequestMethod.GET)
+    public Map<String,Object> statisticClass(HttpServletRequest request){
+        try {
+            setMsg(1,null,tagService.statisticClass(Long.parseLong(request.getAttribute("userId").toString())));
+        } catch (Exception e){
+            setMsg(0,e.getMessage(),null);
+        }
+        return msg;
+    }
+
+    @RequestMapping(value = "/statistic",method = RequestMethod.GET)
+    public Map<String,Object> statistic(HttpServletRequest request){
+        try {
+            setMsg(1,null,tagService.statistic(Long.parseLong(request.getAttribute("userId").toString())));
+        } catch (Exception e){
+            setMsg(0,e.getMessage(),null);
+        }
+        return msg;
+    }
 }

@@ -1,10 +1,15 @@
 package com.noi.oj.dao;
 
-import com.noi.oj.domain.Contest;
-import com.noi.oj.domain.ContestExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import com.noi.oj.domain.*;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Mapper
 public interface ContestMapper {
     long countByExample(ContestExample example);
 
@@ -33,4 +38,19 @@ public interface ContestMapper {
     int updateByPrimaryKeyWithBLOBs(Contest record);
 
     int updateByPrimaryKey(Contest record);
+
+    int countUsers(Conditions record);
+
+    int count(Conditions record);
+
+    List<Contest> selectList(Conditions record);
+
+    List<Users> rank(Conditions record);
+
+    Contest selectByUserId(Long userId);
+
+    int selectMaxId();
+
+    int deleteByContestIdAndUserId(Conditions record);
+
 }

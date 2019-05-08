@@ -1,5 +1,6 @@
 package com.noi.oj.service;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Users;
 import com.noi.oj.utils.PageBean;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,5 +28,9 @@ public interface UsersService {
 
     int userRecharge(Users users);
 
-    List<Users> rank();
+    PageBean rank(Conditions record);
+
+    Users selectPasswordByPrimaryKey(Long pkId);
+
+    int selectUserBalance(Long pkId);
 }

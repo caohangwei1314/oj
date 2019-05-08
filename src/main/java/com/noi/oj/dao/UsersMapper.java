@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Users;
 import com.noi.oj.domain.UsersExample;
 import java.util.List;
@@ -33,7 +34,13 @@ public interface UsersMapper {
 
     int updateByPrimaryKey(Users record);
 
+    int selectUserBalance(Long pkId);
+
     Users selectByEmail(@Param("email") String email);
 
-    List<Users> rank();
+    List<Users> rank(Conditions record);
+
+    int count(Conditions record);
+
+    Users selectPasswordByPrimaryKey(Long pkId);
 }

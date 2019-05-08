@@ -2,15 +2,15 @@ package com.noi.oj.web;
 
 import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Solution;
+import com.noi.oj.domain.SourceCode;
+import com.noi.oj.domain.SubmitMap;
 import com.noi.oj.service.SolutionService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -45,4 +45,28 @@ public class SolutionController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/submit",method = RequestMethod.GET)
+    public Map<String,Object> submit(HttpServletRequest request){
+        Long userId = Long.parseLong(request.getAttribute("userId").toString());
+        List<SubmitMap> submitMaps = solutionService.submit(userId);
+        if(submitMaps.size()>0&&submitMaps!=null)
+            setMsg(1,null,submitMaps);
+        else
+            setMsg(0,"暂无提交",null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/load",method = RequestMethod.GET)
+    public Map<String,Object> load(@RequestParam("id") Integer id, HttpServletRequest request){
+        Long userId = Long.parseLong(request.getAttribute("userId").toString());
+        Conditions record = new Conditions();
+        record.setUserId(userId);
+        record.setProblemId(id);
+        SourceCode sourceCode = solutionService.selectLoad(record);
+        if(sourceCode!=null)
+            setMsg(1,null,sourceCode);
+        else
+            setMsg(0,"暂无记录",null);
+        return msg;
+    }
 }

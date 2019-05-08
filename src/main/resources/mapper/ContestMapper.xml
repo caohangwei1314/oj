@@ -11,6 +11,32 @@
     <result column="langmask" jdbcType="INTEGER" property="langmask" />
     <result column="password" jdbcType="CHAR" property="password" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+  </resultMap>
+  <resultMap id="UsersBaseResultMap" type="com.noi.oj.domain.Users">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="submit" jdbcType="INTEGER" property="submit" />
+    <result column="solved" jdbcType="INTEGER" property="solved" />
+    <result column="defunct" jdbcType="CHAR" property="defunct" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="accesstime" jdbcType="TIMESTAMP" property="accesstime" />
+    <result column="volume" jdbcType="INTEGER" property="volume" />
+    <result column="language" jdbcType="INTEGER" property="language" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="user_class" jdbcType="TINYINT" property="userClass" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="experience" jdbcType="VARCHAR" property="experience" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="count" jdbcType="INTEGER" property="count" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.noi.oj.domain.Contest">
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
@@ -75,7 +101,7 @@
   </sql>
   <sql id="Base_Column_List">
     contest_id, title, start_time, end_time, defunct, is_private, langmask, password, 
-    user_id
+    user_id,source
   </sql>
   <sql id="Blob_Column_List">
     description
@@ -146,7 +172,7 @@
       #{langmask,jdbcType=INTEGER}, #{password,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, 
       #{description,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.Contest">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.Contest" useGeneratedKeys="true" keyProperty="contestId">
     insert into contest
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="contestId != null">
@@ -346,4 +372,62 @@
       user_id = #{userId,jdbcType=BIGINT}
     where contest_id = #{contestId,jdbcType=INTEGER}
   </update>
+  <select id="countUsers" resultType="java.lang.Integer">
+    select count(distinct user_id)
+    from contest
+  </select>
+  <select id="count" resultType="java.lang.Integer">
+    select count(*)
+    from contest
+    where NOW() &gt;= end_time
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="com.noi.oj.domain.Conditions">
+    select *
+    from contest
+    where NOW() &gt;= end_time
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    order by start_time desc
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="rank" resultMap="UsersBaseResultMap">
+    select c.*,sum(IF(b.c_accepted>0,1,0)) as count
+    from contest as a
+    right join contest_problem as b
+    on a.contest_id = b.contest_id
+    inner join users as c
+    on a.user_id = c.user_id
+    order by count
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select *
+    from contest
+    where user_id = #{userId,jdbcType=BIGINT} and NOW() &gt;= start_time and NOW() &lt;= end_time
+  </select>
+  <select id="selectMaxId" resultType="java.lang.Integer">
+      select max(contest_id) as contest_id
+      from contest
+  </select>
+  <delete id="deleteByContestIdAndUserId" parameterType="com.noi.oj.domain.Conditions">
+    delete from contest where user_id = #{userId,jdbcType=BIGINT} and contest_id = #{contestId,jdbcType=INTEGER}
+  </delete>
 </mapper>

@@ -34,6 +34,26 @@ public class Conditions {
 
     private Integer packetId;
 
+    private String school;
+
+    private Integer ContestId;
+
+    public Integer getContestId() {
+        return ContestId;
+    }
+
+    public void setContestId(Integer contestId) {
+        ContestId = contestId;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
     public void setLimit(Integer limit){
         this.limit=limit;
     }

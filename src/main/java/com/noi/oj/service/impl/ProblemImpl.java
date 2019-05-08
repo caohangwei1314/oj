@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ProblemImpl implements ProblemService {
@@ -33,6 +30,9 @@ public class ProblemImpl implements ProblemService {
 
     @Autowired
     private TagMapper tagMapper;
+
+    @Autowired
+    private PacketOrderMapper packetOrderMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer problemId){
@@ -113,6 +113,14 @@ public class ProblemImpl implements ProblemService {
             }
         }
         return flag;
+    }
+
+    public Map<String,Object> isBuy(Conditions record){
+        Map<String,Object> map = new HashMap<>();
+        int count = packetOrderMapper.count(record);
+        map.put("isBuy",count <1 ? 0 : 1);
+        map.put("packetId",problemPacketShipMapper.selectPacketIdByProblemId(record));
+        return map;
     }
 
     private boolean createFile(String path,String output){

@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.SourceCode;
 import com.noi.oj.domain.SourceCodeExample;
 import java.util.List;
@@ -36,4 +37,6 @@ public interface SourceCodeMapper {
     int updateByPrimaryKeySelective(SourceCode record);
 
     int updateByPrimaryKeyWithBLOBs(SourceCode record);
+
+    SourceCode selectLoad(Conditions record);
 }

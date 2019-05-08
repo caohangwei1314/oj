@@ -13,7 +13,10 @@ public class BaseController {
 
     public void setMsg(Integer code,String str,Object data) {
         msg.clear();
-        msg.put("code",code);
+        if(code >= 1)
+            msg.put("code",1);
+        else
+            msg.put("code",0);
         if(str!=null){
             msg.put("msg",str);
         } else{
@@ -21,7 +24,7 @@ public class BaseController {
                 case 0:
                     msg.put("msg","失败");
                     break;
-                case 1:
+                default:
                     msg.put("msg","成功");
             }
         }

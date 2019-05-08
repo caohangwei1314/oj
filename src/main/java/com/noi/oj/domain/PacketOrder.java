@@ -18,6 +18,8 @@ public class PacketOrder implements Serializable {
 
     private Date createDate;
 
+    private String name;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getOrderId() {
@@ -58,6 +60,14 @@ public class PacketOrder implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

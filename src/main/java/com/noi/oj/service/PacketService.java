@@ -1,6 +1,7 @@
 package com.noi.oj.service;
 
 import com.noi.oj.domain.Conditions;
+import com.noi.oj.domain.PacketOrder;
 import com.noi.oj.domain.ProblemPacket;
 import com.noi.oj.utils.PageBean;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,6 @@ public interface PacketService {
 
     boolean setPacketProfile(MultipartFile profile,Integer pkId);
 
-    int isBuy(ProblemPacket record);
+    int isBuy(Conditions record);
 
 }
