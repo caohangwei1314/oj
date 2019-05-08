@@ -115,4 +115,9 @@ public class ContestImpl implements ContestService {
     public Contest selectByPrimaryKey(Integer contestId){
         return contestMapper.selectByPrimaryKey(contestId);
     }
+
+    @Override
+    public int updateByPrimaryKeySelective(Contest record){
+        return contestMapper.updateByPrimaryKeySelective(record);
+    }
 }

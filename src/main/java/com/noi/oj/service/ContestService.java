@@ -25,4 +25,6 @@ public interface ContestService {
     int deleteByContestIdAndUserId(Conditions record);
 
     Contest selectByPrimaryKey(Integer contestId);
+
+    int updateByPrimaryKeySelective(Contest record);
 }
