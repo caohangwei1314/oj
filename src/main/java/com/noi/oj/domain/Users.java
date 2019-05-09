@@ -54,6 +54,26 @@ public class Users implements Serializable {
 
     private Integer count;
 
+    private Integer levelId;
+
+    private Integer acChallengeNum;
+
+    public Integer getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(Integer levelId) {
+        this.levelId = levelId;
+    }
+
+    public Integer getAcChallengeNum() {
+        return acChallengeNum;
+    }
+
+    public void setAcChallengeNum(Integer acChallengeNum) {
+        this.acChallengeNum = acChallengeNum;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Long getUserId() {

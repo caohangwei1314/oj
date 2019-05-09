@@ -42,7 +42,7 @@ public class ContestImpl implements ContestService {
         int id = contestMapper.selectMaxId() + 1;
         record.setTitle("虚拟竞赛 " + id);
         if(contestMapper.insertSelective(record)>0){
-            List<Integer> list = problemMapper.selectPrimaryKey();
+            List<Integer> list = problemMapper.selectPrimaryKey(new Conditions());
             Set<Integer> set = new HashSet<>();
             Random r = new Random();
             while(set.size()<4){

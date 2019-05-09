@@ -25,6 +25,8 @@
     <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="balance" jdbcType="DECIMAL" property="balance" />
     <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="level_id" jdbcType="INTEGER" property="levelId" />
+    <result column="ac_challenge_num" jdbcType="INTEGER" property="acChallengeNum" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -87,7 +89,7 @@
   <sql id="Base_Column_List">
     user_id, email, submit, solved, defunct, ip, accesstime, volume, language, password, 
     reg_time, nick, school, image, user_class, city, province, experience, introduce, 
-    birthday, sex,balance
+    birthday, sex,balance,level_id,ac_challenge_num
   </sql>
   <select id="selectByExample" parameterType="com.noi.oj.domain.UsersExample" resultMap="BaseResultMap">
     select
@@ -115,7 +117,7 @@
     select 
     user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
     reg_time, nick, school, image, user_class, city, province, experience, introduce,
-    birthday, sex,balance
+    birthday, sex,balance,level_id,ac_challenge_num
     from users
     where user_id = #{userId,jdbcType=BIGINT}
   </select>

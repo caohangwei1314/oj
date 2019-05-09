@@ -564,8 +564,11 @@
     </if>
   </select>
   <select id="selectPrimaryKey" resultType="java.lang.Integer">
-    select problem_id
-    from problem
+    select a.problem_id
+    from problem as a
+    <if test="difficulty != null">
+      inner join (select problem_id from problem_class where difficulty = #{difficulty,jdbcType=TINYINT}) as b on a.problem_id = b.problem_id
+    </if>
   </select>
   <select id="selectContestProblem" resultMap="BaseResultMap" parameterType="com.noi.oj.domain.Conditions">
     select c.*
