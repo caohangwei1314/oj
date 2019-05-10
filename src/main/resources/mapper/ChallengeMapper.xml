@@ -9,6 +9,33 @@
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <resultMap id="BaseResultMapProblem" type="com.noi.oj.domain.ProblemWithBLOBs">
+    <id column="problem_id" jdbcType="INTEGER" property="problemId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="spj" jdbcType="CHAR" property="spj" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="in_date" jdbcType="TIMESTAMP" property="inDate" />
+    <result column="time_limit" jdbcType="INTEGER" property="timeLimit" />
+    <result column="memory_limit" jdbcType="INTEGER" property="memoryLimit" />
+    <result column="defunct" jdbcType="CHAR" property="defunct" />
+    <result column="accepted" jdbcType="INTEGER" property="accepted" />
+    <result column="submit" jdbcType="INTEGER" property="submit" />
+    <result column="solved" jdbcType="INTEGER" property="solved" />
+    <result column="packet_id" jdbcType="INTEGER" property="packetId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_free" jdbcType="TINYINT" property="isFree" />
+    <result column="difficulty" jdbcType="TINYINT" property="difficulty" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="result" jdbcType="SMALLINT" property="result" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="input" jdbcType="LONGVARCHAR" property="input" />
+    <result column="output" jdbcType="LONGVARCHAR" property="output" />
+    <result column="sample_input" jdbcType="LONGVARCHAR" property="sampleInput" />
+    <result column="sample_output" jdbcType="LONGVARCHAR" property="sampleOutput" />
+    <result column="hint" jdbcType="LONGVARCHAR" property="hint" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -233,4 +260,13 @@
       status = #{status,jdbcType=INTEGER}
     where challenge_id = #{challengeId,jdbcType=INTEGER}
   </update>
+  <select id="selectChallenge" resultMap="BaseResultMapProblem">
+    select a.*,b.start_time,b.end_time
+    from problem as a
+    inner join (select problem_id,start_time,end_time
+    from challenge
+    where user_id = #{userId,jdbcType=BIGINT}
+    and NOW()&lt;= end_time and NOW() &gt;= start_time) as b
+    on a.problem_id = b.problem_id
+  </select>
 </mapper>

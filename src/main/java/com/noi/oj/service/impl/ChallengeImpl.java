@@ -3,10 +3,7 @@ package com.noi.oj.service.impl;
 import com.noi.oj.dao.ChallengeMapper;
 import com.noi.oj.dao.ProblemMapper;
 import com.noi.oj.dao.UsersMapper;
-import com.noi.oj.domain.Challenge;
-import com.noi.oj.domain.Conditions;
-import com.noi.oj.domain.Problem;
-import com.noi.oj.domain.Users;
+import com.noi.oj.domain.*;
 import com.noi.oj.service.ChallengeService;
 import com.noi.oj.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,4 +82,8 @@ public class ChallengeImpl implements ChallengeService {
         }
     }
 
+    @Override
+    public ProblemWithBLOBs select(Long userId){
+        return challengeMapper.selectChallenge(userId);
+    }
 }

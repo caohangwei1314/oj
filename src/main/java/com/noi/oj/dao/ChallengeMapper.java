@@ -4,6 +4,8 @@ import com.noi.oj.domain.Challenge;
 import com.noi.oj.domain.ChallengeExample;
 import java.util.List;
 
+import com.noi.oj.domain.Problem;
+import com.noi.oj.domain.ProblemWithBLOBs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -32,4 +34,6 @@ public interface ChallengeMapper {
     int updateByPrimaryKeySelective(Challenge record);
 
     int updateByPrimaryKey(Challenge record);
+
+    ProblemWithBLOBs selectChallenge(Long userId);
 }

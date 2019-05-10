@@ -1,6 +1,7 @@
 package com.noi.oj.web;
 
 import com.noi.oj.domain.Problem;
+import com.noi.oj.domain.ProblemWithBLOBs;
 import com.noi.oj.service.ChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class ChallengeController extends BaseController{
     @RequestMapping(method = RequestMethod.GET)
     public Map<String,Object> select(HttpServletRequest request){
         Long userId = Long.parseLong(request.getAttribute("userId").toString());
-        Problem problem = challengeService.select(userId);
+        ProblemWithBLOBs problem = challengeService.select(userId);
         if(problem!=null)
             setMsg(1,null,problem);
         else
