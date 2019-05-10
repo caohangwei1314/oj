@@ -19,6 +19,16 @@ public class Challenge implements Serializable {
 
     private Integer status;
 
+    private Integer number;
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getChallengeId() {

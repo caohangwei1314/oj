@@ -48,7 +48,9 @@ public class UsersImpl implements UsersService {
     @Override
     public Users selectByPrimaryKey(Long pkId)
     {
-        return usersMapper.selectByPrimaryKey(pkId);
+        Users users = usersMapper.selectByPrimaryKey(pkId);
+        users.setLevelId(users.getAcChallengeNum()/4);
+        return users;
     }
 
     @Override
@@ -62,6 +64,7 @@ public class UsersImpl implements UsersService {
         Users users = usersMapper.selectByPrimaryKey(pkId);
         if(users.getImage()!=null && !"".equals(users.getImage()))
             users.setImage(getUrl(users.getImage()));
+        users.setLevelId(users.getAcChallengeNum()/4);
         return users;
     }
 

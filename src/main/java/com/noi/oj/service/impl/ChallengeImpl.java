@@ -6,6 +6,7 @@ import com.noi.oj.dao.UsersMapper;
 import com.noi.oj.domain.*;
 import com.noi.oj.service.ChallengeService;
 import com.noi.oj.service.ProblemService;
+import com.noi.oj.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,12 @@ public class ChallengeImpl implements ChallengeService {
     private ProblemMapper problemMapper;
 
     @Autowired
-    private UsersMapper usersMapper;
+    private UsersService usersService;
 
     public Problem insert(Long userId){
-        Users users = usersMapper.selectByPrimaryKey(userId);
+        if(challengeMapper.selectChallenge(userId)!=null)
+            return null;
+        Users users = usersService.selectByPrimaryKey(userId);
         Conditions record = new Conditions();
         switch (users.getLevelId()){
             case 0:
@@ -67,15 +70,13 @@ public class ChallengeImpl implements ChallengeService {
         Challenge challenge = new Challenge();
         challenge.setProblemId(problemId);
         challenge.setUserId(userId);
+        challenge.setNumber(users.getAcChallengeNum()+1);
         long time = System.currentTimeMillis();
         Date startTime = new Date(time);
-        Date endTime = new Date(time + 1000*60*15);
         challenge.setStartTime(startTime);
-        challenge.setEndTime(endTime);
         if(challengeMapper.insertSelective(challenge)>0){
             Problem problem = problemMapper.selectByPrimaryKey(problemId);
             problem.setStartTime(startTime);
-            problem.setEndTime(endTime);
             return problem;
         }else{
             return null;

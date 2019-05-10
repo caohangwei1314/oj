@@ -25,7 +25,6 @@
     <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="balance" jdbcType="DECIMAL" property="balance" />
     <result column="count" jdbcType="INTEGER" property="count" />
-    <result column="level_id" jdbcType="INTEGER" property="levelId" />
     <result column="ac_challenge_num" jdbcType="INTEGER" property="acChallengeNum" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -89,7 +88,7 @@
   <sql id="Base_Column_List">
     user_id, email, submit, solved, defunct, ip, accesstime, volume, language, password, 
     reg_time, nick, school, image, user_class, city, province, experience, introduce, 
-    birthday, sex,balance,level_id,ac_challenge_num
+    birthday, sex,balance
   </sql>
   <select id="selectByExample" parameterType="com.noi.oj.domain.UsersExample" resultMap="BaseResultMap">
     select
@@ -114,12 +113,12 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
+    select a.*,b.ac_challenge_num
+    from (select user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
     reg_time, nick, school, image, user_class, city, province, experience, introduce,
-    birthday, sex,balance,level_id,ac_challenge_num
-    from users
-    where user_id = #{userId,jdbcType=BIGINT}
+    birthday, sex,balance from users where user_id = #{userId,jdbcType=BIGINT}) as a
+    inner join (select user_id,max(number) as ac_challenge_num from challenge where status=1) as b
+    on a.user_id = b.user_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from users
