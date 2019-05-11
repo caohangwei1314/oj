@@ -48,6 +48,16 @@ public class Problem implements Serializable {
 
     private Date endTime;
 
+    private Integer challengeId;
+
+    public Integer getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(Integer challengeId) {
+        this.challengeId = challengeId;
+    }
+
     public Date getStartTime() {
         return startTime;
     }

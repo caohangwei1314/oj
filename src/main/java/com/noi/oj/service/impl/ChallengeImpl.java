@@ -77,6 +77,7 @@ public class ChallengeImpl implements ChallengeService {
         if(challengeMapper.insertSelective(challenge)>0){
             Problem problem = problemMapper.selectByPrimaryKey(problemId);
             problem.setStartTime(startTime);
+            problem.setChallengeId(challenge.getChallengeId());
             return problem;
         }else{
             return null;
