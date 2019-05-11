@@ -38,6 +38,16 @@ public class Conditions {
 
     private Integer ContestId;
 
+    private Integer levelId;
+
+    public Integer getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(Integer levelId) {
+        this.levelId = levelId;
+    }
+
     public Integer getContestId() {
         return ContestId;
     }

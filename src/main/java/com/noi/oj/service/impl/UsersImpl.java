@@ -149,4 +149,15 @@ public class UsersImpl implements UsersService {
         return usersMapper.selectUserBalance(pkId);
     }
 
+    @Override
+    public PageBean selectChallengeRank(Conditions record){
+        int count = usersMapper.count(record);
+        if(count<1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        record.setOffset(pageBean.getStart());
+        pageBean.setList(usersMapper.selectChallengeRank(record));
+        return pageBean;
+    }
+
 }

@@ -25,6 +25,7 @@
     <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="balance" jdbcType="DECIMAL" property="balance" />
     <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="level_id" jdbcType="INTEGER" property="levelId" />
     <result column="ac_challenge_num" jdbcType="INTEGER" property="acChallengeNum" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -117,7 +118,7 @@
     from (select user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
     reg_time, nick, school, image, user_class, city, province, experience, introduce,
     birthday, sex,balance from users where user_id = #{userId,jdbcType=BIGINT}) as a
-    inner join (select user_id,max(number) as ac_challenge_num from challenge where status=1) as b
+    inner join (select user_id,max(number) as ac_challenge_num from challenge where status=1 and user_id = #{userId,jdbcType=BIGINT}) as b
     on a.user_id = b.user_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -505,7 +506,9 @@
     </if>
   </select>
   <select id="count" resultType="java.lang.Integer" parameterType="com.noi.oj.domain.Conditions">
-    select count(*)
+    select count(a.user_id)
+    from
+    (select *
     from users
     where 1=1
     <if test="nick != null">
@@ -513,7 +516,26 @@
     </if>
     <if test="school != null">
       and school like concat('%',#{school,jdbcType=VARCHAR},'%')
+    </if>) as a
+    <if test="levelId != null">
+      inner join (select user_id,max(number) as ac_challenge_num
+      from challenge
+      where status=1
+      group by user_id
+      having ac_challenge_num&gt;=#{levelId,jdbcType=INTEGER}*4+1 and ac_challenge_num &lt;=(#{levelId,jdbcType=INTEGER}+1)*4) as b
+      on a.user_id = b.user_id
     </if>
+  </select>
+  <select id="selectChallengeRank" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
+    select a.*,b.ac_challenge_num,#{levelId,jdbcType=INTEGER} as level_id
+    from users as a
+    inner join (select user_id,max(number) as ac_challenge_num
+    from challenge
+    where status=1
+    group by user_id
+    having ac_challenge_num &gt;=#{levelId,jdbcType=INTEGER}*4+1 and ac_challenge_num &lt;=(#{levelId,jdbcType=INTEGER}+1)*4) as b
+    on a.user_id = b.user_id
+    order by b.ac_challenge_num desc
   </select>
   <select id="selectPasswordByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select password,user_id

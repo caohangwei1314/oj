@@ -43,4 +43,6 @@ public interface UsersMapper {
     int count(Conditions record);
 
     Users selectPasswordByPrimaryKey(Long pkId);
+
+    List<Users> selectChallengeRank(Conditions record);
 }

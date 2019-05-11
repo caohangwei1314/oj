@@ -33,4 +33,6 @@ public interface UsersService {
     Users selectPasswordByPrimaryKey(Long pkId);
 
     int selectUserBalance(Long pkId);
+
+    PageBean selectChallengeRank(Conditions record);
 }
