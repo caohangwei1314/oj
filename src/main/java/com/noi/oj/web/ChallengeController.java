@@ -4,6 +4,7 @@ import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Problem;
 import com.noi.oj.domain.ProblemWithBLOBs;
 import com.noi.oj.service.ChallengeService;
+import com.noi.oj.service.SolutionService;
 import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ChallengeController extends BaseController{
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private SolutionService solutionService;
 
     @RequestMapping(method = RequestMethod.POST)
     public Map<String,Object> insert(HttpServletRequest request){
@@ -51,6 +55,13 @@ public class ChallengeController extends BaseController{
             setMsg(1,null,pageBean);
         else
             setMsg(0,"暂无排名",null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/solution",method = RequestMethod.POST)
+    public Map<String,Object> selectSolution(@RequestBody Conditions conditions,HttpServletRequest request){
+        conditions.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
+        setMsg(1,null,solutionService.selectList(conditions));
         return msg;
     }
 }

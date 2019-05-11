@@ -419,6 +419,9 @@
     <if test="problemId != null">
       and problem_id = #{problemId,jdbcType=INTEGER}
     </if>
+    <if test="challengeId != null">
+      and challenge_id = #{challengeId,jdbcType=INTEGER}
+    </if>
   </select>
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select a.*,b.title
@@ -433,6 +436,9 @@
     </if>
     <if test="problemId != null">
       and problem_id = #{problemId,jdbcType=INTEGER}
+    </if>
+    <if test="challengeId != null">
+      and challenge_id = #{challengeId,jdbcType=INTEGER}
     </if>) as a
     inner join (select problem_id,title from problem) as b
     on a.problem_id = b.problem_id

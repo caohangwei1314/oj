@@ -40,6 +40,16 @@ public class Conditions {
 
     private Integer levelId;
 
+    private Integer ChallengeId;
+
+    public Integer getChallengeId() {
+        return ChallengeId;
+    }
+
+    public void setChallengeId(Integer challengeId) {
+        ChallengeId = challengeId;
+    }
+
     public Integer getLevelId() {
         return levelId;
     }
