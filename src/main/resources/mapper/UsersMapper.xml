@@ -118,7 +118,7 @@
     from (select user_id, email, submit, solved, defunct, ip, accesstime, volume, language,
     reg_time, nick, school, image, user_class, city, province, experience, introduce,
     birthday, sex,balance from users where user_id = #{userId,jdbcType=BIGINT}) as a
-    inner join (select user_id,max(number) as ac_challenge_num from challenge where status=1 and user_id = #{userId,jdbcType=BIGINT}) as b
+    left join (select user_id,max(number) as ac_challenge_num from challenge where status=1 and user_id = #{userId,jdbcType=BIGINT}) as b
     on a.user_id = b.user_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -1,8 +1,9 @@
 package com.noi.oj.utils;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageBean {
+public class PageBean implements Serializable {
 	//当前页数
 	private Integer currentPage;
 	//总记录数

@@ -42,7 +42,8 @@ public class PacketImpl implements PacketService {
 
     @Override
     public int insertSelective(ProblemPacket record, HttpServletRequest request){
-        Users users = usersMapper.selectByPrimaryKey(Long.parseLong(request.getAttribute("userId").toString()));
+        Long userId = Long.parseLong(request.getAttribute("userId").toString());
+        Users users = usersMapper.selectByPrimaryKey(userId);
         record.setUserId(users.getUserId());
         record.setAuthor(users.getNick());
         return problemPacketMapper.insertSelective(record);
