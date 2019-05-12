@@ -522,7 +522,7 @@
       from challenge
       where status=1
       group by user_id
-      having ac_challenge_num&gt;=#{levelId,jdbcType=INTEGER}*4+1 and ac_challenge_num &lt;=(#{levelId,jdbcType=INTEGER}+1)*4) as b
+      having ac_challenge_num &gt;=(#{levelId,jdbcType=INTEGER}-1)*16+4 and ac_challenge_num &lt;=#{levelId,jdbcType=INTEGER}*16+4) as b
       on a.user_id = b.user_id
     </if>
   </select>
@@ -533,7 +533,7 @@
     from challenge
     where status=1
     group by user_id
-    having ac_challenge_num &gt;=#{levelId,jdbcType=INTEGER}*4+1 and ac_challenge_num &lt;=(#{levelId,jdbcType=INTEGER}+1)*4) as b
+    having ac_challenge_num &gt;=(#{levelId,jdbcType=INTEGER}-1)*16+4 and ac_challenge_num &lt;=#{levelId,jdbcType=INTEGER}*16+4) as b
     on a.user_id = b.user_id
     order by b.ac_challenge_num desc
   </select>

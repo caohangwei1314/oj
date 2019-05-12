@@ -49,7 +49,7 @@ public class UsersImpl implements UsersService {
     public Users selectByPrimaryKey(Long pkId)
     {
         Users users = usersMapper.selectByPrimaryKey(pkId);
-        users.setLevelId(users.getAcChallengeNum()/4);
+        users.setLevelId(users.getAcChallengeNum()>=4 ? ((users.getAcChallengeNum()-4) / 16 + 1 ) : 0);
         return users;
     }
 
@@ -64,7 +64,7 @@ public class UsersImpl implements UsersService {
         Users users = usersMapper.selectByPrimaryKey(pkId);
         if(users.getImage()!=null && !"".equals(users.getImage()))
             users.setImage(getUrl(users.getImage()));
-        users.setLevelId(users.getAcChallengeNum()/4);
+        users.setLevelId(users.getAcChallengeNum()>=4 ? ((users.getAcChallengeNum()-4) / 16 + 1 ) : 0);
         return users;
     }
 
