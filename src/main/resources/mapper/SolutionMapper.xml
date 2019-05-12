@@ -20,6 +20,7 @@
     <result column="lint_error" jdbcType="INTEGER" property="lintError" />
     <result column="judger" jdbcType="CHAR" property="judger" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="challenge_id" jdbcType="INTEGER" property="challengeId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -189,6 +190,9 @@
       <if test="judger != null">
         judger,
       </if>
+      <if test="challengeId != null">
+        challenge_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="solutionId != null">
@@ -241,6 +245,9 @@
       </if>
       <if test="judger != null">
         #{judger,jdbcType=CHAR},
+      </if>
+      <if test="challengeId != null">
+        #{challengeId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

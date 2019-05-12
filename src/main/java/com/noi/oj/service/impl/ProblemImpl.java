@@ -200,7 +200,10 @@ public class ProblemImpl implements ProblemService {
         if(map==null)
             return null;
         ProblemWithBLOBs record = new ProblemWithBLOBs();
-        record.setTitle(map.get("title").toString());
+        if(isEmpty(map.get("title")))
+            record.setTitle(null);
+        else
+            record.setTitle(map.get("title").toString());
         if(isEmpty(map.get("timeLimit")))
             record.setTimeLimit(null);
         else
@@ -209,8 +212,14 @@ public class ProblemImpl implements ProblemService {
             record.setSubmit(null);
         else
             record.setSubmit(Integer.parseInt(map.get("submit").toString()));
-        record.setSpj(map.get("spj").toString());
-        record.setSource(map.get("source").toString());
+        if(isEmpty(map.get("spj")))
+            record.setSpj(null);
+        else
+            record.setSpj(map.get("spj").toString());
+        if(isEmpty(map.get("source")))
+            record.setSource(null);
+        else
+            record.setSource(map.get("source").toString());
         if(isEmpty(map.get("solved")))
             record.setSolved(null);
         else
@@ -227,17 +236,38 @@ public class ProblemImpl implements ProblemService {
         }catch (ParseException e){
             throw new RuntimeException(e.getMessage());
         }
-        record.setDefunct(map.get("defunct").toString());
+        if(isEmpty(map.get("defunct")))
+            record.setMemoryLimit(null);
+        else
+            record.setDefunct(map.get("defunct").toString());
         if(isEmpty(map.get("accepted")))
             record.setAccepted(null);
         else
             record.setAccepted(Integer.parseInt(map.get("accepted").toString()));
-        record.setSampleOutput(map.get("sampleOutput").toString());
-        record.setSampleInput(map.get("sampleInput").toString());
-        record.setInput(map.get("input").toString());
-        record.setOutput(map.get("output").toString());
-        record.setHint(map.get("hint").toString());
-        record.setDescription(map.get("description").toString());
+        if(isEmpty(map.get("sampleOutput")))
+            record.setAccepted(null);
+        else
+            record.setSampleOutput(map.get("sampleOutput").toString());
+        if(isEmpty(map.get("sampleInput")))
+            record.setAccepted(null);
+        else
+            record.setSampleInput(map.get("sampleInput").toString());
+        if(isEmpty(map.get("input")))
+            record.setAccepted(null);
+        else
+            record.setInput(map.get("input").toString());
+        if(isEmpty(map.get("output")))
+            record.setAccepted(null);
+        else
+            record.setOutput(map.get("output").toString());
+        if(isEmpty(map.get("hint")))
+            record.setAccepted(null);
+        else
+            record.setHint(map.get("hint").toString());
+        if(isEmpty(map.get("description")))
+            record.setAccepted(null);
+        else
+            record.setDescription(map.get("description").toString());
         return record;
     }
 

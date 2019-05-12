@@ -46,6 +46,16 @@ public class Solution implements Serializable {
 
     private String title;
 
+    private Integer challengeId;
+
+    public Integer getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(Integer challengeId) {
+        this.challengeId = challengeId;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSolutionId() {
