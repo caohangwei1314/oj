@@ -66,13 +66,18 @@ public class CourseImpl implements CourseService {
     }
 
     @Override
-    public Course selectByPrimaryKey(Integer id){
+    public Course selectAll(Integer id){
         Course course = courseMapper.selectByPrimaryKey(id);
         course.setUsers(usersMapper.selectByPrimaryKey(course.getUserId()));
         course.setChapterList(chapterService.selectByCourseId(course.getCourseId()));
         for(Chapter chapter : course.getChapterList())
             chapter.setSubsectionList(subsectionService.selectByChapterId(chapter.getChapterId()));
         return course;
+    }
+
+    @Override
+    public Course selectByPrimaryKey(Integer id){
+        return courseMapper.selectByPrimaryKey(id);
     }
 
 }

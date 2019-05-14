@@ -19,6 +19,7 @@ public class InterceptorConfiguration  extends WebMvcConfigurerAdapter {
         ir.excludePathPatterns("/users/register");
         ir.excludePathPatterns("/profile/**");
         ir.excludePathPatterns("/**/list");
+        ir.excludePathPatterns("/**/all");
         ir.excludePathPatterns("/**/detail");
         ir.excludePathPatterns("/**/temp");
         ir.excludePathPatterns("/**/rank");

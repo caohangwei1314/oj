@@ -14,5 +14,7 @@ public interface CourseService {
 
     PageBean selectList(Conditions record);
 
+    Course selectAll(Integer id);
+
     Course selectByPrimaryKey(Integer id);
 }
