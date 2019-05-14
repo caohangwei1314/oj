@@ -8,6 +8,6 @@ public interface CourseService {
 
     int insert(Course record);
 
-    int updateByPrimaryKeySelective(Course record);;
+    int updateByPrimaryKeySelective(Course record);
 
 }
