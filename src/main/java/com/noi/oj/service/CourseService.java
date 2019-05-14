@@ -13,4 +13,6 @@ public interface CourseService {
     int updateByPrimaryKeySelective(Course record);
 
     PageBean selectList(Conditions record);
+
+    Course selectByPrimaryKey(Integer id);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class SubsectionImpl implements SubsectionService {
@@ -31,6 +32,11 @@ public class SubsectionImpl implements SubsectionService {
     public int updateByPrimaryKeySelective(Subsection record){
         record.setGmtModified(new Date());
         return subsectionMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public List<Subsection> selectByChapterId(Integer chapterId){
+        return subsectionMapper.selectByChapterId(chapterId);
     }
 
 }

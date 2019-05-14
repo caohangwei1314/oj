@@ -233,4 +233,9 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where chapter_id = #{chapterId,jdbcType=INTEGER}
   </update>
+  <select id="selectByCourseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from chapter
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </select>
 </mapper>

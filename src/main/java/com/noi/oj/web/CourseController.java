@@ -46,4 +46,14 @@ public class CourseController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/detail",method = RequestMethod.GET)
+    public Map<String,Object> selectDetail(@RequestParam("id") Integer id){
+        Course course = courseService.selectByPrimaryKey(id);
+        if(course != null)
+            setMsg(1,null,course);
+        else
+            setMsg(0,null,null);
+        return msg;
+    }
+
 }

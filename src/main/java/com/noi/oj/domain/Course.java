@@ -2,6 +2,7 @@ package com.noi.oj.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
@@ -32,6 +33,26 @@ public class Course implements Serializable {
     private String image;
 
     private String instructions;
+
+    private Users users;
+
+    private List<Chapter> chapterList;
+
+    public List<Chapter> getChapterList() {
+        return chapterList;
+    }
+
+    public void setChapterList(List<Chapter> chapterList) {
+        this.chapterList = chapterList;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
 
     private static final long serialVersionUID = 1L;
 

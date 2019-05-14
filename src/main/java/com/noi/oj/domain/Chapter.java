@@ -2,6 +2,7 @@ package com.noi.oj.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
@@ -18,6 +19,16 @@ public class Chapter implements Serializable {
     private Date gmtCreate;
 
     private Date gmtModified;
+
+    private List<Subsection> subsectionList;
+
+    public List<Subsection> getSubsectionList() {
+        return subsectionList;
+    }
+
+    public void setSubsectionList(List<Subsection> subsectionList) {
+        this.subsectionList = subsectionList;
+    }
 
     private static final long serialVersionUID = 1L;
 

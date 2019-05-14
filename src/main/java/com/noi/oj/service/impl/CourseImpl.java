@@ -1,9 +1,15 @@
 package com.noi.oj.service.impl;
 
+import com.noi.oj.dao.ChapterMapper;
 import com.noi.oj.dao.CourseMapper;
+import com.noi.oj.dao.SubsectionMapper;
+import com.noi.oj.dao.UsersMapper;
+import com.noi.oj.domain.Chapter;
 import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Course;
+import com.noi.oj.service.ChapterService;
 import com.noi.oj.service.CourseService;
+import com.noi.oj.service.SubsectionService;
 import com.noi.oj.utils.PageBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,15 @@ public class CourseImpl implements CourseService {
 
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired
+    private UsersMapper usersMapper;
+
+    @Autowired
+    private ChapterService chapterService;
+
+    @Autowired
+    private SubsectionService subsectionService;
 
     @Override
     public int deleteByPrimaryKey(Integer courseId){
@@ -48,6 +63,16 @@ public class CourseImpl implements CourseService {
         record.setOffset(pageBean.getStart());
         pageBean.setList(courseMapper.selectList(record));
         return pageBean;
+    }
+
+    @Override
+    public Course selectByPrimaryKey(Integer id){
+        Course course = courseMapper.selectByPrimaryKey(id);
+        course.setUsers(usersMapper.selectByPrimaryKey(course.getUserId()));
+        course.setChapterList(chapterService.selectByCourseId(course.getCourseId()));
+        for(Chapter chapter : course.getChapterList())
+            chapter.setSubsectionList(subsectionService.selectByChapterId(chapter.getChapterId()));
+        return course;
     }
 
 }

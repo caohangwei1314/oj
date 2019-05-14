@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Chapter;
 import com.noi.oj.domain.Subsection;
 import com.noi.oj.domain.SubsectionExample;
 import java.util.List;
@@ -32,4 +33,6 @@ public interface SubsectionMapper {
     int updateByPrimaryKeySelective(Subsection record);
 
     int updateByPrimaryKey(Subsection record);
+
+    List<Subsection> selectByChapterId(Integer chapterId);
 }
