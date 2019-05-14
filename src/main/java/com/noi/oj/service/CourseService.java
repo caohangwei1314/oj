@@ -1,6 +1,8 @@
 package com.noi.oj.service;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Course;
+import com.noi.oj.utils.PageBean;
 
 public interface CourseService {
 
@@ -10,4 +12,5 @@ public interface CourseService {
 
     int updateByPrimaryKeySelective(Course record);
 
+    PageBean selectList(Conditions record);
 }

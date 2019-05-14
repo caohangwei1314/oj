@@ -399,4 +399,41 @@
       image = #{image,jdbcType=VARCHAR}
     where course_id = #{courseId,jdbcType=INTEGER}
   </update>
+  <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
+    select count(*)
+    from course
+    where 1=1
+    <if test="title != null">
+      and title like concat('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="classId != null">
+      and class_id = #{classId,jdbcType=INTEGER}
+    </if>
+    <if test="difficulty != null">
+      and difficulty = #{difficulty,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
+    select *
+    from course
+    where 1=1
+    <if test="title != null">
+      and title like concat('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="classId != null">
+      and class_id = #{classId,jdbcType=INTEGER}
+    </if>
+    <if test="difficulty != null">
+      and difficulty = #{difficulty,jdbcType=INTEGER}
+    </if>
+    order by class_id,difficulty,gmt_create
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
 </mapper>

@@ -1,7 +1,9 @@
 package com.noi.oj.web;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Course;
 import com.noi.oj.service.CourseService;
+import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,16 @@ public class CourseController extends BaseController{
     @RequestMapping(method = RequestMethod.DELETE)
     public Map<String,Object> delete(@RequestParam("id") Integer id){
         setMsg(courseService.deleteByPrimaryKey(id),null,null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/list",method = RequestMethod.POST)
+    public Map<String,Object> selectList(@RequestBody Conditions record){
+        PageBean pageBean = courseService.selectList(record);
+        if(pageBean != null)
+            setMsg(1,null,pageBean);
+        else
+            setMsg(0,null,null);
         return msg;
     }
 

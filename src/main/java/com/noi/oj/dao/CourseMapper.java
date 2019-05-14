@@ -1,5 +1,6 @@
 package com.noi.oj.dao;
 
+import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Course;
 import com.noi.oj.domain.CourseExample;
 import java.util.List;
@@ -38,4 +39,8 @@ public interface CourseMapper {
     int updateByPrimaryKeyWithBLOBs(Course record);
 
     int updateByPrimaryKey(Course record);
+
+    int count(Conditions record);
+
+    List<Course> selectList(Conditions record);
 }

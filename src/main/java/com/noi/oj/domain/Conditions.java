@@ -42,6 +42,16 @@ public class Conditions {
 
     private Integer ChallengeId;
 
+    private Integer classId;
+
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
+    }
+
     public Integer getChallengeId() {
         return ChallengeId;
     }
