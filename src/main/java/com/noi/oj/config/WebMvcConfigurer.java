@@ -18,5 +18,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/profile/users/**").addResourceLocations("file:" + SystemConstant.LINUX_USERS_PATH);
         registry.addResourceHandler("/profile/packet/**").addResourceLocations("file:" + SystemConstant.LINUX_PACKET_PATH);
         registry.addResourceHandler("/profile/course/**").addResourceLocations("file:" + SystemConstant.WINDOWS_COURSE_PATH);
+        registry.addResourceHandler("/profile/subsection/**").addResourceLocations("file:" + SystemConstant.WINDOWS_SUBSECTION_PATH);
     }
 }

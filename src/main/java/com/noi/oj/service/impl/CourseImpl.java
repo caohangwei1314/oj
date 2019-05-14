@@ -10,6 +10,7 @@ import com.noi.oj.domain.Course;
 import com.noi.oj.service.ChapterService;
 import com.noi.oj.service.CourseService;
 import com.noi.oj.service.SubsectionService;
+import com.noi.oj.service.UsersService;
 import com.noi.oj.utils.PageBean;
 import com.noi.oj.utils.SystemConstant;
 import com.noi.oj.utils.UploadUtils;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -30,7 +32,7 @@ public class CourseImpl implements CourseService {
     private CourseMapper courseMapper;
 
     @Autowired
-    private UsersMapper usersMapper;
+    private UsersService usersService;
 
     @Autowired
     private ChapterService chapterService;
@@ -75,14 +77,20 @@ public class CourseImpl implements CourseService {
             return null;
         PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
         record.setOffset(pageBean.getStart());
-        pageBean.setList(courseMapper.selectList(record));
+        List<Course> courseList = courseMapper.selectList(record);
+        for(Course course : courseList)
+            if(course.getImage()!=null)
+                course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
+        pageBean.setList(courseList);
         return pageBean;
     }
 
     @Override
     public Course selectAll(Integer id){
         Course course = courseMapper.selectByPrimaryKey(id);
-        course.setUsers(usersMapper.selectByPrimaryKey(course.getUserId()));
+        if(course.getImage()!=null)
+            course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
+        course.setUsers(usersService.selectByPrimaryKey(course.getUserId()));
         course.setChapterList(chapterService.selectByCourseId(course.getCourseId()));
         for(Chapter chapter : course.getChapterList())
             chapter.setSubsectionList(subsectionService.selectByChapterId(chapter.getChapterId()));
@@ -91,7 +99,10 @@ public class CourseImpl implements CourseService {
 
     @Override
     public Course selectByPrimaryKey(Integer id){
-        return courseMapper.selectByPrimaryKey(id);
+        Course course = courseMapper.selectByPrimaryKey(id);
+        if(course.getImage()!=null)
+            course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
+        return course;
     }
 
     @Override

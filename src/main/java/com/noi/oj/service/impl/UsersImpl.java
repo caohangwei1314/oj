@@ -49,7 +49,7 @@ public class UsersImpl implements UsersService {
     public Users selectByPrimaryKey(Long pkId)
     {
         Users users = usersMapper.selectByPrimaryKey(pkId);
-        users.setLevelId(users.getAcChallengeNum()>=4 ? ((users.getAcChallengeNum()-4) / 16 + 1 ) : 0);
+        setUsersInfo(users);
         return users;
     }
 
@@ -62,9 +62,7 @@ public class UsersImpl implements UsersService {
     @Override
     public Users selectUserInfo(Long pkId){
         Users users = usersMapper.selectByPrimaryKey(pkId);
-        if(users.getImage()!=null && !"".equals(users.getImage()))
-            users.setImage(getUrl(users.getImage()));
-        users.setLevelId(users.getAcChallengeNum()>=4 ? ((users.getAcChallengeNum()-4) / 16 + 1 ) : 0);
+        setUsersInfo(users);
         return users;
     }
 
@@ -158,6 +156,12 @@ public class UsersImpl implements UsersService {
         record.setOffset(pageBean.getStart());
         pageBean.setList(usersMapper.selectChallengeRank(record));
         return pageBean;
+    }
+
+    private void setUsersInfo(Users users){
+        if(users.getImage()!=null && !"".equals(users.getImage()))
+            users.setImage(getUrl(users.getImage()));
+        users.setLevelId(users.getAcChallengeNum()>=4 ? ((users.getAcChallengeNum()-4) / 16 + 1 ) : 0);
     }
 
 }

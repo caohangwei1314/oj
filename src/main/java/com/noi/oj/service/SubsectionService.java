@@ -1,6 +1,7 @@
 package com.noi.oj.service;
 
 import com.noi.oj.domain.Subsection;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface SubsectionService {
     List<Subsection> selectByChapterId(Integer chapterId);
 
     Subsection selectByPrimaryKey(Integer id);
+
+    String upload(MultipartFile file);
 }

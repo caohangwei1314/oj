@@ -3,14 +3,21 @@ package com.noi.oj.service.impl;
 import com.noi.oj.dao.SubsectionMapper;
 import com.noi.oj.domain.Subsection;
 import com.noi.oj.service.SubsectionService;
+import com.noi.oj.utils.SystemConstant;
+import com.noi.oj.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.security.auth.Subject;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SubsectionImpl implements SubsectionService {
+
+    private static final String NAME="subsection";
 
     @Autowired
     private SubsectionMapper subsectionMapper;
@@ -36,12 +43,31 @@ public class SubsectionImpl implements SubsectionService {
 
     @Override
     public List<Subsection> selectByChapterId(Integer chapterId){
-        return subsectionMapper.selectByChapterId(chapterId);
+        List<Subsection> subsectionList = subsectionMapper.selectByChapterId(chapterId);
+        for(Subsection subsection : subsectionList)
+            if(subsection.getUrl()!=null)
+                subsection.setUrl(UploadUtils.getUrl(subsection.getUrl(),NAME));
+        return subsectionList;
     }
 
     @Override
     public Subsection selectByPrimaryKey(Integer id){
-        return subsectionMapper.selectByPrimaryKey(id);
+        Subsection subsection = subsectionMapper.selectByPrimaryKey(id);
+        if(subsection.getUrl()!=null)
+            subsection.setUrl(UploadUtils.getUrl(subsection.getUrl(),NAME));
+        return subsection;
+    }
+
+    @Override
+    public String upload(MultipartFile file){
+        String[] originName = file.getOriginalFilename().split("\\.");
+        String suffix = originName[originName.length-1];
+        String name = UUID.randomUUID().toString() + "." + suffix;
+        if(UploadUtils.setProductProfile(file,name, SystemConstant.WINDOWS_SUBSECTION_PATH)){
+            return UploadUtils.getUrl(name,NAME);
+        }else{
+            return null;
+        }
     }
 
 }

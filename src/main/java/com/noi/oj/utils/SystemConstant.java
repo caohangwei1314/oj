@@ -5,6 +5,8 @@ public class SystemConstant {
 
     public static final String WINDOWS_COURSE_PATH = "E:\\work\\course_profiles\\";
 
+    public static final String WINDOWS_SUBSECTION_PATH = "E:\\work\\subsection_profiles\\";
+
     public static final String LINUX_PROFILES_PATH = "/home/judge/users/profiles/";
 
     public static final String LINUX_PACKET_PATH = "/home/judge/packet/profiles/";

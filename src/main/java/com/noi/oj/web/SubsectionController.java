@@ -5,6 +5,7 @@ import com.noi.oj.domain.Subsection;
 import com.noi.oj.service.SubsectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,16 @@ public class SubsectionController extends BaseController{
         Subsection subsection = subsectionService.selectByPrimaryKey(id);
         if(subsection != null)
             setMsg(1,null,subsection);
+        else
+            setMsg(0,null,null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/temp",method = RequestMethod.POST)
+    public Map<String,Object> selectDetail(@RequestParam("file") MultipartFile file){
+        String url = subsectionService.upload(file);
+        if(url != null)
+            setMsg(1,null,url);
         else
             setMsg(0,null,null);
         return msg;
