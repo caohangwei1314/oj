@@ -4,7 +4,7 @@ import com.noi.oj.domain.Chapter;
 
 public interface ChapterService {
 
-    int deleteByPrimaryKey(Integer courseId);
+    int deleteByPrimaryKey(Integer chapterId);
 
     int insert(Chapter record);
 

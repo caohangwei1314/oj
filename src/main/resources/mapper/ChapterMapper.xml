@@ -116,7 +116,7 @@
       #{description,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.Chapter">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.Chapter" useGeneratedKeys="true" keyProperty="chapterId">
     insert into chapter
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="chapterId != null">

@@ -9,6 +9,8 @@ import java.util.Date;
 public class Subsection implements Serializable {
     private Integer subsectionId;
 
+    private Integer chapterId;
+
     private String title;
 
     private String url;
@@ -19,17 +21,20 @@ public class Subsection implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    {
-        Date date = new Date();
-        gmtModified = date;
-    }
-
     public Integer getSubsectionId() {
         return subsectionId;
     }
 
     public void setSubsectionId(Integer subsectionId) {
         this.subsectionId = subsectionId;
+    }
+
+    public Integer getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(Integer chapterId) {
+        this.chapterId = chapterId;
     }
 
     public String getTitle() {
@@ -77,6 +82,7 @@ public class Subsection implements Serializable {
         }
         Subsection other = (Subsection) that;
         return (this.getSubsectionId() == null ? other.getSubsectionId() == null : this.getSubsectionId().equals(other.getSubsectionId()))
+            && (this.getChapterId() == null ? other.getChapterId() == null : this.getChapterId().equals(other.getChapterId()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
@@ -88,6 +94,7 @@ public class Subsection implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getSubsectionId() == null) ? 0 : getSubsectionId().hashCode());
+        result = prime * result + ((getChapterId() == null) ? 0 : getChapterId().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
@@ -102,6 +109,7 @@ public class Subsection implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", subsectionId=").append(subsectionId);
+        sb.append(", chapterId=").append(chapterId);
         sb.append(", title=").append(title);
         sb.append(", url=").append(url);
         sb.append(", gmtCreate=").append(gmtCreate);

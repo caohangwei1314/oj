@@ -185,6 +185,66 @@ public class SubsectionExample {
             return (Criteria) this;
         }
 
+        public Criteria andChapterIdIsNull() {
+            addCriterion("chapter_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdIsNotNull() {
+            addCriterion("chapter_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdEqualTo(Integer value) {
+            addCriterion("chapter_id =", value, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdNotEqualTo(Integer value) {
+            addCriterion("chapter_id <>", value, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdGreaterThan(Integer value) {
+            addCriterion("chapter_id >", value, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("chapter_id >=", value, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdLessThan(Integer value) {
+            addCriterion("chapter_id <", value, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdLessThanOrEqualTo(Integer value) {
+            addCriterion("chapter_id <=", value, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdIn(List<Integer> values) {
+            addCriterion("chapter_id in", values, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdNotIn(List<Integer> values) {
+            addCriterion("chapter_id not in", values, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdBetween(Integer value1, Integer value2) {
+            addCriterion("chapter_id between", value1, value2, "chapterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChapterIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("chapter_id not between", value1, value2, "chapterId");
+            return (Criteria) this;
+        }
+
         public Criteria andTitleIsNull() {
             addCriterion("title is null");
             return (Criteria) this;

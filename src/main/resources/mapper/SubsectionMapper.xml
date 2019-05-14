@@ -3,6 +3,7 @@
 <mapper namespace="com.noi.oj.dao.SubsectionMapper">
   <resultMap id="BaseResultMap" type="com.noi.oj.domain.Subsection">
     <id column="subsection_id" jdbcType="INTEGER" property="subsectionId" />
+    <result column="chapter_id" jdbcType="INTEGER" property="chapterId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    subsection_id, title, url, gmt_create, gmt_modified
+    subsection_id, chapter_id, title, url, gmt_create, gmt_modified
   </sql>
   <select id="selectByExample" parameterType="com.noi.oj.domain.SubsectionExample" resultMap="BaseResultMap">
     select
@@ -108,16 +109,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.noi.oj.domain.Subsection">
-    insert into subsection (subsection_id, title, url, 
-      gmt_create, gmt_modified)
-    values (#{subsectionId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+    insert into subsection (subsection_id, chapter_id, title, 
+      url, gmt_create, gmt_modified
+      )
+    values (#{subsectionId,jdbcType=INTEGER}, #{chapterId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.noi.oj.domain.Subsection">
+  <insert id="insertSelective" parameterType="com.noi.oj.domain.Subsection" useGeneratedKeys="true" keyProperty="subsectionId">
     insert into subsection
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="subsectionId != null">
         subsection_id,
+      </if>
+      <if test="chapterId != null">
+        chapter_id,
       </if>
       <if test="title != null">
         title,
@@ -135,6 +141,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="subsectionId != null">
         #{subsectionId,jdbcType=INTEGER},
+      </if>
+      <if test="chapterId != null">
+        #{chapterId,jdbcType=INTEGER},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -162,6 +171,9 @@
       <if test="record.subsectionId != null">
         subsection_id = #{record.subsectionId,jdbcType=INTEGER},
       </if>
+      <if test="record.chapterId != null">
+        chapter_id = #{record.chapterId,jdbcType=INTEGER},
+      </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
@@ -182,6 +194,7 @@
   <update id="updateByExample" parameterType="map">
     update subsection
     set subsection_id = #{record.subsectionId,jdbcType=INTEGER},
+      chapter_id = #{record.chapterId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
@@ -193,6 +206,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.noi.oj.domain.Subsection">
     update subsection
     <set>
+      <if test="chapterId != null">
+        chapter_id = #{chapterId,jdbcType=INTEGER},
+      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -210,7 +226,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.noi.oj.domain.Subsection">
     update subsection
-    set title = #{title,jdbcType=VARCHAR},
+    set chapter_id = #{chapterId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
