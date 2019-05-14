@@ -13,4 +13,6 @@ public interface ChapterService {
     int updateByPrimaryKeySelective(Chapter record);
 
     List<Chapter> selectByCourseId(Integer courseId);
+
+    Chapter selectByPrimaryKey(Integer id);
 }

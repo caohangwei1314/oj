@@ -44,6 +44,36 @@ public class Conditions {
 
     private Integer classId;
 
+    private Integer courseId;
+
+    private Integer chapterId;
+
+    private Integer subsectionId;
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public Integer getSubsectionId() {
+        return subsectionId;
+    }
+
+    public void setSubsectionId(Integer subsectionId) {
+        this.subsectionId = subsectionId;
+    }
+
+    public Integer getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(Integer chapterId) {
+        this.chapterId = chapterId;
+    }
+
     public Integer getClassId() {
         return classId;
     }
