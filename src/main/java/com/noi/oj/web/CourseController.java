@@ -6,6 +6,7 @@ import com.noi.oj.service.CourseService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -61,6 +62,16 @@ public class CourseController extends BaseController{
         Course course = courseService.selectByPrimaryKey(id);
         if(course != null)
             setMsg(1,null,course);
+        else
+            setMsg(0,null,null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/temp",method = RequestMethod.POST)
+    public Map<String,Object> selectDetail(@RequestParam("file") MultipartFile file){
+        String url = courseService.upload(file);
+        if(url != null)
+            setMsg(1,null,url);
         else
             setMsg(0,null,null);
         return msg;

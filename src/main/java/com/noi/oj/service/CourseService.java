@@ -3,6 +3,7 @@ package com.noi.oj.service;
 import com.noi.oj.domain.Conditions;
 import com.noi.oj.domain.Course;
 import com.noi.oj.utils.PageBean;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface CourseService {
 
@@ -17,4 +18,6 @@ public interface CourseService {
     Course selectAll(Integer id);
 
     Course selectByPrimaryKey(Integer id);
+
+    String upload(MultipartFile file);
 }

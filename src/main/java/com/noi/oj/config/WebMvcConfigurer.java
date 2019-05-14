@@ -1,6 +1,7 @@
 package com.noi.oj.config;
 
 
+import com.noi.oj.utils.SystemConstant;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -14,7 +15,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         //上传的图片在D盘下的OTA目录下，访问路径如：http://localhost:8081/OTA/d3cf0281-bb7f-40e0-ab77-406db95ccf2c.jpg
         //其中OTA表示访问的前缀。"file:D:/OTA/"是文件真实的存储路径
-        registry.addResourceHandler("/profile/users/**").addResourceLocations("file:/home/judge/users/profiles/");
-        registry.addResourceHandler("/profile/packet/**").addResourceLocations("file:/home/judge/packet/profiles/");
+        registry.addResourceHandler("/profile/users/**").addResourceLocations("file:" + SystemConstant.LINUX_USERS_PATH);
+        registry.addResourceHandler("/profile/packet/**").addResourceLocations("file:" + SystemConstant.LINUX_PACKET_PATH);
+        registry.addResourceHandler("/profile/course/**").addResourceLocations("file:" + SystemConstant.WINDOWS_COURSE_PATH);
     }
 }

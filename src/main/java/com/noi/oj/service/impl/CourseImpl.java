@@ -11,14 +11,20 @@ import com.noi.oj.service.ChapterService;
 import com.noi.oj.service.CourseService;
 import com.noi.oj.service.SubsectionService;
 import com.noi.oj.utils.PageBean;
+import com.noi.oj.utils.SystemConstant;
+import com.noi.oj.utils.UploadUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class CourseImpl implements CourseService {
+
+    private static final String NAME = "course";
 
     @Autowired
     private CourseMapper courseMapper;
@@ -45,12 +51,20 @@ public class CourseImpl implements CourseService {
         Date date = new Date();
         record.setGmtCreate(date);
         record.setGmtModified(date);
+        if(record.getImage()!=null){
+            String[] orginName = record.getImage().split("/");
+            record.setImage(orginName[orginName.length-1]);
+        }
         return courseMapper.insertSelective(record);
     }
 
     @Override
     public int updateByPrimaryKeySelective(Course record){
         record.setGmtModified(new Date());
+        if(record.getImage()!=null){
+            String[] orginName = record.getImage().split("/");
+            record.setImage(orginName[orginName.length-1]);
+        }
         return courseMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -78,6 +92,18 @@ public class CourseImpl implements CourseService {
     @Override
     public Course selectByPrimaryKey(Integer id){
         return courseMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public String upload(MultipartFile file){
+        String[] originName = file.getOriginalFilename().split("\\.");
+        String suffix = originName[originName.length-1];
+        String name = UUID.randomUUID().toString() + "." + suffix;
+        if(UploadUtils.setProductProfile(file,name, SystemConstant.WINDOWS_COURSE_PATH)){
+            return UploadUtils.getUrl(name,NAME);
+        }else{
+            return null;
+        }
     }
 
 }
