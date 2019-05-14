@@ -78,9 +78,11 @@ public class CourseImpl implements CourseService {
         PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
         record.setOffset(pageBean.getStart());
         List<Course> courseList = courseMapper.selectList(record);
-        for(Course course : courseList)
+        for(Course course : courseList){
             if(course.getImage()!=null)
                 course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
+            setCount(course);
+        }
         pageBean.setList(courseList);
         return pageBean;
     }
@@ -92,14 +94,21 @@ public class CourseImpl implements CourseService {
             course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
         course.setUsers(usersService.selectByPrimaryKey(course.getUserId()));
         course.setChapterList(chapterService.selectByCourseId(course.getCourseId()));
-        for(Chapter chapter : course.getChapterList())
+        course.setChapterCount(course.getChapterList().size());
+        int total = 0;
+        for(Chapter chapter : course.getChapterList()){
             chapter.setSubsectionList(subsectionService.selectByChapterId(chapter.getChapterId()));
+            chapter.setSubsectionCount(chapter.getSubsectionList().size());
+            total+=chapter.getSubsectionCount();
+        }
+        course.setSubsectionCount(total);
         return course;
     }
 
     @Override
     public Course selectByPrimaryKey(Integer id){
         Course course = courseMapper.selectByPrimaryKey(id);
+        setCount(course);
         if(course.getImage()!=null)
             course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
         return course;
@@ -114,6 +123,13 @@ public class CourseImpl implements CourseService {
             return UploadUtils.getUrl(name,NAME);
         }else{
             return null;
+        }
+    }
+
+    private void setCount(Course course){
+        if(course.getCourseId()!=null){
+            course.setChapterCount(chapterService.countByCourseId(course.getCourseId()));
+            course.setSubsectionCount(subsectionService.countByCourseId(course.getCourseId()));
         }
     }
 

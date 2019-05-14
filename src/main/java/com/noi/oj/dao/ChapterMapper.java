@@ -34,4 +34,6 @@ public interface ChapterMapper {
     int updateByPrimaryKey(Chapter record);
 
     List<Chapter> selectByCourseId(Integer courseId);
+
+    int countByCourseId(Integer courseId);
 }

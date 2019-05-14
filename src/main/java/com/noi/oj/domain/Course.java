@@ -38,6 +38,26 @@ public class Course implements Serializable {
 
     private List<Chapter> chapterList;
 
+    private Integer chapterCount;
+
+    private Integer subsectionCount;
+
+    public Integer getChapterCount() {
+        return chapterCount;
+    }
+
+    public void setChapterCount(Integer chapterCount) {
+        this.chapterCount = chapterCount;
+    }
+
+    public Integer getSubsectionCount() {
+        return subsectionCount;
+    }
+
+    public void setSubsectionCount(Integer subsectionCount) {
+        this.subsectionCount = subsectionCount;
+    }
+
     public List<Chapter> getChapterList() {
         return chapterList;
     }

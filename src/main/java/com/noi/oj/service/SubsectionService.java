@@ -18,4 +18,6 @@ public interface SubsectionService {
     Subsection selectByPrimaryKey(Integer id);
 
     String upload(MultipartFile file);
+
+    int countByCourseId(Integer courseId);
 }

@@ -22,6 +22,16 @@ public class Chapter implements Serializable {
 
     private List<Subsection> subsectionList;
 
+    private Integer subsectionCount;
+
+    public Integer getSubsectionCount() {
+        return subsectionCount;
+    }
+
+    public void setSubsectionCount(Integer subsectionCount) {
+        this.subsectionCount = subsectionCount;
+    }
+
     public List<Subsection> getSubsectionList() {
         return subsectionList;
     }

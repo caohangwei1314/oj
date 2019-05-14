@@ -35,4 +35,6 @@ public interface SubsectionMapper {
     int updateByPrimaryKey(Subsection record);
 
     List<Subsection> selectByChapterId(Integer chapterId);
+
+    int countByCourseId(Integer courseId);
 }

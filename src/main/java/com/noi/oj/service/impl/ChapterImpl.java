@@ -50,4 +50,9 @@ public class ChapterImpl implements ChapterService {
         return chapterMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public int countByCourseId(Integer courseId){
+        return chapterMapper.countByCourseId(courseId);
+    }
+
 }

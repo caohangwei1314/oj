@@ -70,4 +70,9 @@ public class SubsectionImpl implements SubsectionService {
         }
     }
 
+    @Override
+    public int countByCourseId(Integer courseId){
+        return subsectionMapper.countByCourseId(courseId);
+    }
+
 }

@@ -15,4 +15,6 @@ public interface ChapterService {
     List<Chapter> selectByCourseId(Integer courseId);
 
     Chapter selectByPrimaryKey(Integer id);
+
+    int countByCourseId(Integer courseId);
 }

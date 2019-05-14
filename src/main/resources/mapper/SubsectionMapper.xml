@@ -238,4 +238,9 @@
     from subsection
     where chapter_id = #{chapterId,jdbcType=INTEGER}
   </select>
+  <select id="countByCourseId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*)
+    from subsection
+    where chapter_id in (select chapter_id from chapter where course_id = #{courseId,jdbcType=INTEGER})
+  </select>
 </mapper>

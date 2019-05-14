@@ -238,4 +238,9 @@
     from chapter
     where course_id = #{courseId,jdbcType=INTEGER}
   </select>
+  <select id="countByCourseId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*)
+    from chapter
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </select>
 </mapper>
