@@ -13,4 +13,6 @@ public interface SubsectionService {
     int updateByPrimaryKeySelective(Subsection record);
 
     List<Subsection> selectByChapterId(Integer chapterId);
+
+    Subsection selectByPrimaryKey(Integer id);
 }

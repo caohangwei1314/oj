@@ -39,4 +39,9 @@ public class SubsectionImpl implements SubsectionService {
         return subsectionMapper.selectByChapterId(chapterId);
     }
 
+    @Override
+    public Subsection selectByPrimaryKey(Integer id){
+        return subsectionMapper.selectByPrimaryKey(id);
+    }
+
 }
