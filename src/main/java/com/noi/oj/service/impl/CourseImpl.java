@@ -90,6 +90,8 @@ public class CourseImpl implements CourseService {
     @Override
     public Course selectAll(Integer id){
         Course course = courseMapper.selectByPrimaryKey(id);
+        if(course==null)
+            return null;
         if(course.getImage()!=null)
             course.setImage(UploadUtils.getUrl(course.getImage(),NAME));
         course.setUsers(usersService.selectByPrimaryKey(course.getUserId()));

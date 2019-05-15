@@ -127,7 +127,7 @@
     ,
     <include refid="Blob_Column_List" />
     from course
-    where course_id = #{courseId,jdbcType=INTEGER}
+    where course_id = #{courseId,jdbcType=INTEGER} and state!=-1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from course
@@ -402,7 +402,7 @@
   <select id="count" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
     select count(*)
     from course
-    where 1=1
+    where state!=-1
     <if test="title != null">
       and title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if>
@@ -416,7 +416,7 @@
   <select id="selectList" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
     select *
     from course
-    where 1=1
+    where state!=-1
     <if test="title != null">
       and title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if>
