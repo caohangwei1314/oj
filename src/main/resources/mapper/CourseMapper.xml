@@ -426,7 +426,7 @@
     <if test="difficulty != null">
       and difficulty = #{difficulty,jdbcType=INTEGER}
     </if>
-    order by class_id,difficulty,gmt_create
+    order by course_id
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}
