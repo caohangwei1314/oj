@@ -34,7 +34,7 @@ public interface TopicMapper {
 
     int updateByPrimaryKey(Topic record);
 
-    int count(@Param("problemId") Integer problemId);
+    int count(Conditions record);
 
     List<Topic> selectList(Conditions record);
 }

@@ -9,6 +9,7 @@ import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +23,7 @@ public class ReplyImpl implements ReplyService {
 
     @Override
     public int insert(Reply record){
+        record.setCreateAt(new Date());
         return replyMapper.insertSelective(record);
     }
 

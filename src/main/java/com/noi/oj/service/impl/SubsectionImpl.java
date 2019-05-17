@@ -29,6 +29,10 @@ public class SubsectionImpl implements SubsectionService {
 
     @Override
     public int insert(Subsection record){
+        if(record.getUrl()!=null){
+            String[] origin = record.getUrl().split("/");
+            record.setUrl(origin[origin.length-1]);
+        }
         Date date = new Date();
         record.setGmtCreate(date);
         record.setGmtModified(date);
@@ -38,6 +42,10 @@ public class SubsectionImpl implements SubsectionService {
     @Override
     public int updateByPrimaryKeySelective(Subsection record){
         record.setGmtModified(new Date());
+        if(record.getUrl()!=null){
+            String[] origin = record.getUrl().split("/");
+            record.setUrl(origin[origin.length-1]);
+        }
         return subsectionMapper.updateByPrimaryKeySelective(record);
     }
 

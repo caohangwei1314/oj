@@ -8,6 +8,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -93,10 +94,12 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select a.*,b.course_id
+    from
+    (select *
     from subsection
-    where subsection_id = #{subsectionId,jdbcType=INTEGER}
+    where subsection_id = #{subsectionId,jdbcType=INTEGER}) as a
+    left join (select chapter_id,course_id from chapter) as b on a.chapter_id = b.chapter_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from subsection
@@ -234,9 +237,12 @@
     where subsection_id = #{subsectionId,jdbcType=INTEGER}
   </update>
   <select id="selectByChapterId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select *
+    select a.*,b.course_id
+    from
+    (select *
     from subsection
-    where chapter_id = #{chapterId,jdbcType=INTEGER}
+    where chapter_id = #{chapterId,jdbcType=INTEGER}) as a
+    left join (select chapter_id,course_id from chapter) as b on a.chapter_id = b.chapter_id
   </select>
   <select id="countByCourseId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(*)

@@ -19,6 +19,16 @@ public class Subsection implements Serializable {
 
     private Date gmtModified;
 
+    private Integer courseId;
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSubsectionId() {

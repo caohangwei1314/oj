@@ -10,6 +10,7 @@ import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class TopicImpl implements TopicService {
     public int insert(Topic record,Long userId){
         int flag=0;
         record.setAuthorId(userId);
+        record.setCreateAt(new Date());
         if(topicMapper.insertSelective(record)>0){
             flag=1;
         }
@@ -50,7 +52,7 @@ public class TopicImpl implements TopicService {
     public PageBean select(Conditions record){
         if(record==null)
             return null;
-        int count = topicMapper.count(record.getProblemId());
+        int count = topicMapper.count(record);
         if(count<1)
             return null;
         PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
