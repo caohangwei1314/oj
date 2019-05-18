@@ -17,66 +17,66 @@ public class TagController extends BaseController{
     private TagService tagService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Tag record){
+    public BaseController insert(@RequestBody Tag record){
         try {
-            setMsg(tagService.insert(record),null,null);
+            return BaseController.result(tagService.insert(record),null,null);
         }catch (Exception e){
-            setMsg(0,e.getMessage(),null);
+            return BaseController.result(0,e.getMessage(),null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Map<String,Object> select(){
+    public BaseController select(){
         try {
             List<Tag> tags = tagService.select();
             if(tags!=null)
-                setMsg(1,null,tags);
+                return BaseController.result(1,null,tags);
             else
-                setMsg(0,"还没有添加标签",null);
+                return BaseController.result(0,"还没有添加标签",null);
         }catch (Exception e){
-            setMsg(0,e.getMessage(),null);
+            return BaseController.result(0,e.getMessage(),null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Map<String,Object> update(@RequestBody Tag tag){
+    public BaseController update(@RequestBody Tag tag){
         try {
-            setMsg(tagService.update(tag),null,null);
+            return BaseController.result(tagService.update(tag),null,null);
         }catch (Exception e){
-            setMsg(0,e.getMessage(),null);
+            return BaseController.result(0,e.getMessage(),null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
+    public BaseController delete(@RequestParam("id") Integer id){
         try {
-            setMsg(tagService.delete(id),null,null);
+            return BaseController.result(tagService.delete(id),null,null);
         }catch (Exception e){
-            setMsg(0,e.getMessage(),null);
+            return BaseController.result(0,e.getMessage(),null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(value = "/class",method = RequestMethod.GET)
-    public Map<String,Object> statisticClass(HttpServletRequest request){
+    public BaseController statisticClass(HttpServletRequest request){
         try {
-            setMsg(1,null,tagService.statisticClass(Long.parseLong(request.getAttribute("userId").toString())));
+            return BaseController.result(1,null,tagService.statisticClass(Long.parseLong(request.getAttribute("userId").toString())));
         } catch (Exception e){
-            setMsg(0,e.getMessage(),null);
+            return BaseController.result(0,e.getMessage(),null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(value = "/statistic",method = RequestMethod.GET)
-    public Map<String,Object> statistic(HttpServletRequest request){
+    public BaseController statistic(HttpServletRequest request){
         try {
-            setMsg(1,null,tagService.statistic(Long.parseLong(request.getAttribute("userId").toString())));
+            return BaseController.result(1,null,tagService.statistic(Long.parseLong(request.getAttribute("userId").toString())));
         } catch (Exception e){
-            setMsg(0,e.getMessage(),null);
+            return BaseController.result(0,e.getMessage(),null);
         }
-        return msg;
+        
     }
 }

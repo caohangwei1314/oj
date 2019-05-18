@@ -18,31 +18,31 @@ public class ReplyController extends BaseController{
     private ReplyService replyService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Reply record, HttpServletRequest request){
+    public BaseController insert(@RequestBody Reply record, HttpServletRequest request){
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(replyService.insert(record),null,null);
-        return msg;
+        return BaseController.result(replyService.insert(record),null,null);
+        
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Map<String,Object> update(@RequestBody Reply record){
-        setMsg(replyService.update(record),null,null);
-        return msg;
+    public BaseController update(@RequestBody Reply record){
+        return BaseController.result(replyService.update(record),null,null);
+        
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
-        setMsg(replyService.delete(id),null,null);
-        return msg;
+    public BaseController delete(@RequestParam("id") Integer id){
+        return BaseController.result(replyService.delete(id),null,null);
+        
     }
 
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    public Map<String,Object> select(@RequestBody Conditions record){
+    public BaseController select(@RequestBody Conditions record){
         List<Reply> replies = replyService.select(record);
         if(replies!=null && replies.size()>0)
-            setMsg(1,null,replies);
+            return BaseController.result(1,null,replies);
         else
-            setMsg(0,"还没有评论",null);
-        return msg;
+            return BaseController.result(0,"还没有评论",null);
+        
     }
 }

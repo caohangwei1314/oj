@@ -23,14 +23,14 @@ public class PacketOrderController extends BaseController{
     private OrderService orderService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody PacketOrder record, HttpServletRequest request){
+    public BaseController insert(@RequestBody PacketOrder record, HttpServletRequest request){
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(orderService.insert(record),null,null);
-        return msg;
+        return BaseController.result(orderService.insert(record),null,null);
+        
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public Map<String,Object> select(@RequestBody Conditions record, HttpServletRequest request){
+    public BaseController select(@RequestBody Conditions record, HttpServletRequest request){
         String header = request.getHeader("X-Token");
         if(header!=null){
             try {
@@ -41,15 +41,15 @@ public class PacketOrderController extends BaseController{
                 record.setUserId(null);
             }
         }else{
-            setMsg(0,"请先登陆",null);
-            return msg;
+            return BaseController.result(0,"请先登陆",null);
+            
         }
         PageBean pageBean = orderService.selectList(record);
         if(pageBean!=null)
-            setMsg(1,null,pageBean);
+            return BaseController.result(1,null,pageBean);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
+        
     }
 
 }

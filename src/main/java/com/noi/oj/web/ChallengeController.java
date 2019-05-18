@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/challenge")
-public class ChallengeController extends BaseController{
+public class ChallengeController{
 
     @Autowired
     private ChallengeService challengeService;
@@ -27,41 +27,37 @@ public class ChallengeController extends BaseController{
     private SolutionService solutionService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(HttpServletRequest request){
+    public BaseController insert(HttpServletRequest request){
         Long userId = Long.parseLong(request.getAttribute("userId").toString());
         Problem problem = challengeService.insert(userId);
         if(problem!=null)
-            setMsg(1,null,problem);
+            return BaseController.result(1,null,problem);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Map<String,Object> select(HttpServletRequest request){
+    public BaseController select(HttpServletRequest request){
         Long userId = Long.parseLong(request.getAttribute("userId").toString());
         ProblemWithBLOBs problem = challengeService.select(userId);
         if(problem!=null)
-            setMsg(1,null,problem);
+            return BaseController.result(1,null,problem);
         else
-            setMsg(0,"暂无挑战",null);
-        return msg;
+            return BaseController.result(0,"暂无挑战",null);
     }
 
     @RequestMapping(value = "/rank",method = RequestMethod.POST)
-    public Map<String,Object> rank(@RequestBody Conditions record){
+    public BaseController rank(@RequestBody Conditions record){
         PageBean pageBean = usersService.selectChallengeRank(record);
         if(pageBean != null)
-            setMsg(1,null,pageBean);
+            return BaseController.result(1,null,pageBean);
         else
-            setMsg(0,"暂无排名",null);
-        return msg;
+            return BaseController.result(0,"暂无排名",null);
     }
 
     @RequestMapping(value = "/solution",method = RequestMethod.POST)
-    public Map<String,Object> selectSolution(@RequestBody Conditions conditions,HttpServletRequest request){
+    public BaseController selectSolution(@RequestBody Conditions conditions,HttpServletRequest request){
         conditions.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(1,null,solutionService.selectList(conditions));
-        return msg;
+        return BaseController.result(1,null,solutionService.selectList(conditions));
     }
 }

@@ -18,51 +18,51 @@ public class SubsectionController extends BaseController{
     private SubsectionService subsectionService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Subsection record){
-        setMsg(subsectionService.insert(record),null,record.getSubsectionId());
-        return msg;
+    public BaseController insert(@RequestBody Subsection record){
+        return BaseController.result(subsectionService.insert(record),null,record.getSubsectionId());
+        
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Map<String,Object> update(@RequestBody Subsection record){
-        setMsg(subsectionService.updateByPrimaryKeySelective(record),null,null);
-        return msg;
+    public BaseController update(@RequestBody Subsection record){
+        return BaseController.result(subsectionService.updateByPrimaryKeySelective(record),null,null);
+        
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
-        setMsg(subsectionService.deleteByPrimaryKey(id),null,null);
-        return msg;
+    public BaseController delete(@RequestParam("id") Integer id){
+        return BaseController.result(subsectionService.deleteByPrimaryKey(id),null,null);
+        
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public Map<String,Object> selectList(@RequestBody Conditions record){
+    public BaseController selectList(@RequestBody Conditions record){
         List<Subsection> subsectionList = subsectionService.selectByChapterId(record.getChapterId());
         if(subsectionList != null)
-            setMsg(1,null,subsectionList);
+            return BaseController.result(1,null,subsectionList);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
+        
     }
 
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
-    public Map<String,Object> selectDetail(@RequestParam("id") Integer id){
+    public BaseController selectDetail(@RequestParam("id") Integer id){
         Subsection subsection = subsectionService.selectByPrimaryKey(id);
         if(subsection != null)
-            setMsg(1,null,subsection);
+            return BaseController.result(1,null,subsection);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
+        
     }
 
     @RequestMapping(value = "/temp",method = RequestMethod.POST)
-    public Map<String,Object> selectDetail(@RequestParam("file") MultipartFile file){
+    public BaseController selectDetail(@RequestParam("file") MultipartFile file){
         String url = subsectionService.upload(file);
         if(url != null)
-            setMsg(1,null,url);
+            return BaseController.result(1,null,url);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
+        
     }
 
 }

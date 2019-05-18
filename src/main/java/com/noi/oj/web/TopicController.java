@@ -17,41 +17,41 @@ public class TopicController extends BaseController{
     private TopicService topicService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Topic record, HttpServletRequest request){
+    public BaseController insert(@RequestBody Topic record, HttpServletRequest request){
         Long userId = Long.parseLong(request.getAttribute("userId").toString());
-        setMsg(topicService.insert(record,userId),null,null);
-        return msg;
+        return BaseController.result(topicService.insert(record,userId),null,null);
+        
     }
 
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    public Map<String,Object> select(@RequestBody Conditions record){
+    public BaseController select(@RequestBody Conditions record){
         PageBean pageBean = topicService.select(record);
         if(pageBean!=null)
-            setMsg(1,null,pageBean);
+            return BaseController.result(1,null,pageBean);
         else
-            setMsg(0,"暂无帖子",null);
-        return msg;
+            return BaseController.result(0,"暂无帖子",null);
+        
     }
 
     @RequestMapping(value = "detail",method = RequestMethod.GET)
-    public Map<String,Object> selectDetail(@RequestParam("id") Integer id){
+    public BaseController selectDetail(@RequestParam("id") Integer id){
         Topic topic = topicService.selectDetail(id);
         if(topic!=null)
-            setMsg(1,null,topic);
+            return BaseController.result(1,null,topic);
         else
-            setMsg(0,"该帖子不存在或以被删除",null);
-        return msg;
+            return BaseController.result(0,"该帖子不存在或以被删除",null);
+        
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Map<String,Object> update(@RequestBody Topic record){
-        setMsg(topicService.update(record),null,null);
-        return msg;
+    public BaseController update(@RequestBody Topic record){
+        return BaseController.result(topicService.update(record),null,null);
+        
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
-        setMsg(topicService.delete(id),null,null);
-        return msg;
+    public BaseController delete(@RequestParam("id") Integer id){
+        return BaseController.result(topicService.delete(id),null,null);
+        
     }
 }

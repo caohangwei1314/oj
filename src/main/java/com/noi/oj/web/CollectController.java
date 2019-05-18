@@ -18,23 +18,20 @@ public class CollectController extends BaseController{
     private CollectService collectService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Collect record, HttpServletRequest request){
+    public BaseController insert(@RequestBody Collect record, HttpServletRequest request){
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(collectService.insertSelective(record),null,null);
-        return msg;
+        return BaseController.result(collectService.insertSelective(record),null,null);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
-        setMsg(collectService.deleteByPrimaryKey(id),null,null);
-        return msg;
+    public BaseController delete(@RequestParam("id") Integer id){
+        return BaseController.result(collectService.deleteByPrimaryKey(id),null,null);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Map<String,Object> select(@RequestBody Conditions conditions,HttpServletRequest request){
+    public BaseController select(@RequestBody Conditions conditions,HttpServletRequest request){
         conditions.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(1,null,collectService.selectList(conditions));
-        return msg;
+        return BaseController.result(1,null,collectService.selectList(conditions));
     }
 
 }

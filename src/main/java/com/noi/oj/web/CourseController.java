@@ -19,62 +19,55 @@ public class CourseController extends BaseController{
     private CourseService courseService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody Course record,HttpServletRequest request){
+    public BaseController insert(@RequestBody Course record,HttpServletRequest request){
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(courseService.insert(record),null,record.getCourseId());
-        return msg;
+        return BaseController.result(courseService.insert(record),null,record.getCourseId());
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Map<String,Object> update(@RequestBody Course record){
-        setMsg(courseService.updateByPrimaryKeySelective(record),null,null);
-        return msg;
+    public BaseController update(@RequestBody Course record){
+        return BaseController.result(courseService.updateByPrimaryKeySelective(record),null,null);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
-        setMsg(courseService.deleteByPrimaryKey(id),null,null);
-        return msg;
+    public BaseController delete(@RequestParam("id") Integer id){
+        return BaseController.result(courseService.deleteByPrimaryKey(id),null,null);
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public Map<String,Object> selectList(@RequestBody Conditions record){
+    public BaseController selectList(@RequestBody Conditions record){
         PageBean pageBean = courseService.selectList(record);
         if(pageBean != null)
-            setMsg(1,null,pageBean);
+            return BaseController.result(1,null,pageBean);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
-    public Map<String,Object> selectAll(@RequestParam("id") Integer id){
+    public BaseController selectAll(@RequestParam("id") Integer id){
         Course course = courseService.selectAll(id);
         if(course != null)
-            setMsg(1,null,course);
+            return BaseController.result(1,null,course);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
     }
 
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
-    public Map<String,Object> selectDetail(@RequestParam("id") Integer id){
+    public BaseController selectDetail(@RequestParam("id") Integer id){
         Course course = courseService.selectByPrimaryKey(id);
         if(course != null)
-            setMsg(1,null,course);
+            return BaseController.result(1,null,course);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
     }
 
     @RequestMapping(value = "/temp",method = RequestMethod.POST)
-    public Map<String,Object> selectDetail(@RequestParam("file") MultipartFile file){
+    public BaseController selectDetail(@RequestParam("file") MultipartFile file){
         String url = courseService.upload(file);
         if(url != null)
-            setMsg(1,null,url);
+            return BaseController.result(1,null,url);
         else
-            setMsg(0,null,null);
-        return msg;
+            return BaseController.result(0,null,null);
     }
 
 }

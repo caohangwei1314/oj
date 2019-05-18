@@ -19,84 +19,84 @@ public class PacketController extends BaseController{
     private PacketService packetService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String,Object> insert(@RequestBody ProblemPacket record, HttpServletRequest request){
-        setMsg(packetService.insertSelective(record,request),null,record.getPacketId());
-        return msg;
+    public BaseController insert(@RequestBody ProblemPacket record, HttpServletRequest request){
+        return BaseController.result(packetService.insertSelective(record,request),null,record.getPacketId());
+        
     }
 
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
-    public Map<String,Object> select(@RequestParam("id") Integer id){
+    public BaseController select(@RequestParam("id") Integer id){
         ProblemPacket packet = packetService.selectByPrimaryKey(id);
         if(packet!=null)
-            setMsg(1,null,packet);
+            return BaseController.result(1,null,packet);
         else
-            setMsg(0,"题包不存在",null);
-        return msg;
+            return BaseController.result(0,"题包不存在",null);
+        
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public Map<String,Object> selectList(@RequestBody Conditions record){
+    public BaseController selectList(@RequestBody Conditions record){
         PageBean pageBean = packetService.selectList(record);
         if(pageBean!=null)
-            setMsg(1,null,pageBean);
+            return BaseController.result(1,null,pageBean);
         else
-            setMsg(0,"还没有题包",null);
-        return msg;
+            return BaseController.result(0,"还没有题包",null);
+        
     }
 
     @RequestMapping(value = "/me",method = RequestMethod.GET)
-    public Map<String,Object> selectPacket(HttpServletRequest request){
+    public BaseController selectPacket(HttpServletRequest request){
         Conditions record = new Conditions();
         record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
         PageBean pageBean = packetService.selectList(record);
         if(pageBean!=null)
-            setMsg(1,null,pageBean);
+            return BaseController.result(1,null,pageBean);
         else
-            setMsg(0,"还没有题包",null);
-        return msg;
+            return BaseController.result(0,"还没有题包",null);
+        
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Map<String,Object> update(@RequestBody ProblemPacket record){
-        setMsg(packetService.updateByPrimaryKeySelective(record),null,null);
-        return msg;
+    public BaseController update(@RequestBody ProblemPacket record){
+        return BaseController.result(packetService.updateByPrimaryKeySelective(record),null,null);
+        
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Map<String,Object> delete(@RequestParam("id") Integer id){
-        setMsg(packetService.deleteByPrimaryKey(id),null,null);
-        return msg;
+    public BaseController delete(@RequestParam("id") Integer id){
+        return BaseController.result(packetService.deleteByPrimaryKey(id),null,null);
+        
     }
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public Map<String,Object> setUserProfile(@RequestParam("file") MultipartFile profile,@RequestParam("id") Integer pkId){
+    public BaseController setUserProfile(@RequestParam("file") MultipartFile profile,@RequestParam("id") Integer pkId){
         msg.clear();
         if(packetService.setPacketProfile(profile,pkId)){
-            setMsg(1,null,null);
+            return BaseController.result(1,null,null);
         }else{
-            setMsg(0,null,null);
+            return BaseController.result(0,null,null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(value = "/temp",method = RequestMethod.POST)
-    public Map<String,Object> setUserProfile(@RequestParam("file") MultipartFile profile){
+    public BaseController setUserProfile(@RequestParam("file") MultipartFile profile){
         msg.clear();
         String url =packetService.setPacketProfile(profile);
         if(url!=null){
-            setMsg(1,null,url);
+            return BaseController.result(1,null,url);
         }else{
-            setMsg(0,null,null);
+            return BaseController.result(0,null,null);
         }
-        return msg;
+        
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Map<String,Object> isBuy(@RequestParam("id") Integer id, HttpServletRequest request){
+    public BaseController isBuy(@RequestParam("id") Integer id, HttpServletRequest request){
         Conditions packet = new Conditions();
         packet.setPacketId(id);
         packet.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
-        setMsg(packetService.isBuy(packet),null,null);
-        return msg;
+        return BaseController.result(packetService.isBuy(packet),null,null);
+        
     }
 }
