@@ -63,6 +63,15 @@ public class UsersImpl implements UsersService {
     public Users selectUserInfo(Long pkId){
         Users users = usersMapper.selectByPrimaryKey(pkId);
         setUsersInfo(users);
+        Conditions record = new Conditions();
+        int i=0;
+        for(Users users1 : usersMapper.rank(record)){
+            i++;
+            if(users.getUserId().equals(users1.getUserId())){
+                break;
+            }
+        }
+        users.setRank(i);
         return users;
     }
 

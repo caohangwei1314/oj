@@ -30,7 +30,7 @@ public class ServerConfig{
     }
 
     public String getUrl(){
-        String address = getHost();
+        String address = SystemConstant.IP;
         return "http://" + address + ":" + getServerPort();
     }
 

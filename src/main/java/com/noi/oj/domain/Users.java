@@ -58,6 +58,16 @@ public class Users implements Serializable {
 
     private Integer acChallengeNum;
 
+    private Integer rank;
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
     public Integer getLevelId() {
         return levelId;
     }

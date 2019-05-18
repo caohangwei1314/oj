@@ -1,10 +1,8 @@
 package com.noi.oj.web;
 
 import com.noi.oj.domain.Conditions;
-import com.noi.oj.domain.PacketOrder;
 import com.noi.oj.domain.ProblemPacket;
 import com.noi.oj.service.PacketService;
-import com.noi.oj.service.ProblemService;
 import com.noi.oj.utils.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +36,18 @@ public class PacketController extends BaseController{
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public Map<String,Object> selectList(@RequestBody Conditions record){
+        PageBean pageBean = packetService.selectList(record);
+        if(pageBean!=null)
+            setMsg(1,null,pageBean);
+        else
+            setMsg(0,"还没有题包",null);
+        return msg;
+    }
+
+    @RequestMapping(value = "/me",method = RequestMethod.GET)
+    public Map<String,Object> selectPacket(HttpServletRequest request){
+        Conditions record = new Conditions();
+        record.setUserId(Long.parseLong(request.getAttribute("userId").toString()));
         PageBean pageBean = packetService.selectList(record);
         if(pageBean!=null)
             setMsg(1,null,pageBean);

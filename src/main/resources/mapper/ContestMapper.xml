@@ -412,7 +412,7 @@
     inner join users as c
     on a.user_id = c.user_id
     group by c.user_id
-    order by count
+    order by count desc
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}

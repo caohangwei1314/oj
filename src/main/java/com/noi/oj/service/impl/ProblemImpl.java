@@ -167,7 +167,7 @@ public class ProblemImpl implements ProblemService {
         deleteAllFile(path);
         File file = new File(path);
         if(!file.exists())
-            return false;
+            return true;
         if(!file.isDirectory())
             return false;
         else

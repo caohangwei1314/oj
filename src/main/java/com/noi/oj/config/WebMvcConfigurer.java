@@ -17,7 +17,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         //其中OTA表示访问的前缀。"file:D:/OTA/"是文件真实的存储路径
         registry.addResourceHandler("/profile/users/**").addResourceLocations("file:" + SystemConstant.LINUX_USERS_PATH);
         registry.addResourceHandler("/profile/packet/**").addResourceLocations("file:" + SystemConstant.LINUX_PACKET_PATH);
-        registry.addResourceHandler("/profile/course/**").addResourceLocations("file:" + SystemConstant.WINDOWS_COURSE_PATH);
-        registry.addResourceHandler("/profile/subsection/**").addResourceLocations("file:" + SystemConstant.WINDOWS_SUBSECTION_PATH);
+        registry.addResourceHandler("/profile/course/**").addResourceLocations("file:" + SystemConstant.LINUX_COURSE_PATH);
+        registry.addResourceHandler("/profile/subsection/**").addResourceLocations("file:" + SystemConstant.LINUX_SUBSECTION_PATH);
     }
 }

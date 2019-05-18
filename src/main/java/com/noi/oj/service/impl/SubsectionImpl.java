@@ -71,7 +71,7 @@ public class SubsectionImpl implements SubsectionService {
         String[] originName = file.getOriginalFilename().split("\\.");
         String suffix = originName[originName.length-1];
         String name = UUID.randomUUID().toString() + "." + suffix;
-        if(UploadUtils.setProductProfile(file,name, SystemConstant.WINDOWS_SUBSECTION_PATH)){
+        if(UploadUtils.setProductProfile(file,name, SystemConstant.LINUX_SUBSECTION_PATH)){
             return UploadUtils.getUrl(name,NAME);
         }else{
             return null;

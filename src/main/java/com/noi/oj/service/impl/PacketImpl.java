@@ -36,7 +36,7 @@ public class PacketImpl implements PacketService {
     public int deleteByPrimaryKey(Integer packetId){
         ProblemPacket packet = new ProblemPacket();
         packet.setPacketId(packetId);
-        packet.setStatus(new Byte("0"));
+        packet.setStatus(new Byte("-2"));
         return updateByPrimaryKeySelective(packet);
     }
 

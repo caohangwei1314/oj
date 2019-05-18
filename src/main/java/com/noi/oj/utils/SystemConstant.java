@@ -15,5 +15,9 @@ public class SystemConstant {
 
     public static final String LINUX_USERS_PATH = "/home/judge/users/profiles/";
 
-    public static final String IP = "192.168.10.103";
+    public static final String LINUX_COURSE_PATH = "/home/judge/course/profiles/";
+
+    public static final String LINUX_SUBSECTION_PATH = "/home/judge/course/subsection/profiles/";
+
+    public static final String IP = "192.168.10.112";
 }
