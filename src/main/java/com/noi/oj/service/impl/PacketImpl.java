@@ -83,6 +83,10 @@ public class PacketImpl implements PacketService {
 
     @Override
     public int updateByPrimaryKeySelective(ProblemPacket record){
+        if(record.getImage()!=null){
+            String[] origin = record.getImage().split("/");
+            record.setImage(origin[origin.length-1]);
+        }
         return problemPacketMapper.updateByPrimaryKeySelective(record);
     }
 
