@@ -495,7 +495,7 @@
     ) as a
     left join (select count(user_id) as count,user_id from solution GROUP BY user_id) as b
     on a.user_id = b.user_id
-	ORDER BY count desc
+	ORDER BY a.solved desc
     <if test="limit != null">
       <if test="offset != null">
         limit ${offset},${limit}

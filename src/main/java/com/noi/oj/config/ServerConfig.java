@@ -4,6 +4,7 @@ import com.noi.oj.utils.SystemConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -21,8 +22,8 @@ public class ServerConfig{
     public String getHost(){
         InetAddress address = null;
         try {
-            address = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
+            address = Inet4Address.getLoopbackAddress();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return address.getHostAddress();

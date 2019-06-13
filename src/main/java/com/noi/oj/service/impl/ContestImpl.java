@@ -45,7 +45,8 @@ public class ContestImpl implements ContestService {
             List<Integer> list = problemMapper.selectPrimaryKey(new Conditions());
             Set<Integer> set = new HashSet<>();
             Random r = new Random();
-            while(set.size()<5){
+            set.add(1028);
+            while(set.size()<4){
                 set.add(list.get(r.nextInt(list.size())));
             }
             Iterator<Integer> iterator = set.iterator();
