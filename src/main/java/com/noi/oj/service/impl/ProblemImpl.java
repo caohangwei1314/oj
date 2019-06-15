@@ -123,6 +123,15 @@ public class ProblemImpl implements ProblemService {
         return map;
     }
 
+    public PageBean selectByContestId(Conditions record){
+        int count = problemMapper.countByContestId(record);
+        if(count < 1)
+            return null;
+        PageBean pageBean = new PageBean(record.getPage(),count,record.getLimit());
+        pageBean.setList(problemMapper.selectByContestId(record));
+        return pageBean;
+    }
+
     private boolean createFile(String path,String output){
         if(path == null || output == null)
             return false;

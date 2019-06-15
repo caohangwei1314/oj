@@ -390,7 +390,7 @@
   <select id="selectList" resultMap="BaseResultMap" parameterType="com.noi.oj.domain.Conditions">
     select *
     from contest
-    where NOW() &gt;= end_time
+    where status = 1
     <if test="userId != null">
       and user_id = #{userId,jdbcType=BIGINT}
     </if>

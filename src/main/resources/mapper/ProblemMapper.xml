@@ -578,4 +578,39 @@
     inner join problem as c
     on b.problem_id = c.problem_id
   </select>
+  <select id="countByContestId" parameterType="com.noi.oj.domain.Conditions" resultType="java.lang.Integer">
+    select count(a.problem_id)
+    from
+    (select problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted,
+    submit, solved from problem
+    ) as a
+    <if test="contestId != null">
+      inner join (select problem_id from contest_problem where contest_id = #{contestId,jdbcType=INTEGER}) as g
+      on a.problem_id = g.problem_id
+    </if>
+  </select>
+  <select id="selectByContestId" parameterType="com.noi.oj.domain.Conditions" resultMap="BaseResultMap">
+    select a.*
+    <if test="userId != null">
+      ,IFNULL(f.result,0) as result
+    </if>
+    from
+    (select problem_id, title, spj, source, in_date, time_limit, memory_limit, defunct, accepted,
+    submit, solved,rate from problem) as a
+    <if test="contestId != null">
+      inner join (select problem_id from contest_problem where contest_id = #{contestId,jdbcType=INTEGER}) as g
+      on a.problem_id = g.problem_id
+    </if>
+    <if test="orderBy != null">
+      order by #{orderBy,jdbcType=VARCHAR} desc
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset},${limit}
+      </if>
+      <if test="limit == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
 </mapper>

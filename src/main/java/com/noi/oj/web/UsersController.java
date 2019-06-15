@@ -108,6 +108,16 @@ public class UsersController extends BaseController{
         return msg;
     }
 
+    @RequestMapping(value = "/email",method = RequestMethod.GET)
+    public Map<String,Object> getdetail(@RequestParam("email") String email){
+        Users users = usersService.selectByEmail(email);
+        if(users!=null)
+            setMsg(1,null,users);
+        else
+            setMsg(0,null,null);
+        return msg;
+    }
+
     @RequestMapping(value = "/modified",method = RequestMethod.POST)
     public Map<String,Object> modified(@RequestBody Users users, HttpServletRequest request)
     {

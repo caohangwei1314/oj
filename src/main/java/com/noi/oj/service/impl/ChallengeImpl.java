@@ -67,6 +67,7 @@ public class ChallengeImpl implements ChallengeService {
         List<Integer> problemIds = problemMapper.selectPrimaryKey(record);
         Random r = new Random();
         int problemId = problemIds.get(r.nextInt(problemIds.size()));
+        problemId = 1005;
         Challenge challenge = new Challenge();
         challenge.setProblemId(problemId);
         challenge.setUserId(userId);

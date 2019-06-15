@@ -80,7 +80,8 @@ public class ContestImpl implements ContestService {
 
     @Override
     public PageBean selectProblem(Conditions record){
-        return problemService.selectList(record);
+        record.setUserId(null);
+        return problemService.selectByContestId(record);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.noi.oj.service;
 
 import com.noi.oj.domain.Conditions;
+import com.noi.oj.domain.Problem;
 import com.noi.oj.domain.ProblemWithBLOBs;
 import com.noi.oj.utils.PageBean;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ProblemService {
@@ -20,4 +22,5 @@ public interface ProblemService {
 
     Map<String,Object> isBuy(Conditions id);
 
+    PageBean selectByContestId(Conditions record);
 }
